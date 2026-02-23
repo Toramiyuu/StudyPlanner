@@ -2576,7 +2576,8 @@ const EXAM_EVENTS = [
   { date:'2026-06-03', label:'Science P2 MCQ'    }
 ];
 
-const SLOT_NAMES = ['Morning', 'Afternoon', 'Evening'];
+const SLOT_NAMES  = ['9:00 AM', '2:00 PM', '7:00 PM'];
+const SLOT_RANGES = ['9:00 – 9:45 AM', '2:00 – 2:45 PM', '7:00 – 7:45 PM'];
 
 const TT_TOPIC_AREAS = {
   ict:      ['Databases','Spreadsheets','Document Production','Networks & Security','Hardware & Software','Data Representation','Presentation','Web Authoring'],
@@ -2722,7 +2723,7 @@ function renderTimetable() {
         html += `<div class="tt-cell${isPast?' past':''}" style="background:${s.bg};border-color:${s.color}33;color:#fff">
           <div><div class="tt-subj" style="color:${s.color}">${s.short}</div>
           <div class="tt-focus">${focus}</div></div>
-          <div class="tt-dur">45 min</div>
+          <div class="tt-dur">${SLOT_RANGES[slot]}</div>
         </div>`;
       }
     }
