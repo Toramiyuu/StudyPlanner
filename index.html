@@ -704,7 +704,179 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
   .countdown-strip { gap: 8px; }
   .countdown-card { padding: 12px 16px; min-width: 70px; }
   .countdown-card .num { font-size: 24px; }
+  .tt-grid { grid-template-columns: 56px repeat(7,1fr); font-size: 10px; }
+  .tt-cell { padding: 5px 4px; }
 }
+
+/* ===== VISUAL REFRESH ===== */
+/* richer gradient on hero bg */
+.hero::before {
+  background: radial-gradient(ellipse at 20% 0%, rgba(240,192,64,0.10) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 0%, rgba(96,160,240,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 100%, rgba(160,112,240,0.05) 0%, transparent 60%);
+}
+/* subject card colour tints */
+.subject-card { transition: all 0.25s; }
+.subject-card[data-s="ict"]      { background: linear-gradient(135deg,var(--surface) 0%,rgba(96,160,240,0.09) 100%); border-color:rgba(96,160,240,0.25); }
+.subject-card[data-s="cs"]       { background: linear-gradient(135deg,var(--surface) 0%,rgba(160,112,240,0.09) 100%); border-color:rgba(160,112,240,0.25); }
+.subject-card[data-s="business"] { background: linear-gradient(135deg,var(--surface) 0%,rgba(64,208,128,0.09) 100%); border-color:rgba(64,208,128,0.25); }
+.subject-card[data-s="engfirst"] { background: linear-gradient(135deg,var(--surface) 0%,rgba(240,192,64,0.09) 100%); border-color:rgba(240,192,64,0.25); }
+.subject-card[data-s="englit"]   { background: linear-gradient(135deg,var(--surface) 0%,rgba(240,96,160,0.09) 100%); border-color:rgba(240,96,160,0.25); }
+.subject-card[data-s="science"]  { background: linear-gradient(135deg,var(--surface) 0%,rgba(240,96,96,0.09) 100%); border-color:rgba(240,96,96,0.25); }
+.subject-card[data-s="addmath"]  { background: linear-gradient(135deg,var(--surface) 0%,rgba(64,208,208,0.09) 100%); border-color:rgba(64,208,208,0.25); }
+.subject-card[data-s="gp"]       { background: linear-gradient(135deg,var(--surface) 0%,rgba(64,192,160,0.09) 100%); border-color:rgba(64,192,160,0.25); }
+/* stronger hover glow per subject */
+.subject-card[data-s="ict"]:hover      { border-color:var(--blue);   box-shadow:0 8px 32px rgba(96,160,240,0.18); transform:translateY(-3px); }
+.subject-card[data-s="cs"]:hover       { border-color:var(--purple); box-shadow:0 8px 32px rgba(160,112,240,0.18); transform:translateY(-3px); }
+.subject-card[data-s="business"]:hover { border-color:var(--green);  box-shadow:0 8px 32px rgba(64,208,128,0.18); transform:translateY(-3px); }
+.subject-card[data-s="engfirst"]:hover { border-color:var(--accent); box-shadow:0 8px 32px rgba(240,192,64,0.18); transform:translateY(-3px); }
+.subject-card[data-s="englit"]:hover   { border-color:var(--pink);   box-shadow:0 8px 32px rgba(240,96,160,0.18); transform:translateY(-3px); }
+.subject-card[data-s="science"]:hover  { border-color:var(--red);    box-shadow:0 8px 32px rgba(240,96,96,0.18); transform:translateY(-3px); }
+.subject-card[data-s="addmath"]:hover  { border-color:var(--cyan);   box-shadow:0 8px 32px rgba(64,208,208,0.18); transform:translateY(-3px); }
+.subject-card[data-s="gp"]:hover       { border-color:var(--teal);   box-shadow:0 8px 32px rgba(64,192,160,0.18); transform:translateY(-3px); }
+/* thicker colour bar */
+.subject-card .color-bar { height: 4px; }
+/* conf-bar thicker + rounded segments */
+.conf-bar { height: 6px; border-radius: 3px; gap: 2px; }
+.conf-bar .cb-shaky, .conf-bar .cb-confident, .conf-bar .cb-none { border-radius: 2px; }
+/* section headings */
+.section > h3:first-child {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg,var(--text) 0%,var(--text2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== TIMETABLE ===== */
+.tt-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.tt-nav-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.tt-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+.tt-week-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text2);
+  flex: 1;
+  text-align: center;
+}
+.tt-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.tt-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text2);
+}
+.tt-legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.tt-grid {
+  display: grid;
+  grid-template-columns: 72px repeat(7, 1fr);
+  gap: 6px;
+  font-size: 12px;
+}
+.tt-header {
+  padding: 8px 6px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 11px;
+}
+.tt-header.today {
+  background: rgba(240,192,64,0.12);
+  border: 1px solid rgba(240,192,64,0.3);
+  color: var(--accent);
+}
+.tt-header.past { opacity: 0.4; }
+.tt-header .tt-date { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; }
+.tt-header .tt-dow  { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.tt-slot-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+}
+.tt-cell {
+  border-radius: 8px;
+  padding: 8px 7px;
+  min-height: 62px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  border: 1px solid transparent;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.tt-cell:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+.tt-cell.rest {
+  background: var(--surface);
+  border-color: var(--border);
+  align-items: center;
+  justify-content: center;
+  color: var(--text3);
+  font-style: italic;
+}
+.tt-cell.empty {
+  background: var(--surface);
+  border-color: var(--border);
+  opacity: 0.4;
+}
+.tt-cell.past { opacity: 0.45; }
+.tt-subj {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+.tt-focus {
+  font-size: 10px;
+  opacity: 0.85;
+  margin-top: 3px;
+}
+.tt-dur {
+  font-size: 10px;
+  opacity: 0.65;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 5px;
+}
+.tt-exam-day {
+  background: rgba(240,192,64,0.08) !important;
+  border-color: rgba(240,192,64,0.35) !important;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 11px;
+  text-align: center;
+}
+.tt-exam-day::before { content: '🎯'; display: block; font-size: 16px; margin-bottom: 3px; }
 </style>
 </head>
 <body>
@@ -729,6 +901,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="nav-tab" data-section="science">Co-ordinated Sciences</div>
     <div class="nav-tab" data-section="addmath">Add Maths</div>
     <div class="nav-tab" data-section="gp">Global Perspectives</div>
+    <div class="nav-tab" data-section="timetable">Timetable</div>
     <div class="nav-tab" data-section="papers">Past Papers</div>
     <div class="nav-tab" data-section="progress">Progress</div>
   </div>
@@ -742,7 +915,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
   <p>The May/June 2026 CAIE session (Zone 4) runs from 1 April (ICT practicals) to 9 June 2026, with results released on 20 August 2026. Below is every subject you're sitting with its syllabus code, number of papers, and total marks.</p>
 
   <div class="overview-grid">
-    <div class="subject-card" onclick="goToSubject('ict')">
+    <div class="subject-card" data-s="ict" onclick="goToSubject('ict')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--blue),var(--cyan))"></div>
       <div class="code">0417</div>
       <div class="name">ICT</div>
@@ -753,7 +926,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       </div>
       <div class="conf-bar" id="cb-ict"></div>
     </div>
-    <div class="subject-card" onclick="goToSubject('cs')">
+    <div class="subject-card" data-s="cs" onclick="goToSubject('cs')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--purple),var(--blue))"></div>
       <div class="code">0478</div>
       <div class="name">Computer Science</div>
@@ -764,7 +937,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       </div>
       <div class="conf-bar" id="cb-cs"></div>
     </div>
-    <div class="subject-card" onclick="goToSubject('business')">
+    <div class="subject-card" data-s="business" onclick="goToSubject('business')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--green),var(--teal))"></div>
       <div class="code">0450</div>
       <div class="name">Business Studies</div>
@@ -775,7 +948,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       </div>
       <div class="conf-bar" id="cb-business"></div>
     </div>
-    <div class="subject-card" onclick="goToSubject('engfirst')">
+    <div class="subject-card" data-s="engfirst" onclick="goToSubject('engfirst')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--accent),var(--orange))"></div>
       <div class="code">0500</div>
       <div class="name">English First Language</div>
@@ -785,7 +958,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
         <span>🕐 ~3h 45m</span>
       </div>
     </div>
-    <div class="subject-card" onclick="goToSubject('englit')">
+    <div class="subject-card" data-s="englit" onclick="goToSubject('englit')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--pink),var(--purple))"></div>
       <div class="code">0475</div>
       <div class="name">English Literature</div>
@@ -795,7 +968,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
         <span>🕐 ~3h+</span>
       </div>
     </div>
-    <div class="subject-card" onclick="goToSubject('science')">
+    <div class="subject-card" data-s="science" onclick="goToSubject('science')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--red),var(--orange))"></div>
       <div class="code">0654</div>
       <div class="name">Co-ordinated Sciences (Double Award)</div>
@@ -806,7 +979,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       </div>
       <div class="conf-bar" id="cb-science"></div>
     </div>
-    <div class="subject-card" onclick="goToSubject('addmath')">
+    <div class="subject-card" data-s="addmath" onclick="goToSubject('addmath')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--cyan),var(--blue))"></div>
       <div class="code">0606</div>
       <div class="name">Additional Mathematics</div>
@@ -817,7 +990,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       </div>
       <div class="conf-bar" id="cb-addmath"></div>
     </div>
-    <div class="subject-card" onclick="goToSubject('gp')">
+    <div class="subject-card" data-s="gp" onclick="goToSubject('gp')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--teal),var(--green))"></div>
       <div class="code">0457</div>
       <div class="name">Global Perspectives</div>
@@ -1439,6 +1612,19 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Individual Report</div>Stay within 1500–2000 words. Structure clearly: introduction, research findings, analysis, personal reflection, conclusion. Use a variety of sources (not just websites — include academic articles, reports, data). Cite everything.</div>
     <div class="tip-card"><div class="tip-label">Team Project</div>Keep the Explanation of Research & Planning under 400 words — marks stop at 400. Evidence of Action should show what you DID, not just your research. Your Reflective Paper is individual — focus on YOUR contribution and learning.</div>
   </div>
+</div>
+
+<!-- ========== TIMETABLE ========== -->
+<div class="section" id="timetable">
+  <h3>Study Timetable</h3>
+  <p>Auto-generated daily schedule weighted by exam proximity and topic count. ICT practicals are prioritised before April — scroll right on smaller screens.</p>
+  <div class="tt-nav">
+    <button class="tt-nav-btn" onclick="ttPrev()">← Prev</button>
+    <div class="tt-week-label" id="ttLabel"></div>
+    <button class="tt-nav-btn" onclick="ttNext()">Next →</button>
+  </div>
+  <div class="tt-legend" id="ttLegend"></div>
+  <div class="tt-grid" id="ttGrid"></div>
 </div>
 
 <!-- ========== PAST PAPERS ========== -->
@@ -2187,6 +2373,169 @@ function renderScores() {
     </div>`;
   }).join('');
 }
+
+
+// ========== TIMETABLE ==========
+const TT_SUBJECTS = {
+  ict:      { name:'ICT',        short:'ICT',  color:'#60a0f0', bg:'rgba(96,160,240,0.18)',  topics:21, exam:'2026-04-01' },
+  science:  { name:'Science',    short:'Sci',  color:'#f06060', bg:'rgba(240,96,96,0.18)',   topics:35, exam:'2026-05-07' },
+  addmath:  { name:'Add Maths',  short:'AM',   color:'#40d0d0', bg:'rgba(64,208,208,0.18)',  topics:17, exam:'2026-05-18' },
+  cs:       { name:'Comp Sci',   short:'CS',   color:'#a070f0', bg:'rgba(160,112,240,0.18)', topics:10, exam:'2026-05-13' },
+  business: { name:'Business',   short:'Biz',  color:'#40d080', bg:'rgba(64,208,128,0.18)',  topics:8,  exam:'2026-05-11' },
+  engfirst: { name:'Eng 1st',    short:'EFL',  color:'#f0c040', bg:'rgba(240,192,64,0.18)',  topics:6,  exam:'2026-05-06' },
+  englit:   { name:'Eng Lit',    short:'Lit',  color:'#f060a0', bg:'rgba(240,96,160,0.18)',  topics:6,  exam:'2026-05-08' },
+  gp:       { name:'Global Per', short:'GP',   color:'#40c0a0', bg:'rgba(64,192,160,0.18)',  topics:10, exam:'2026-05-06' }
+};
+
+const EXAM_EVENTS = [
+  { date:'2026-04-01', label:'ICT P2 Practical' },
+  { date:'2026-04-02', label:'ICT P3 Practical' },
+  { date:'2026-04-16', label:'ICT P2 (var 2)'   },
+  { date:'2026-04-21', label:'ICT P3 (var 2)'   },
+  { date:'2026-05-06', label:'EFL P1 · GP C1'   },
+  { date:'2026-05-07', label:'ICT P1 · Sci P4'  },
+  { date:'2026-05-08', label:'Eng Lit P1'        },
+  { date:'2026-05-11', label:'Biz P1 · Lit P2'  },
+  { date:'2026-05-12', label:'Science P5/6'      },
+  { date:'2026-05-13', label:'CS P1'             },
+  { date:'2026-05-15', label:'EFL P2'            },
+  { date:'2026-05-18', label:'Biz P2 · AM P1'   },
+  { date:'2026-05-20', label:'CS P2'             },
+  { date:'2026-05-26', label:'Add Maths P2'      },
+  { date:'2026-06-03', label:'Science P2 MCQ'    }
+];
+
+const SLOT_NAMES = ['Morning', 'Afternoon', 'Evening'];
+const FOCUSES = ['Topic Revision', 'Past Paper', 'Mark Scheme', 'Timed Practice', 'Flashcards'];
+
+function ttDateStr(d) {
+  return d.toISOString().slice(0,10);
+}
+function ttExamOnDay(dateStr) {
+  return EXAM_EVENTS.find(e => e.date === dateStr);
+}
+function ttPriority(subjId, fromDate) {
+  const s = TT_SUBJECTS[subjId];
+  const exam = new Date(s.exam + 'T00:00:00');
+  const days = Math.max(1, Math.ceil((exam - fromDate) / 86400000));
+  let w = s.topics / Math.pow(days, 0.55);
+  if (subjId === 'ict' && days < 47) w *= 3.5;
+  if (days <= 0) w = 0;
+  return w;
+}
+// deterministic shuffle using date seed
+function ttShuffle(arr, seed) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = (seed * 1664525 + 1013904223 + i * 22695477) % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function ttDaySchedule(date) {
+  const ds = ttDateStr(date);
+  if (ttExamOnDay(ds)) return 'exam';
+  const dow = date.getDay(); // 0=Sun
+  if (dow === 0) return 'rest';
+  const slots = dow === 6 ? 2 : 3;
+  const seed = date.getDate() * 31 + date.getMonth() * 373;
+  const subjIds = Object.keys(TT_SUBJECTS);
+  const scored = subjIds
+    .map(id => ({ id, p: ttPriority(id, date) }))
+    .filter(x => x.p > 0)
+    .sort((a, b) => b.p - a.p);
+  const top = scored.slice(0, 5).map(x => x.id);
+  const pool = ttShuffle(top, seed);
+  const picked = [];
+  for (let i = 0; i < slots; i++) picked.push(pool[i % pool.length]);
+  return picked.map((id, i) => ({
+    subj: id,
+    focus: FOCUSES[(seed + i * 7) % FOCUSES.length]
+  }));
+}
+
+let ttWeekOffset = 0;
+function ttWeekStart(offset) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dow = today.getDay();
+  const monday = new Date(today); monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
+  monday.setDate(monday.getDate() + offset * 7);
+  return monday;
+}
+function ttPrev() { ttWeekOffset--; renderTimetable(); }
+function ttNext() { ttWeekOffset++; renderTimetable(); }
+
+function renderTimetable() {
+  const ws = ttWeekStart(ttWeekOffset);
+  const we = new Date(ws); we.setDate(ws.getDate() + 6);
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // label
+  const fmt = d => d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+  document.getElementById('ttLabel').textContent = `${fmt(ws)} – ${fmt(we)}`;
+
+  // legend
+  document.getElementById('ttLegend').innerHTML = Object.entries(TT_SUBJECTS)
+    .map(([,s]) => `<div class="tt-legend-item"><div class="tt-legend-dot" style="background:${s.color}"></div>${s.name}</div>`)
+    .join('');
+
+  // build grid: row 0 = headers, rows 1-3 = slots
+  const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  let html = '';
+
+  // header row
+  html += '<div></div>'; // corner
+  for (let d = 0; d < 7; d++) {
+    const date = new Date(ws); date.setDate(ws.getDate() + d);
+    const isToday = ttDateStr(date) === ttDateStr(today);
+    const isPast  = date < today;
+    const cls = isToday ? 'today' : isPast ? 'past' : '';
+    html += `<div class="tt-header ${cls}">
+      <div class="tt-date">${date.getDate()}</div>
+      <div class="tt-dow">${DAYS[d]}</div>
+    </div>`;
+  }
+
+  // slot rows
+  for (let slot = 0; slot < 3; slot++) {
+    html += `<div class="tt-slot-label">${SLOT_NAMES[slot]}</div>`;
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(ws); date.setDate(ws.getDate() + d);
+      const ds = ttDateStr(date);
+      const isPast = date < today;
+      const sched = ttDaySchedule(date);
+
+      if (sched === 'exam') {
+        if (slot === 1) {
+          const ev = ttExamOnDay(ds);
+          html += `<div class="tt-cell tt-exam-day${isPast?' past':''}" style="grid-row:span 1"><span>${ev.label}</span></div>`;
+        } else {
+          html += `<div class="tt-cell empty"></div>`;
+        }
+      } else if (sched === 'rest') {
+        if (slot === 1) {
+          html += `<div class="tt-cell rest">Rest Day</div>`;
+        } else {
+          html += `<div class="tt-cell empty"></div>`;
+        }
+      } else if (!sched[slot]) {
+        html += `<div class="tt-cell empty"></div>`;
+      } else {
+        const { subj, focus } = sched[slot];
+        const s = TT_SUBJECTS[subj];
+        html += `<div class="tt-cell${isPast?' past':''}" style="background:${s.bg};border-color:${s.color}33;color:#fff">
+          <div><div class="tt-subj" style="color:${s.color}">${s.short}</div>
+          <div class="tt-focus">${focus}</div></div>
+          <div class="tt-dur">45 min</div>
+        </div>`;
+      }
+    }
+  }
+
+  document.getElementById('ttGrid').innerHTML = html;
+}
+
+renderTimetable();
 
 renderScores();
 onSubjectChange(); // populate paper dropdown on load
