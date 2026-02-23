@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IGCSE 2026 Study Planner</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0f;
-  --surface: #111118;
-  --surface2: #1a1a24;
+  --bg: #080810;
+  --surface: #0f0f1a;
+  --surface2: #1a1a26;
   --surface3: #22222f;
-  --border: #2a2a3a;
+  --border: #1e1e30;
   --text: #e8e8f0;
   --text2: #9999aa;
   --text3: #666678;
@@ -25,6 +25,8 @@
   --pink: #f060a0;
   --cyan: #40d0d0;
   --teal: #40c0a0;
+  --sidebar-bg: #0a0a16;
+  --sidebar-w: 240px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
@@ -34,6 +36,8 @@ body {
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
 }
 ::selection { background: var(--accent); color: var(--bg); }
 ::-webkit-scrollbar { width: 6px; }
@@ -42,14 +46,13 @@ body {
 
 /* HEADER */
 .hero {
-  padding: 60px 40px 40px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 40px 0 36px;
   position: relative;
+  margin-bottom: 8px;
 }
 .hero::before {
   content: '';
-  position: fixed;
+  position: absolute;
   top: 0; left: 0; right: 0;
   height: 400px;
   background: radial-gradient(ellipse at 30% 0%, rgba(240,192,64,0.06) 0%, transparent 60%),
@@ -72,7 +75,7 @@ body {
   margin-bottom: 20px;
 }
 h1 {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Syne', sans-serif;
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1.1;
   margin-bottom: 12px;
@@ -116,49 +119,15 @@ h1 {
   margin-top: 4px;
 }
 
-/* NAV */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(10,10,15,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 40px;
-}
-.nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  gap: 0;
-  overflow-x: auto;
-}
-.nav-inner::-webkit-scrollbar { height: 0; }
-.nav-tab {
-  padding: 14px 18px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text3);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap;
-  transition: all 0.2s;
-  user-select: none;
-}
-.nav-tab:hover { color: var(--text); }
-.nav-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-
 /* MAIN */
 main {
+  padding: 40px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px;
 }
 .section { display: none; }
-.section.active { display: block; animation: fadeIn 0.3s ease; }
+.section.active { display: block; animation: sectionIn 0.25s ease; }
+@keyframes sectionIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 
 /* OVERVIEW SECTION */
@@ -195,7 +164,7 @@ main {
   margin-bottom: 8px;
 }
 .subject-card .name {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Syne', sans-serif;
   font-size: 20px;
   margin-bottom: 12px;
 }
@@ -223,7 +192,7 @@ main {
 }
 .subject-header .back:hover { color: var(--accent); }
 .subject-header h2 {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Syne', sans-serif;
   font-size: 36px;
   margin-bottom: 6px;
 }
@@ -236,23 +205,24 @@ main {
 /* TABS inside subject */
 .detail-tabs {
   display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
+  gap: 6px;
   margin-bottom: 28px;
-  overflow-x: auto;
+  flex-wrap: wrap;
 }
 .detail-tab {
-  padding: 12px 20px;
+  padding: 8px 18px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--text3);
+  color: var(--text2);
   cursor: pointer;
-  border-bottom: 2px solid transparent;
+  border-radius: 20px;
   white-space: nowrap;
   transition: all 0.2s;
+  background: var(--surface2);
+  border: 1px solid var(--border);
 }
-.detail-tab:hover { color: var(--text); }
-.detail-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.detail-tab:hover { color: var(--text); border-color: var(--accent); }
+.detail-tab.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 .detail-panel { display: none; }
 .detail-panel.active { display: block; animation: fadeIn 0.25s ease; }
 
@@ -423,7 +393,7 @@ main {
   padding: 20px;
 }
 .pp-subject h4 {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Syne', sans-serif;
   font-size: 17px;
   margin-bottom: 4px;
 }
@@ -489,7 +459,7 @@ main {
 .score-form .btn-log:hover { background: var(--accent2); }
 .score-subject-block { margin-bottom: 28px; }
 .score-subject-block h4 {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Syne', sans-serif;
   font-size: 17px;
   margin-bottom: 12px;
 }
@@ -628,7 +598,7 @@ main {
 }
 
 h3 {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Syne', sans-serif;
   font-size: 22px;
   margin-bottom: 16px;
   margin-top: 24px;
@@ -696,8 +666,13 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
 .days-badge.done { background: rgba(128,128,128,0.15); color: var(--text2); text-decoration: line-through; }
 
 @media (max-width: 768px) {
+  body { display: block; }
+  .app-shell { display: block; min-height: 100vh; }
+  .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-w); transform: translateX(-100%); transition: transform 0.3s ease; z-index: 200; }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle { display: flex; }
+  .sidebar-overlay.active { display: block; }
   .hero, main { padding: 24px 20px; }
-  nav { padding: 0 16px; }
   .overview-grid { grid-template-columns: 1fr; }
   .info-grid { grid-template-columns: 1fr 1fr; }
   .tracker-grid { grid-template-columns: 1fr; }
@@ -741,7 +716,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
 .conf-bar .cb-shaky, .conf-bar .cb-confident, .conf-bar .cb-none { border-radius: 2px; }
 /* section headings */
 .section > h3:first-child {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Syne', sans-serif;
   font-size: 28px;
   margin-bottom: 8px;
   background: linear-gradient(90deg,var(--text) 0%,var(--text2) 100%);
@@ -914,40 +889,360 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
 .btn-import:hover { background:var(--accent2); }
 .btn-import-sec { padding:9px 18px; background:transparent; color:var(--text2); border:1px solid var(--border); border-radius:6px; font-size:13px; cursor:pointer; }
 .btn-import-sec:hover { border-color:var(--text); color:var(--text); }
+
+/* ===== SIDEBAR LAYOUT ===== */
+.sidebar {
+  grid-column: 1;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: var(--sidebar-w);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 100;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.sidebar-logo {
+  padding: 22px 20px 16px;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.sidebar-logo span {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.sidebar-nav { flex: 1; padding: 8px 0 16px; overflow-y: auto; }
+.sidebar-group { margin-bottom: 4px; }
+.sidebar-group-label {
+  padding: 10px 20px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 20px 9px 17px;
+  font-size: 13px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+  user-select: none;
+}
+.sidebar-item:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.sidebar-item.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: rgba(240,192,64,0.07);
+}
+.sidebar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 300;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 150;
+}
+.app-shell {
+  grid-column: 2;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+.app-shell::-webkit-scrollbar { width: 6px; }
+.app-shell::-webkit-scrollbar-track { background: transparent; }
+.app-shell::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+/* ===== NEW FEATURE CSS ===== */
+.section-intro { color: var(--text2); font-size: 14px; margin: -12px 0 24px; line-height: 1.6; }
+.section-intro .btn-print { margin-left: 12px; padding: 4px 12px; font-size: 12px; background: var(--surface2); border: 1px solid var(--border); color: var(--text2); border-radius: 6px; cursor: pointer; }
+.section-intro .btn-print:hover { border-color: var(--accent); color: var(--accent); }
+.btn-secondary { padding: 8px 16px; background: var(--surface2); border: 1px solid var(--border); color: var(--text2); border-radius: 8px; font-size: 13px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.btn-secondary:hover { border-color: var(--accent); color: var(--text); }
+
+/* GRADE CALCULATOR */
+.gc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+.gc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.gc-card h4 { font-family: 'Syne', sans-serif; font-size: 16px; margin-bottom: 4px; color: var(--text); }
+.gc-card .gc-subcode { font-size: 11px; color: var(--text3); font-family: 'JetBrains Mono', monospace; margin-bottom: 14px; }
+.gc-paper-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.gc-paper-label { flex: 1; font-size: 12px; color: var(--text2); }
+.gc-paper-input { width: 56px; padding: 5px 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 13px; text-align: center; }
+.gc-paper-input:focus { outline: none; border-color: var(--accent); }
+.gc-paper-max { font-size: 11px; color: var(--text3); white-space: nowrap; }
+.gc-results { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.gc-grade-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 13px; }
+.gc-grade-chip { width: 30px; text-align: center; padding: 2px 0; border-radius: 4px; font-weight: 700; font-size: 12px; }
+.gc-grade-chip.astar { background: rgba(240,192,64,0.2); color: var(--accent); }
+.gc-grade-chip.a { background: rgba(96,160,240,0.2); color: var(--blue); }
+.gc-grade-chip.b { background: rgba(64,208,128,0.15); color: var(--green); }
+.gc-grade-chip.c { background: rgba(240,128,64,0.15); color: var(--orange); }
+.gc-need { flex: 1; color: var(--text2); }
+.gc-need strong { color: var(--text); }
+.gc-need.achieved { color: var(--green); }
+.gc-need.impossible { color: var(--red); }
+
+/* FORMULA SHEET */
+.fs-subject { margin-bottom: 28px; }
+.fs-subject-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.fs-subject-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.fs-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.fs-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.fs-card-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.fs-formula { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text); background: var(--surface2); padding: 4px 8px; border-radius: 4px; margin-bottom: 4px; }
+@media print { .sidebar, .sidebar-toggle, .app-shell::-webkit-scrollbar, .pomo-widget, #pomodoroWidget { display: none !important; } .app-shell { display: block; } body { display: block; } main { padding: 20px; } .section { display: block !important; } .section:not(#formulae) { display: none !important; } }
+
+/* FLASHCARDS */
+.fc-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; align-items: center; }
+.fc-controls select { padding: 8px 12px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 13px; }
+.fc-card { perspective: 1000px; cursor: pointer; width: 100%; max-width: 560px; margin: 0 auto; height: 260px; }
+.fc-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.45s ease; }
+.fc-inner.flipped { transform: rotateY(180deg); }
+.fc-front, .fc-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 14px; padding: 28px 32px; display: flex; flex-direction: column; justify-content: center; }
+.fc-front { background: var(--surface); border: 1px solid var(--border); }
+.fc-back { background: var(--surface2); border: 1px solid var(--accent); transform: rotateY(180deg); overflow-y: auto; justify-content: flex-start; }
+.fc-subj-tag { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+.fc-topic-name { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.fc-tap-hint { font-size: 11px; color: var(--text3); margin-top: 16px; }
+.fc-back-section { margin-bottom: 10px; }
+.fc-back-label { font-size: 10px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.fc-back ul { margin: 0; padding-left: 16px; }
+.fc-back li { font-size: 12px; color: var(--text2); margin-bottom: 3px; line-height: 1.5; }
+.fc-back .formula { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text); background: var(--bg); padding: 2px 6px; border-radius: 3px; display: inline-block; }
+.fc-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; }
+.fc-counter { font-size: 13px; color: var(--text3); min-width: 60px; text-align: center; }
+.fc-rate { display: flex; align-items: center; gap: 12px; margin-top: 14px; justify-content: center; flex-wrap: wrap; }
+.fc-rate-label { font-size: 13px; color: var(--text2); }
+.fc-type-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 3px 8px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+.fc-type-def { background: rgba(212,167,98,0.15); color: var(--accent); }
+.fc-type-formula { background: rgba(64,208,128,0.15); color: var(--green); }
+.fc-type-fact { background: rgba(120,180,255,0.15); color: #78b4ff; }
+.fc-topic-label { font-size: 11px; color: var(--text3); margin-bottom: 6px; }
+.fc-question-text { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.fc-answer-content { font-size: 15px; color: var(--text2); line-height: 1.65; padding: 8px 0; }
+.fc-answer-formula { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--green); background: var(--bg); padding: 12px 16px; border-radius: 8px; display: block; }
+.btn-rate { padding: 8px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
+.btn-rate.fail { background: rgba(240,96,96,0.15); color: var(--red); border: 1px solid var(--red); }
+.btn-rate.fail:hover { background: rgba(240,96,96,0.3); }
+.btn-rate.pass { background: rgba(64,208,128,0.15); color: var(--green); border: 1px solid var(--green); }
+.btn-rate.pass:hover { background: rgba(64,208,128,0.3); }
+
+/* REVIEW QUEUE */
+.rq-empty { text-align: center; padding: 48px 20px; color: var(--text3); font-size: 14px; }
+.rq-section { margin-bottom: 24px; }
+.rq-section-title { font-size: 12px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.rq-items { display: flex; flex-direction: column; gap: 6px; }
+.rq-item { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; cursor: pointer; transition: border-color 0.15s; }
+.rq-item:hover { border-color: var(--accent); }
+.rq-item-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.rq-item-name { flex: 1; font-size: 13px; color: var(--text); }
+.rq-item-interval { font-size: 11px; color: var(--text3); white-space: nowrap; }
+.rq-item-overdue { font-size: 11px; color: var(--red); white-space: nowrap; }
+.rq-stats { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.rq-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; font-size: 13px; color: var(--text2); }
+.rq-stat strong { display: block; font-size: 20px; color: var(--accent); font-family: 'Syne', sans-serif; }
+
+/* POMODORO WIDGET */
+.sidebar-pomo-btn { margin: 8px 12px 16px; padding: 9px 14px; background: rgba(240,192,64,0.08); border: 1px solid rgba(240,192,64,0.25); border-radius: 8px; color: var(--accent); font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.15s; }
+.sidebar-pomo-btn:hover { background: rgba(240,192,64,0.15); }
+.sidebar-pomo-btn.active { background: rgba(240,192,64,0.2); border-color: var(--accent); }
+.pomo-widget { position: fixed; bottom: 24px; right: 24px; width: 240px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; z-index: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+.pomo-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.pomo-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); }
+.pomo-close { background: none; border: none; color: var(--text3); font-size: 14px; cursor: pointer; padding: 0; line-height: 1; }
+.pomo-close:hover { color: var(--text); }
+.pomo-select { width: 100%; padding: 6px 10px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 6px; font-size: 12px; margin-bottom: 12px; }
+.pomo-time { font-family: 'JetBrains Mono', monospace; font-size: 40px; font-weight: 500; color: var(--accent); text-align: center; line-height: 1; margin-bottom: 4px; }
+.pomo-phase { text-align: center; font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.pomo-btns { display: flex; gap: 8px; margin-bottom: 10px; }
+.pomo-btn { flex: 1; padding: 7px 0; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; background: var(--accent); color: var(--bg); transition: all 0.15s; }
+.pomo-btn:hover { opacity: 0.85; }
+.pomo-btn.secondary { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+.pomo-btn.secondary:hover { border-color: var(--accent); color: var(--text); }
+.pomo-stats { font-size: 11px; color: var(--text3); text-align: center; line-height: 1.6; border-top: 1px solid var(--border); padding-top: 8px; }
+
+/* Mobile sidebar overrides — must come AFTER sidebar base CSS */
+@media (max-width: 768px) {
+  .sidebar { position: fixed; left: 0; top: 0; bottom: 0; height: auto; width: var(--sidebar-w); transform: translateX(-100%); transition: transform 0.3s ease; z-index: 200; }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle { display: flex; }
+  .sidebar-overlay.active { display: block; }
+}
+
+/* ===== F1: STREAK HEATMAP ===== */
+.streak-panel { margin-top: 32px; }
+.streak-stats { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.streak-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 18px; }
+.streak-stat .ss-val { font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--accent); }
+.streak-stat .ss-lbl { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+.streak-grid { display: grid; grid-template-columns: repeat(12, 14px); grid-template-rows: repeat(7, 14px); gap: 3px; grid-auto-flow: column; }
+.streak-cell { width: 14px; height: 14px; border-radius: 3px; background: var(--surface2); }
+.streak-cell.l1 { background: rgba(64,208,128,0.25); }
+.streak-cell.l2 { background: rgba(64,208,128,0.5); }
+.streak-cell.l3 { background: rgba(64,208,128,0.75); }
+.streak-cell.l4 { background: var(--green); }
+.streak-cell.today { outline: 2px solid var(--accent); outline-offset: 1px; }
+.streak-label { font-size: 11px; color: var(--text3); margin-bottom: 8px; }
+
+/* ===== F3: MOCK EXAM ===== */
+.mock-timer-bar { height: 3px; background: var(--surface2); border-radius: 2px; margin-bottom: 16px; overflow: hidden; }
+.mock-timer-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 1s linear; }
+.mock-header { text-align: center; padding: 8px 0 14px; }
+.mock-header h4 { font-family: 'Syne', sans-serif; font-size: 20px; color: var(--text); }
+.mock-header .mock-progress { font-size: 13px; color: var(--text3); margin-top: 4px; }
+.mock-btns { display: flex; gap: 16px; justify-content: center; margin-top: 16px; }
+.mock-results { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; max-width: 480px; margin: 0 auto; text-align: center; }
+.mock-results h4 { font-family: 'Syne', sans-serif; font-size: 22px; margin-bottom: 6px; }
+.mock-score-big { font-family: 'JetBrains Mono', monospace; font-size: 48px; font-weight: 700; color: var(--accent); margin: 8px 0; line-height: 1; }
+.mock-breakdown { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; text-align: left; }
+.mock-breakdown th { text-align: left; padding: 6px 10px; color: var(--text3); font-size: 11px; font-weight: 500; border-bottom: 1px solid var(--border); }
+.mock-breakdown td { padding: 7px 10px; border-bottom: 1px solid rgba(42,42,58,0.4); }
+
+/* ===== F4: EXAM BRIEFING MODAL ===== */
+.exam-briefing-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 600; padding: 16px; }
+.exam-briefing-modal.hidden { display: none; }
+.eb-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; max-width: 560px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; }
+.eb-close { position: absolute; top: 14px; right: 14px; background: none; border: none; color: var(--text3); font-size: 20px; cursor: pointer; line-height: 1; padding: 4px 8px; border-radius: 4px; }
+.eb-close:hover { color: var(--text); background: var(--surface2); }
+.eb-subject { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.eb-title { font-family: 'Syne', sans-serif; font-size: 22px; margin-bottom: 4px; }
+.eb-meta { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
+.eb-section { margin-bottom: 16px; }
+.eb-section-label { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.eb-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.eb-chip { font-size: 11px; padding: 3px 10px; border-radius: 12px; border: 1px solid; }
+.eb-chip.weak { background: rgba(240,96,96,0.1); border-color: rgba(240,96,96,0.3); color: var(--red); }
+.eb-chip.amber { background: rgba(240,192,64,0.1); border-color: rgba(240,192,64,0.3); color: var(--accent); }
+.eb-formula { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--surface2); padding: 3px 8px; border-radius: 4px; color: var(--cyan); display: inline-block; margin: 2px; }
+.eb-strategy { font-size: 14px; color: var(--text2); line-height: 1.6; padding: 12px 16px; background: var(--surface2); border-radius: 8px; border-left: 3px solid var(--accent); }
+.eb-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.tracker-exam { cursor: pointer; transition: background 0.15s; }
+.tracker-exam:hover { background: rgba(240,192,64,0.04); border-radius: 4px; }
+.btn-eb-primary { padding: 10px 20px; background: var(--accent); color: var(--bg); border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }
+.btn-eb-primary:hover { background: var(--accent2); }
+
+/* ===== F5: PAPER LOG ===== */
+.pl-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+.pl-form label { display: flex; flex-direction: column; gap: 5px; font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
+.pl-form input { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; color: var(--text); font-size: 13px; font-family: inherit; width: 110px; }
+.pl-form select { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; color: var(--text); font-size: 13px; font-family: inherit; width: 240px; }
+.pl-form input:focus, .pl-form select:focus { outline: none; border-color: var(--accent); }
+.btn-pl-log { padding: 9px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; }
+.btn-pl-log:hover { background: var(--accent2); }
+.pl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.pl-table th { text-align: left; padding: 7px 10px; color: var(--text3); font-size: 11px; font-weight: 500; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
+.pl-table td { padding: 9px 10px; border-bottom: 1px solid rgba(42,42,58,0.4); vertical-align: middle; }
+.pl-table .pct { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.pl-table .pct.good { color: var(--green); }
+.pl-table .pct.ok   { color: var(--accent); }
+.pl-table .pct.low  { color: var(--red); }
+.pl-empty { text-align: center; padding: 32px; color: var(--text3); font-size: 13px; }
+
+/* ===== F6: TOPIC PERSONAL NOTES ===== */
+.topic-note-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px 5px; color: var(--text3); transition: color 0.15s; flex-shrink: 0; line-height: 1; }
+.topic-note-btn:hover { color: var(--accent); }
+.topic-note-btn.has-note { color: var(--accent); }
+.topic-note-area { width: 100%; margin-top: 6px; padding: 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; resize: vertical; min-height: 60px; display: none; }
+.topic-note-area.open { display: block; }
+.topic-note-area:focus { outline: none; border-color: var(--accent); }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="badge">Product Requirements Document</div>
-  <h1>IGCSE 2026<br>Study Planner</h1>
-  <p class="subtitle">Cambridge CAIE · May/June 2026 Session · 8 Subjects · Complete exam intelligence & revision tracker</p>
+<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-  <div class="countdown-strip" id="countdown"></div>
-</div>
-
-<nav>
-  <div class="nav-inner" id="mainNav">
-    <div class="nav-tab active" data-section="overview">Overview</div>
-    <div class="nav-tab" data-section="tracker">Exam Tracker</div>
-    <div class="nav-tab" data-section="ict">ICT</div>
-    <div class="nav-tab" data-section="cs">Computer Science</div>
-    <div class="nav-tab" data-section="business">Business Studies</div>
-    <div class="nav-tab" data-section="engfirst">English 1st Lang</div>
-    <div class="nav-tab" data-section="englit">English Lit</div>
-    <div class="nav-tab" data-section="science">Co-ordinated Sciences</div>
-    <div class="nav-tab" data-section="addmath">Add Maths</div>
-    <div class="nav-tab" data-section="gp">Global Perspectives</div>
-    <div class="nav-tab" data-section="timetable">Timetable</div>
-    <div class="nav-tab" data-section="papers">Past Papers</div>
-    <div class="nav-tab" data-section="progress">Progress</div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span>IGCSE 2026</span>
+    Study Planner
   </div>
-</nav>
+  <nav class="sidebar-nav">
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Dashboard</div>
+      <div class="sidebar-item active" data-section="overview">Overview</div>
+      <div class="sidebar-item" data-section="tracker">Exam Tracker</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Subjects</div>
+      <div class="sidebar-item" data-section="ict"><span class="sidebar-dot" style="background:var(--blue)"></span>ICT</div>
+      <div class="sidebar-item" data-section="cs"><span class="sidebar-dot" style="background:var(--purple)"></span>Computer Science</div>
+      <div class="sidebar-item" data-section="business"><span class="sidebar-dot" style="background:var(--green)"></span>Business Studies</div>
+      <div class="sidebar-item" data-section="engfirst"><span class="sidebar-dot" style="background:var(--accent)"></span>English 1st Lang</div>
+      <div class="sidebar-item" data-section="englit"><span class="sidebar-dot" style="background:var(--pink)"></span>English Lit</div>
+      <div class="sidebar-item" data-section="science"><span class="sidebar-dot" style="background:var(--red)"></span>Sciences</div>
+      <div class="sidebar-item" data-section="addmath"><span class="sidebar-dot" style="background:var(--cyan)"></span>Add Maths</div>
+      <div class="sidebar-item" data-section="gp"><span class="sidebar-dot" style="background:var(--teal)"></span>Global Perspectives</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Tools</div>
+      <div class="sidebar-item" data-section="timetable">Timetable</div>
+      <div class="sidebar-item" data-section="papers">Past Papers</div>
+      <div class="sidebar-item" data-section="progress">Progress</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Study Tools</div>
+      <div class="sidebar-item" data-section="flashcards">Flashcards</div>
+      <div class="sidebar-item" data-section="reviewqueue">Review Queue</div>
+      <div class="sidebar-item" data-section="gradecalc">Grade Calculator</div>
+      <div class="sidebar-item" data-section="formulae">Formula Sheet</div>
+    </div>
+  </nav>
+  <div class="sidebar-pomo-btn" id="pomoSidebarBtn" onclick="togglePomo()">⏱ Pomodoro</div>
+</aside>
 
+<div class="app-shell">
 <main>
 
 <!-- ========== OVERVIEW ========== -->
 <div class="section active" id="overview">
+
+  <div class="hero">
+    <h1>IGCSE 2026<br>Study Planner</h1>
+    <p class="subtitle">Cambridge CAIE · May/June 2026 Session · 8 Subjects · Complete exam intelligence & revision tracker</p>
+    <div class="countdown-strip" id="countdown"></div>
+  </div>
+
   <h3>Your 8 Subjects at a Glance</h3>
   <p>The May/June 2026 CAIE session (Zone 4) runs from 1 April (ICT practicals) to 9 June 2026, with results released on 20 August 2026. Below is every subject you're sitting with its syllabus code, number of papers, and total marks.</p>
 
@@ -958,7 +1253,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       <div class="name">ICT</div>
       <div class="meta">
         <span>📄 3 Papers</span>
-        <span>📊 240 marks</span>
+        <span>📊 220 marks</span>
         <span>🕐 ~5h total</span>
       </div>
       <div class="conf-bar" id="cb-ict"></div>
@@ -1043,6 +1338,14 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
   <div class="note" style="margin-top:24px">
     <strong>Note on Grade Boundaries:</strong> The grade thresholds shown in each subject are from the June 2025 session (the most recent available data). Actual 2026 boundaries will be set after your exams are marked and may differ. Use these as approximate targets for your revision.
   </div>
+
+  <div class="streak-panel">
+    <h3>Study Habit Tracker</h3>
+    <p>Every topic check, flashcard rating, and Pomodoro session contributes to your activity calendar.</p>
+    <div class="streak-stats" id="streakStats"></div>
+    <div class="streak-label">Last 12 weeks · left = older, right = this week · darker = more activity</div>
+    <div class="streak-grid" id="streakGrid"></div>
+  </div>
 </div>
 
 <!-- ========== EXAM TRACKER ========== -->
@@ -1070,12 +1373,14 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="detail-tab" data-panel="ict-syllabus">Syllabus Topics</div>
     <div class="detail-tab" data-panel="ict-grades">Grade Boundaries</div>
     <div class="detail-tab" data-panel="ict-tips">Exam Strategy</div>
+    <div class="detail-tab" data-panel="ict-paperlog" onclick="renderPaperLog('ict')">Paper Log</div>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="printRevisionSheet('ict')">🖨️ Print Sheet</button>
   </div>
 
   <div class="detail-panel active" id="ict-papers">
     <div class="info-grid">
       <div class="info-box"><div class="info-label">Total Papers</div><div class="info-value">3</div></div>
-      <div class="info-box"><div class="info-label">Total Marks</div><div class="info-value">240</div></div>
+      <div class="info-box"><div class="info-label">Total Marks</div><div class="info-value">220</div></div>
       <div class="info-box"><div class="info-label">Grades Available</div><div class="info-value">A*–G</div></div>
       <div class="info-box"><div class="info-label">Calculator</div><div class="info-value">N/A</div></div>
     </div>
@@ -1094,7 +1399,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       <h4>Paper 2 — Document Production, Databases & Presentations</h4>
       <div class="paper-meta">
         <span class="tag">⏱ 2h 30min</span>
-        <span class="tag">📊 80 marks</span>
+        <span class="tag">📊 70 marks</span>
         <span class="tag">📝 30% weighting</span>
       </div>
       <p>Practical test. You complete tasks using word processing, database, and presentation software. Tasks must be followed precisely — format, content, accuracy all credited. You produce evidence documents and printouts.</p>
@@ -1104,13 +1409,13 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       <h4>Paper 3 — Spreadsheets & Data Manipulation</h4>
       <div class="paper-meta">
         <span class="tag">⏱ 2h 30min</span>
-        <span class="tag">📊 80 marks</span>
+        <span class="tag">📊 70 marks</span>
         <span class="tag">📝 30% weighting</span>
       </div>
       <p>Practical test covering spreadsheets, data analysis, and web authoring. You work with formulae, functions, charts, CSS stylesheets, and HTML.</p>
       <p><strong>Covers:</strong> Section 20 (Spreadsheets & Data Graphs), Section 21 (Web Authoring including CSS).</p>
     </div>
-    <div class="note">Paper 1 carries 40% of your grade; Papers 2 and 3 each carry 30%. All three papers are 80 raw marks (240 total). File naming and correct save format are mark-bearing — don't lose easy marks.</div>
+    <div class="note">Paper 1 carries 40% of your grade; Papers 2 and 3 each carry 30%. Paper 1 is 80 raw marks; Papers 2 and 3 are 70 raw marks each (220 total raw). File naming and correct save format are mark-bearing — don't lose easy marks.</div>
   </div>
 
   <div class="detail-panel" id="ict-syllabus">
@@ -1140,6 +1445,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Practical Papers</div>Read each task instruction word-by-word. Follow formats exactly (font size, alignment, cell references). Always save in the correct file format. Name files exactly as instructed. Produce screenshots as evidence.</div>
     <div class="tip-card"><div class="tip-label">High-Frequency Topics</div>Spreadsheet functions (IF, VLOOKUP, COUNTIF), mail merge, database queries, CSS classes vs inline styles, and web page structure appear in almost every session.</div>
   </div>
+  <div class="detail-panel" id="ict-paperlog"></div>
 </div>
 
 <!-- ========== COMPUTER SCIENCE ========== -->
@@ -1155,6 +1461,8 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="detail-tab" data-panel="cs-syllabus">Syllabus Topics</div>
     <div class="detail-tab" data-panel="cs-grades">Grade Boundaries</div>
     <div class="detail-tab" data-panel="cs-tips">Exam Strategy</div>
+    <div class="detail-tab" data-panel="cs-paperlog" onclick="renderPaperLog('cs')">Paper Log</div>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="printRevisionSheet('cs')">🖨️ Print Sheet</button>
   </div>
 
   <div class="detail-panel active" id="cs-papers">
@@ -1213,6 +1521,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Paper 2 — Scenario Question</div>Budget 30 minutes for the final 15-mark question. Write in proper pseudocode using the Cambridge notation (not Python). Show DECLARE statements, use proper indentation, and test your logic mentally before writing.</div>
     <div class="tip-card"><div class="tip-label">Trace Tables</div>Show every single step. One wrong variable value cascades errors. Use a ruler to keep rows aligned. Practice at least 10 past paper trace table questions before your exam.</div>
   </div>
+  <div class="detail-panel" id="cs-paperlog"></div>
 </div>
 
 <!-- ========== BUSINESS STUDIES ========== -->
@@ -1228,6 +1537,8 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="detail-tab" data-panel="bus-syllabus">Syllabus Topics</div>
     <div class="detail-tab" data-panel="bus-grades">Grade Boundaries</div>
     <div class="detail-tab" data-panel="bus-tips">Exam Strategy</div>
+    <div class="detail-tab" data-panel="bus-paperlog" onclick="renderPaperLog('business')">Paper Log</div>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="printRevisionSheet('business')">🖨️ Print Sheet</button>
   </div>
 
   <div class="detail-panel active" id="bus-papers">
@@ -1280,6 +1591,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Case Study (Paper 2)</div>Read the case thoroughly before answering. Use the company name, specific data, and context in EVERY answer. Own knowledge supports the case — it doesn't replace it. Practice reading pre-release material under timed conditions.</div>
     <div class="tip-card"><div class="tip-label">Calculations</div>Memorise: Break-even = Fixed Costs ÷ (Selling Price – Variable Cost). Profit = Revenue – Total Costs. Gross Profit Margin = (Gross Profit ÷ Revenue) × 100. Always show your working and include currency/percentage symbols.</div>
   </div>
+  <div class="detail-panel" id="bus-paperlog"></div>
 </div>
 
 <!-- ========== ENGLISH FIRST LANGUAGE ========== -->
@@ -1294,6 +1606,8 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="detail-tab active" data-panel="ef-papers">Papers & Marks</div>
     <div class="detail-tab" data-panel="ef-grades">Grade Boundaries</div>
     <div class="detail-tab" data-panel="ef-tips">Exam Strategy</div>
+    <div class="detail-tab" data-panel="ef-paperlog" onclick="renderPaperLog('engfirst')">Paper Log</div>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="printRevisionSheet('engfirst')">🖨️ Print Sheet</button>
   </div>
 
   <div class="detail-panel active" id="ef-papers">
@@ -1350,6 +1664,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Composition</div>Plan for 5 minutes before writing. Use a variety of sentence lengths. Open with something striking — not "It was a dark and stormy night." End deliberately. Descriptive writing should engage ALL senses. Narrative should have a clear arc with tension.</div>
     <div class="tip-card"><div class="tip-label">SPaG Matters</div>Spelling, punctuation, and grammar are assessed in EVERY writing task. Use semicolons, colons, and dashes correctly for instant sophistication. Avoid comma splices — they're the most common error.</div>
   </div>
+  <div class="detail-panel" id="ef-paperlog"></div>
 </div>
 
 <!-- ========== ENGLISH LITERATURE ========== -->
@@ -1364,6 +1679,8 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="detail-tab active" data-panel="el-papers">Papers & Marks</div>
     <div class="detail-tab" data-panel="el-grades">Grade Boundaries</div>
     <div class="detail-tab" data-panel="el-tips">Exam Strategy</div>
+    <div class="detail-tab" data-panel="el-paperlog" onclick="renderPaperLog('englit')">Paper Log</div>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="printRevisionSheet('englit')">🖨️ Print Sheet</button>
   </div>
 
   <div class="detail-panel active" id="el-papers">
@@ -1418,6 +1735,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Personal Response</div>Examiners want YOUR interpretation, not a textbook answer. Use phrases like "This suggests…", "The reader might feel…", "This creates an atmosphere of…". Avoid retelling the plot — analyse, don't narrate.</div>
     <div class="tip-card"><div class="tip-label">Language Analysis</div>Comment on specific word choices, imagery, metre (for poetry), and dramatic techniques (for drama). Always link technique → effect on reader → broader theme.</div>
   </div>
+  <div class="detail-panel" id="el-paperlog"></div>
 </div>
 
 <!-- ========== COMBINED SCIENCE ========== -->
@@ -1433,6 +1751,8 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="detail-tab" data-panel="sci-syllabus">Syllabus Topics</div>
     <div class="detail-tab" data-panel="sci-grades">Grade Boundaries</div>
     <div class="detail-tab" data-panel="sci-tips">Exam Strategy</div>
+    <div class="detail-tab" data-panel="sci-paperlog" onclick="renderPaperLog('science')">Paper Log</div>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="printRevisionSheet('science')">🖨️ Print Sheet</button>
   </div>
 
   <div class="detail-panel active" id="sci-papers">
@@ -1500,6 +1820,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Supplement Content</div>Extended paper questions often focus heavily on Supplement material (the starred content). Prioritise learning these topics — they separate A*A*/AA from BB/CC.</div>
     <div class="tip-card"><div class="tip-label">Practical Skills</div>Whether Paper 5 or 6: know how to draw graphs correctly (labels, units, line of best fit), record measurements with correct significant figures, identify variables (independent, dependent, controlled), and evaluate experimental procedures. The planning question can come from any science.</div>
   </div>
+  <div class="detail-panel" id="sci-paperlog"></div>
 </div>
 
 <!-- ========== ADDITIONAL MATHS ========== -->
@@ -1515,6 +1836,8 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="detail-tab" data-panel="am-syllabus">Syllabus Topics</div>
     <div class="detail-tab" data-panel="am-grades">Grade Boundaries</div>
     <div class="detail-tab" data-panel="am-tips">Exam Strategy</div>
+    <div class="detail-tab" data-panel="am-paperlog" onclick="renderPaperLog('addmath')">Paper Log</div>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="printRevisionSheet('addmath')">🖨️ Print Sheet</button>
   </div>
 
   <div class="detail-panel active" id="am-papers">
@@ -1572,6 +1895,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Calculus</div>Differentiation and integration appear in every single paper. Know: power rule, chain rule, product rule, trig derivatives, area under curves, stationary points, tangent/normal equations. Practice setting up equations from word problems.</div>
     <div class="tip-card"><div class="tip-label">"Hence" and "Show That"</div>"Hence" means USE your previous answer. "Show that" means the answer is given — you must prove it step-by-step. If you can't do part (a), you can still attempt part (b) using the given result.</div>
   </div>
+  <div class="detail-panel" id="am-paperlog"></div>
 </div>
 
 <!-- ========== GLOBAL PERSPECTIVES ========== -->
@@ -1587,6 +1911,8 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="detail-tab" data-panel="gp-syllabus">Topics</div>
     <div class="detail-tab" data-panel="gp-grades">Grade Boundaries</div>
     <div class="detail-tab" data-panel="gp-tips">Exam Strategy</div>
+    <div class="detail-tab" data-panel="gp-paperlog" onclick="renderPaperLog('gp')">Paper Log</div>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="printRevisionSheet('gp')">🖨️ Print Sheet</button>
   </div>
 
   <div class="detail-panel active" id="gp-papers">
@@ -1649,6 +1975,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="tip-card"><div class="tip-label">Individual Report</div>Stay within 1500–2000 words. Structure clearly: introduction, research findings, analysis, personal reflection, conclusion. Use a variety of sources (not just websites — include academic articles, reports, data). Cite everything.</div>
     <div class="tip-card"><div class="tip-label">Team Project</div>Keep the Explanation of Research & Planning under 400 words — marks stop at 400. Evidence of Action should show what you DID, not just your research. Your Reflective Paper is individual — focus on YOUR contribution and learning.</div>
   </div>
+  <div class="detail-panel" id="gp-paperlog"></div>
 </div>
 
 <!-- ========== TIMETABLE ========== -->
@@ -1736,7 +2063,103 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
   <div id="scoreResults"></div>
 </div>
 
+<!-- ========== GRADE CALCULATOR ========== -->
+<div class="section" id="gradecalc">
+  <h3>Grade Calculator</h3>
+  <p class="section-intro">Enter scores for papers you've already sat (or predicted scores) to see what you need on remaining papers to hit each grade.</p>
+  <div class="gc-grid" id="gcGrid"></div>
+</div>
+
+<!-- ========== FORMULA SHEET ========== -->
+<div class="section" id="formulae">
+  <h3>Formula Sheet</h3>
+  <p class="section-intro">Every formula from your revision notes, grouped by subject. <button class="btn-print" onclick="window.print()">🖨 Print</button></p>
+  <div id="formulaSheet"></div>
+</div>
+
+<!-- ========== FLASHCARDS ========== -->
+<div class="section" id="flashcards">
+  <h3>Flashcards</h3>
+  <p class="section-intro">Flip through topic cards to test your recall. Quiz mode pulls 5 random cards — rate yourself to update your review schedule.</p>
+  <div class="fc-controls">
+    <select id="fcSubject" onchange="initFlashcards()">
+      <option value="all">All Subjects</option>
+      <option value="ict">ICT</option>
+      <option value="cs">Computer Science</option>
+      <option value="business">Business Studies</option>
+      <option value="science">Sciences</option>
+      <option value="addmath">Add Maths</option>
+      <option value="gp">Global Perspectives</option>
+    </select>
+    <button class="btn-secondary" onclick="startQuiz()">⚡ Quiz Mode (5 cards)</button>
+    <button class="btn-secondary" onclick="shuffleFlashcards()">🔀 Shuffle</button>
+    <button class="btn-secondary" onclick="startMockExam()">📝 Mock Exam (20 cards)</button>
+  </div>
+  <div id="fcDeck">
+    <div class="fc-card" id="fcCard" onclick="flipCard()">
+      <div class="fc-inner" id="fcInner">
+        <div class="fc-front" id="fcFront"></div>
+        <div class="fc-back" id="fcBack"></div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="btn-secondary" onclick="prevCard()">← Prev</button>
+      <span id="fcCounter" class="fc-counter">1 / 1</span>
+      <button class="btn-secondary" onclick="nextCard()">Next →</button>
+    </div>
+    <div class="fc-rate" id="fcRate" style="display:none">
+      <span class="fc-rate-label">How did you do?</span>
+      <button class="btn-rate fail" onclick="rateCard(false)">✗ Missed it</button>
+      <button class="btn-rate pass" onclick="rateCard(true)">✓ Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== REVIEW QUEUE ========== -->
+<div class="section" id="reviewqueue">
+  <h3>Review Queue</h3>
+  <p class="section-intro">Topics due for review today based on your spaced repetition schedule. Complete them to keep your intervals on track.</p>
+  <div id="rqContent"></div>
+</div>
+
 </main>
+
+<!-- EXAM BRIEFING MODAL -->
+<div id="examBriefing" class="exam-briefing-modal hidden" onclick="closeExamBriefingOverlay(event)">
+  <div class="eb-card">
+    <button class="eb-close" onclick="closeExamBriefing()">✕</button>
+    <div id="ebContent"></div>
+  </div>
+</div>
+
+<!-- POMODORO WIDGET -->
+<div id="pomodoroWidget" class="pomo-widget" style="display:none">
+  <div class="pomo-header">
+    <span class="pomo-title" id="pomoTitle">Study Session</span>
+    <button class="pomo-close" onclick="hidePomo()">✕</button>
+  </div>
+  <div class="pomo-subject-row">
+    <select id="pomoSubject" class="pomo-select">
+      <option value="ict">ICT</option>
+      <option value="cs">Computer Science</option>
+      <option value="business">Business Studies</option>
+      <option value="engfirst">English 1st Lang</option>
+      <option value="englit">English Lit</option>
+      <option value="science">Sciences</option>
+      <option value="addmath">Add Maths</option>
+      <option value="gp">Global Perspectives</option>
+    </select>
+  </div>
+  <div class="pomo-time" id="pomoTime">25:00</div>
+  <div class="pomo-phase" id="pomoPhase">Focus</div>
+  <div class="pomo-btns">
+    <button class="pomo-btn" id="pomoStartBtn" onclick="pomoStartStop()">▶ Start</button>
+    <button class="pomo-btn secondary" onclick="pomoReset()">↺ Reset</button>
+  </div>
+  <div class="pomo-stats" id="pomoStats"></div>
+</div>
+
+</div><!-- end .app-shell -->
 
 <script>
 // ========== DATA ==========
@@ -1881,12 +2304,12 @@ const topicData = {
     ['17','Kinematics (displacement, velocity, acceleration)']
   ],
   'gp-topics': [
-    ['—','Demographic Change'],['—','Education for All'],['—','Employment'],
-    ['—','Fuel & Energy'],['—','Globalisation'],['—','Law & Criminality'],
-    ['—','Migration'],['—','Poverty & Inequality'],['—','Sport & Recreation'],
-    ['—','Sustainability'],['—','Technology & the Digital World'],['—','Tradition, Culture & Identity'],
-    ['—','Transport & Infrastructure'],['—','Water, Food & Agriculture'],
-    ['—','Conflict & Peace'],['—','Disease & Health'],['—','Human Rights'],['—','Language & Communication']
+    ['1','Demographic Change'],['2','Education for All'],['3','Employment'],
+    ['4','Fuel & Energy'],['5','Globalisation'],['6','Law & Criminality'],
+    ['7','Migration'],['8','Poverty & Inequality'],['9','Sport & Recreation'],
+    ['10','Sustainability'],['11','Technology & the Digital World'],['12','Tradition, Culture & Identity'],
+    ['13','Transport & Infrastructure'],['14','Water, Food & Agriculture'],
+    ['15','Conflict & Peace'],['16','Disease & Health'],['17','Human Rights'],['18','Language & Communication']
   ]
 };
 
@@ -1910,23 +2333,37 @@ updateCountdown();
 setInterval(updateCountdown, 60000);
 
 // ========== NAVIGATION ==========
-document.querySelectorAll('.nav-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById(tab.dataset.section).classList.add('active');
-    window.scrollTo({ top: 200, behavior: 'smooth' });
-  });
-});
-
-function goToSubject(id) {
-  document.querySelectorAll('.nav-tab').forEach(t => {
+function navigateTo(id) {
+  document.querySelectorAll('.sidebar-item').forEach(t => {
     t.classList.toggle('active', t.dataset.section === id);
   });
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  window.scrollTo({ top: 200, behavior: 'smooth' });
+  const shell = document.querySelector('.app-shell');
+  if (shell) shell.scrollTo({ top: 0, behavior: 'smooth' });
+  closeSidebar();
+}
+
+document.querySelectorAll('.sidebar-item').forEach(item => {
+  item.addEventListener('click', () => navigateTo(item.dataset.section));
+});
+
+function goToSubject(id) {
+  navigateTo(id);
+}
+
+// ========== MOBILE SIDEBAR ==========
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('active');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
 }
 
 // ========== DETAIL TABS ==========
@@ -2072,6 +2509,359 @@ const topicNotes = {
   'am-topics-14': {
     formulae: ['Matrix addition: add corresponding elements', 'Scalar multiply: multiply every element by k', 'AB: row of A × column of B (only if cols of A = rows of B)', 'det(A) = ad − bc  for 2×2', 'A⁻¹ = (1/det) × [d −b; −c a]'],
     facts: ['AA⁻¹ = I (identity matrix)', 'det = 0: matrix is singular (no inverse)', 'AX = B → X = A⁻¹B']
+  },
+  // ——— NEW: ICT Theory ———
+  'ict-theory-topics-5': {
+    defs: ['ICT effect: social, economic, environmental or ethical impact of information technology'],
+    facts: ['Teleworking: working from home using ICT — reduces commuting, saves office costs', 'Online shopping: 24/7 access, global reach; replaces physical stores', 'E-learning: education via digital platforms; accessible anytime but lacks face-to-face', 'Digital divide: gap between those with and without access to technology', 'Health risks of ICT: RSI (repetitive strain), eye strain, obesity from long screen time', 'Privacy concern: personal data collected by websites and apps']
+  },
+  'ict-theory-topics-6': {
+    defs: ['ICT application: specific use of technology to solve a problem or provide a service'],
+    facts: ['Finance/banking: online transactions, ATMs, fraud detection algorithms', 'Healthcare: electronic patient records, diagnostic imaging, robotic surgery', 'Education: virtual classrooms, interactive whiteboards, online assessments', 'Retail: EPOS systems, stock management systems, online ordering', 'Government: e-voting, digital ID, automated tax returns', 'Transport: GPS navigation, automated ticketing, traffic management', 'Entertainment: streaming services, virtual reality, online gaming']
+  },
+  'ict-theory-topics-7': {
+    defs: ['Systems Life Cycle: structured process for developing or replacing an information system', 'Feasibility study: analysis of whether a proposed system is practical and worthwhile'],
+    facts: ['Stages: Analysis → Design → Development/Testing → Implementation → Evaluation', 'Analysis: identify problems, gather requirements via interviews, questionnaires, observation', 'Design: create file structures, user interface mockups, algorithms, and test plans', 'Testing: use normal, extreme, and erroneous test data to verify the system works correctly', 'Implementation methods: direct changeover (risky), parallel running (safe, costly), phased/pilot rollout', 'Evaluation: compare system against original requirements; identify improvements needed']
+  },
+  'ict-theory-topics-9': {
+    defs: ['Audience: the intended users of a document, website, or system', 'Accessibility: design that allows all users, including those with disabilities, to use a system'],
+    facts: ['Audience factors to consider: age, technical expertise, language, and disability', 'Accessibility features: alt text for images, adjustable font size, screen reader compatibility', 'High colour contrast helps visually impaired users read content', 'Clear navigation benefits beginners; keyboard shortcuts benefit experienced users', 'Localisation: adapting content for language, currency, and date formats of different regions']
+  },
+  'ict-theory-topics-10': {
+    defs: ['Email: electronic message system using SMTP to send and POP3/IMAP to receive', 'VoIP: Voice over Internet Protocol — real-time voice communication over the internet'],
+    facts: ['Email protocols: SMTP (sending), POP3 (download to device), IMAP (sync on server)', 'Instant messaging: real-time text; video conferencing adds live video and audio', 'Spam: unsolicited bulk email; phishing is a targeted form of spam', 'FTP: File Transfer Protocol — transferring files between computers on a network', 'HTTP transfers web pages; HTTPS adds SSL/TLS encryption for security', 'Social media: platforms for sharing content; raises concerns about privacy and misinformation']
+  },
+  'ict-theory-topics-11': {
+    defs: ['File: named collection of data stored on a storage medium', 'Compression: reducing file size by encoding data more efficiently'],
+    facts: ['Common file types: .docx (document), .pdf (portable), .jpg/.png (images), .mp3 (audio), .csv (data)', 'Lossless compression: no data lost — exact original recovered (ZIP, PNG)', 'Lossy compression: some data permanently removed — smaller file but lower quality (JPEG, MP3)', 'File permissions: read, write, execute — control who can access or modify files', 'Backup types: full (all files), incremental (changes since last backup), differential (changes since last full)', 'Hierarchical folder structure organises files in directories and subdirectories']
+  },
+  'ict-theory-topics-12': {
+    defs: ['Pixel: smallest unit of a digital image (picture element)', 'Resolution: number of pixels per unit area — higher resolution means more detail'],
+    facts: ['Raster/bitmap images: made of pixels (JPEG, PNG, BMP) — quality degrades when enlarged', 'Vector images: made of mathematical paths (SVG) — scale without quality loss', 'Colour depth: bits per pixel; 8-bit = 256 colours; 24-bit = 16.7M colours (true colour)', 'Higher resolution and colour depth produce larger file sizes', 'JPEG: lossy, best for photographs; PNG: lossless, supports transparency; GIF: limited colours, supports animation'],
+    formulae: ['File size (image) = width (px) × height (px) × colour depth (bits)']
+  },
+  'ict-theory-topics-13': {
+    defs: ['Layout: arrangement of text, images, and other elements on a page or screen'],
+    facts: ['Headers and footers appear on every page — contain page numbers, titles, or dates', 'Margins: white space around page content; consistent margins look professional', 'Columns: multi-column layout aids readability for newsletters and newspapers', 'Templates: pre-designed layouts ensure consistency across a document', 'House style: an organisation\'s standard design guide covering fonts, colours, and logo placement', 'Consistent formatting throughout a document improves readability and professionalism']
+  },
+  'ict-theory-topics-14': {
+    defs: ['Style: named set of formatting attributes (font, size, colour) applied to text'],
+    facts: ['Paragraph styles (Heading 1, Body Text) maintain a clear visual hierarchy', 'Applying styles rather than manual formatting makes global changes easy', 'Serif fonts (e.g. Times New Roman) suit print; sans-serif (e.g. Arial) suit screens', 'Text formatting attributes include: bold, italic, underline, colour, and alignment', 'CSS in web design: .class { property: value; } separates style from content', 'Cascading in CSS: styles inherit from parent elements; more specific rules override less specific ones']
+  },
+  'ict-theory-topics-15': {
+    defs: ['Proofreading: carefully checking a document for errors before publishing or distributing', 'Spell check: automated tool that compares words against a dictionary'],
+    facts: ['Spell check finds misspelt words but not wrongly used words (e.g. their vs there)', 'Grammar check highlights potential grammar issues but is not always accurate', 'Find and Replace: search for specific text and change it throughout a document', 'Track Changes: records edits by different users for review and collaborative editing', 'Validation: checking data meets specific rules (e.g. number within allowed range)', 'Verification: confirming data was entered correctly (e.g. double-entry, visual check)']
+  },
+  'ict-theory-topics-16': {
+    defs: ['Chart/Graph: visual representation of data to show patterns, trends, and comparisons'],
+    facts: ['Bar chart: comparing discrete categories — bars should not touch', 'Line graph: showing trends over time — data points joined by lines', 'Pie chart: showing proportions of a whole — each slice angle is proportional to the value', 'Scatter graph: shows correlation between two variables', 'Every chart must have a title, labelled axes (with units), and a legend if needed', 'Choosing the right chart type depends on the data type and the message you want to show']
+  },
+  // ——— NEW: ICT Practical ———
+  'ict-practical-topics-17': {
+    defs: ['Word processing: creating, editing, and formatting text documents', 'Mail merge: combining a template document with a data source to produce personalised copies'],
+    facts: ['Styles: named formatting sets — apply to headings and body text for consistency', 'Tables: rows and columns to organise data; can have formatted borders and shading', 'Headers/footers contain page numbers, dates, or document title and appear on every page', 'Mail merge uses a data source (e.g. CSV/database) with merge fields in the template document', 'Save as PDF to preserve formatting when sharing with people using different software', 'Track changes and comments are collaboration tools used during document review']
+  },
+  'ict-practical-topics-18': {
+    defs: ['Database: organised collection of structured data stored and accessed electronically', 'Query: a request to retrieve or manipulate records in a database that meet specific criteria'],
+    facts: ['Tables contain records (rows) and fields (columns)', 'Primary key: unique identifier field in each table (e.g. StudentID) — no duplicates allowed', 'Foreign key: field that references the primary key of another table — links related tables', 'Forms: user-friendly interface for entering and viewing data in a table', 'Reports: formatted output summarising query results for printing or presenting', 'Wildcards in queries: * matches any number of characters; ? matches a single character', 'Logical operators: AND, OR, NOT, BETWEEN, LIKE used to filter query results']
+  },
+  'ict-practical-topics-19': {
+    defs: ['Presentation software: tool for creating slideshows (e.g. Microsoft PowerPoint)'],
+    facts: ['Slide layout: title, content, two-content etc. — choose to suit the slide\'s purpose', 'Animation: movement effects applied to individual elements on a slide', 'Transitions: effects between slides — keep subtle to avoid distracting the audience', 'Too much text per slide reduces effectiveness; use short bullet points and visuals instead', 'Slide master: controls the design of all slides — change once, updates automatically', 'Speaker notes: notes visible only to the presenter, not displayed to the audience', 'File formats: .pptx (editable), .pdf (portable read-only), .ppsx (auto-play show)']
+  },
+  // ——— NEW: Computer Science ———
+  'cs-topics1-2': {
+    defs: ['Data transmission: the process of sending data between devices or systems', 'Protocol: agreed set of rules for how data is formatted, sent, and received between systems'],
+    facts: ['Serial transmission: bits sent one at a time along a single channel — reliable over long distances', 'Parallel transmission: multiple bits sent simultaneously — faster but only over short distances', 'Simplex: one direction only (keyboard → computer)', 'Half-duplex: both directions but not simultaneously (walkie-talkie)', 'Full-duplex: both directions at the same time (telephone call)', 'Parity check: an extra parity bit is added so total number of 1s is always even (or odd) to detect errors', 'Check digit: extra digit calculated from the other digits to detect entry errors (used in ISBN, barcodes)'],
+    formulae: ['Even parity: total count of 1 bits (data + parity bit) must be even']
+  },
+  'cs-topics1-4': {
+    defs: ['Operating system: software that manages hardware resources and provides an interface for programs', 'Compiler: translates an entire high-level program into machine code in one step before execution'],
+    facts: ['OS functions: process management, memory management, file management, device management, user interface', 'Interpreter: translates and executes high-level code line-by-line — slower but easier to debug', 'Assembler: converts assembly language (mnemonics like MOV, ADD) into machine code (binary)', 'High-level language: human-readable (Python, Java) — needs translation; portable across machines', 'Low-level language: close to machine code (Assembly) — fast but hardware-specific', 'IDE: Integrated Development Environment provides editor, compiler/interpreter, and debugger in one tool']
+  },
+  'cs-topics1-5': {
+    defs: ['URL: Uniform Resource Locator — the address of a resource on the internet', 'DNS: Domain Name System — translates human-readable domain names into IP addresses'],
+    facts: ['HTTP: HyperText Transfer Protocol — transfers web pages; HTTPS adds SSL/TLS encryption', 'Web browser: client software that sends HTTP requests and renders HTML/CSS/JS responses', 'Web server: software that responds to HTTP requests by serving files to clients', 'Cloud computing: using remote servers accessed over the internet for storage, processing, or software', 'Streaming: data delivered continuously in real time — user does not wait for full download', 'IoT: Internet of Things — everyday objects with sensors connected to the internet to send/receive data']
+  },
+  'cs-topics1-6': {
+    defs: ['Sensor: device that detects a physical input (temperature, light, motion) and converts it to a signal', 'Actuator: output device that causes a physical effect in response to a control signal (motor, valve, LED)'],
+    facts: ['Microcontroller: small computer on a single chip; reads sensors and controls actuators', 'Feedback loop: sensor readings are used to adjust system behaviour (e.g. thermostat)', 'Robotics: programmable machines that use sensors and actuators to interact with the physical world', 'Artificial Intelligence: systems that perform tasks normally needing human intelligence (recognition, decisions)', 'Machine learning: AI systems that learn and improve by being trained on large sets of data', 'Expert systems: simulate the decision-making of a human expert using a knowledge base and rules']
+  },
+  'cs-topics2-9': {
+    defs: ['DBMS: Database Management System — software that creates, manages, and provides access to databases', 'Primary key: a field that uniquely identifies every record in a table — no two records can have the same value'],
+    facts: ['Table: organises data into rows (records) and columns (fields)', 'Foreign key: a field in one table that references the primary key of another table — links related data', 'SELECT fieldnames FROM table WHERE condition: basic SQL query structure to retrieve data', 'INSERT INTO table VALUES (…): SQL command to add a new record', 'UPDATE table SET field=value WHERE condition: SQL to modify existing records', 'DELETE FROM table WHERE condition: SQL to remove records', 'ORDER BY field ASC/DESC: sorts query results; LIKE uses % as wildcard']
+  },
+  // ——— NEW: Business Studies ———
+  'bus-topics-2': {
+    defs: ['Motivation: the internal and external factors that drive a person to work and put in effort', 'Organisational structure: the way a business arranges roles, responsibilities, and communication'],
+    facts: ['Taylor (Scientific Management): money is the main motivator — pay workers more for higher output', 'Maslow\'s Hierarchy: Physiological → Safety → Social → Esteem → Self-actualisation needs', 'Herzberg Two-Factor Theory: hygiene factors prevent dissatisfaction (pay, conditions); motivators create satisfaction (achievement, recognition)', 'Delegation: passing authority to a subordinate to complete tasks and make decisions', 'Span of control: number of staff directly managed by one manager', 'Flat structure: few management layers — wide span of control, faster communication', 'Tall structure: many layers — narrow span of control, slower communication up the hierarchy']
+  },
+  'bus-topics-6': {
+    defs: ['External influence: factor outside the business that affects its operations and decisions', 'Globalisation: increasing economic, cultural, and political interconnection of the world'],
+    facts: ['Government policies: taxation affects profit; subsidies reduce costs; minimum wage affects labour costs', 'Legislation: consumer protection, health & safety, and employment laws all affect business operations', 'Inflation: rising price levels reduce consumer purchasing power and can increase business costs', 'Exchange rates: strong local currency makes exports more expensive but imports cheaper', 'Sustainability: businesses face pressure to reduce waste, use renewable energy, and cut carbon emissions', 'Multinational corporations: bring investment and jobs to developing nations but may exploit low wages and avoid local tax']
+  },
+  // ——— NEW: Science Biology ———
+  'sci-bio-topics-2': {
+    defs: ['Cell membrane: selectively permeable barrier that controls what enters and leaves the cell', 'Nucleus: control centre of the cell; contains DNA in chromosomes'],
+    facts: ['Mitochondria: site of aerobic respiration — produces ATP energy for the cell', 'Ribosomes: site of protein synthesis; found in cytoplasm or on rough endoplasmic reticulum', 'Chloroplasts: found in plant cells; contain chlorophyll for photosynthesis', 'Cell wall: made of cellulose in plants; provides structural support and is fully permeable', 'Large central vacuole in plant cells is filled with cell sap; maintains turgor pressure', 'Prokaryotic cells (bacteria): no nucleus, no membrane-bound organelles, smaller than eukaryotic cells']
+  },
+  'sci-bio-topics-4': {
+    defs: ['Carbohydrate: organic molecule made of C, H, O used mainly for energy; monomers are monosaccharides', 'Protein: polymer of amino acids; functions include enzymes, antibodies, structural materials, and hormones'],
+    facts: ['Test for glucose: Benedict\'s reagent — blue → brick-red precipitate if sugar present', 'Test for starch: iodine solution — brown → blue-black if starch present', 'Test for protein: Biuret reagent — blue → purple if protein present', 'Test for fat: ethanol emulsion test — milky-white layer forms if fat present', 'Lipids (fats and oils): made of glycerol and fatty acids; used for long-term energy storage, insulation, and cell membranes', 'Water: essential for transport, chemical reactions, and temperature regulation (high specific heat capacity)']
+  },
+  'sci-bio-topics-5': {
+    defs: ['Enzyme: biological catalyst that speeds up metabolic reactions without being consumed', 'Active site: specific region of an enzyme molecule where a complementary substrate binds'],
+    facts: ['Lock-and-key model: enzyme active site fits exactly with one specific substrate shape', 'Optimum temperature/pH: reaction rate is highest; deviation from optimum reduces activity', 'Denaturation: irreversible change to enzyme shape at high temperature or extreme pH — active site altered', 'Amylase: digests starch → maltose; produced in salivary glands and pancreas', 'Protease: digests proteins → amino acids; produced in stomach (pepsin) and pancreas', 'Lipase: digests lipids → glycerol + fatty acids; produced in pancreas', 'Enzymes lower activation energy, increasing reaction rate without changing the overall energy change']
+  },
+  'sci-bio-topics-6': {
+    defs: ['Chlorophyll: green pigment in chloroplasts that absorbs light energy to drive photosynthesis'],
+    facts: ['Photosynthesis occurs in chloroplasts, mainly in palisade mesophyll cells of leaves', 'Leaf adaptations: large surface area, thin, transparent cuticle, stomata for gas exchange, veins for transport', 'Limiting factors for photosynthesis: light intensity, CO₂ concentration, and temperature', 'If one factor is limiting, increasing others has no effect on the rate', 'Nitrate ions: needed to make amino acids and proteins; deficiency causes stunted growth', 'Magnesium ions: needed to make chlorophyll; deficiency causes yellow leaves (chlorosis)'],
+    formulae: ['6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂']
+  },
+  'sci-bio-topics-7': {
+    defs: ['Digestion: breaking down large insoluble food molecules into small soluble ones that can be absorbed', 'Peristalsis: wave-like muscular contractions that push food along the digestive tract'],
+    facts: ['Mouth: teeth mechanically break food; salivary amylase begins starch digestion', 'Stomach: hydrochloric acid (pH 2) kills bacteria and activates pepsin which digests protein', 'Small intestine (ileum): enzymes from pancreas complete digestion; villi absorb nutrients into blood', 'Villi adaptations for absorption: large surface area, thin walls, good blood supply, microvilli', 'Large intestine (colon): absorbs water; remaining material forms faeces', 'Bile: made in liver, stored in gall bladder; emulsifies fats to increase surface area for lipase']
+  },
+  'sci-bio-topics-8': {
+    defs: ['Transpiration: loss of water vapour from leaves through stomata by evaporation', 'Xylem: vascular tissue transporting water and dissolved minerals from roots upward; dead lignified cells'],
+    facts: ['Phloem: living tissue transporting dissolved sugars (sucrose) from leaves to the rest of the plant', 'Root hair cells: increase surface area for absorption of water by osmosis and mineral ions by active transport', 'Transpiration rate increases with: higher temperature, lower humidity, higher wind speed, higher light intensity', 'Guard cells control stomatal opening — become turgid in light → stomata open; flaccid → stomata close', 'Water moves up xylem by transpiration pull (cohesion-tension theory)', 'Translocation: movement of sucrose in phloem from source (leaves) to sink (roots, fruits, growing tips)']
+  },
+  'sci-bio-topics-9': {
+    defs: ['Plasma: liquid part of blood (~55%) transporting dissolved substances throughout the body', 'Haemoglobin: iron-containing protein in red blood cells that binds and carries oxygen'],
+    facts: ['Red blood cells: biconcave disc shape, no nucleus, packed with haemoglobin, transport O₂', 'White blood cells: phagocytes engulf pathogens by phagocytosis; lymphocytes produce antibodies', 'Platelets: cell fragments that release clotting factors to seal wounds', 'Arteries: thick muscular walls, carry blood away from heart at high pressure', 'Veins: thinner walls, carry blood toward heart, contain valves to prevent backflow', 'Capillaries: one cell thick; site of exchange of gases, nutrients, and waste with body tissues', 'Double circulatory system: pulmonary (heart → lungs → heart) and systemic (heart → body → heart)'],
+    formulae: ['Cardiac output = heart rate × stroke volume']
+  },
+  'sci-bio-topics-10': {
+    defs: ['Pathogen: microorganism that causes disease (bacteria, virus, fungus, or protozoan)', 'Antibody: protein produced by B-lymphocytes that binds specifically to a matching antigen'],
+    facts: ['Bacteria cause disease by producing toxins; viruses reproduce inside host cells and destroy them', 'Antigen: specific protein on the surface of a pathogen that triggers an immune response', 'Active immunity: body produces its own antibodies after infection or vaccination — long-lasting', 'Passive immunity: antibodies received from another source (mother\'s milk, injection) — temporary', 'Vaccination: introduces weakened/dead pathogens or antigens → immune system makes antibodies + memory cells', 'Antibiotics kill bacteria but are ineffective against viruses; overuse leads to antibiotic resistance', 'MRSA: antibiotic-resistant bacterium — example of natural selection producing a resistant strain']
+  },
+  'sci-bio-topics-11': {
+    defs: ['Alveolus (pl. alveoli): tiny air sac in the lungs where gas exchange between air and blood occurs', 'Tidal volume: volume of air inhaled or exhaled with each normal resting breath'],
+    facts: ['Alveoli adaptations: very large total surface area, thin walls (one cell thick), moist surface, rich capillary blood supply', 'Breathing in: intercostal muscles and diaphragm contract → thorax volume increases → air rushes in', 'Breathing out: intercostal muscles and diaphragm relax → thorax volume decreases → air pushed out', 'Gas exchange: O₂ diffuses from alveoli into blood; CO₂ diffuses from blood into alveoli', 'Vital capacity: maximum volume of air that can be exhaled after a maximum inhalation', 'Smoking: damages cilia, produces excess mucus, destroys alveolar walls (emphysema), causes lung cancer']
+  },
+  'sci-bio-topics-12': {
+    defs: ['Aerobic respiration: release of energy from glucose using oxygen — efficient, produces CO₂ and water', 'ATP: adenosine triphosphate — the immediate energy currency used by cells for all life processes'],
+    facts: ['Aerobic respiration occurs in the mitochondria', 'Anaerobic respiration releases energy from glucose without oxygen — less efficient', 'In muscles during intense exercise: anaerobic respiration produces lactic acid → cramp and fatigue', 'Oxygen debt: extra oxygen required after anaerobic exercise to oxidise lactic acid', 'Yeast anaerobic respiration: glucose → ethanol + CO₂ (fermentation, used in baking and brewing)', 'Energy from respiration is used for: muscle contraction, active transport, cell division, maintaining body temperature'],
+    formulae: ['Aerobic: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP energy', 'Anaerobic (muscle): glucose → lactic acid + ATP', 'Anaerobic (yeast): glucose → ethanol + CO₂ + ATP']
+  },
+  'sci-bio-topics-13': {
+    defs: ['Neuron: nerve cell specialised to conduct electrical impulses rapidly over long distances', 'Hormone: chemical messenger secreted by an endocrine gland, transported in blood to a target organ'],
+    facts: ['Nervous system: electrical signals along neurons — fast, short-lived, localised response', 'Endocrine system: chemical hormones via blood — slower, longer-lasting, widespread effect', 'Reflex arc: receptor → sensory neuron → relay neuron (spinal cord) → motor neuron → effector', 'Synapse: junction between neurons; neurotransmitter chemicals diffuse across the synaptic gap', 'Insulin (from pancreas β cells): lowers blood glucose by stimulating uptake by liver and muscle cells', 'Glucagon (from pancreas α cells): raises blood glucose by stimulating glycogen breakdown in liver', 'ADH (from pituitary): regulates water reabsorption in kidney tubules to control blood water potential']
+  },
+  'sci-bio-topics-14': {
+    defs: ['Drug: chemical substance that alters the way the body or mind functions', 'Antibiotic: drug that kills or inhibits the growth of bacteria (not effective against viruses)'],
+    facts: ['Depressants slow the nervous system — examples: alcohol, sedatives, heroin', 'Stimulants speed up the nervous system — examples: caffeine, nicotine, cocaine', 'Hallucinogens alter sensory perception — examples: LSD, cannabis', 'Nicotine: highly addictive; causes increased heart rate and blood pressure; found in tobacco', 'Long-term alcohol use causes liver cirrhosis, damages brain cells, and impairs coordination', 'Antibiotic resistance arises through natural selection: bacteria that survive treatment reproduce and spread the resistance gene', 'Patients must complete the full course of antibiotics to prevent resistant strains from surviving']
+  },
+  'sci-bio-topics-15': {
+    defs: ['Fertilisation: fusion of a male gamete with a female gamete to form a diploid zygote', 'Gamete: a sex cell (sperm or egg) containing the haploid number of chromosomes (23 in humans)'],
+    facts: ['Human sperm: haploid, motile, small; egg (ovum): haploid, large, non-motile', 'Menstrual cycle (~28 days): FSH stimulates egg maturation; LH surge triggers ovulation (day 14)', 'Oestrogen: thickens uterine lining; inhibits FSH; used in the combined contraceptive pill', 'In plants: pollination = transfer of pollen; fertilisation occurs in ovule → seed; ovary becomes fruit', 'Asexual reproduction: produces genetically identical clones (e.g. binary fission in bacteria, runners in plants)', 'Sexual reproduction: produces genetic variation in offspring — advantageous for adapting to environmental changes']
+  },
+  'sci-bio-topics-16': {
+    defs: ['Gene: a section of DNA that codes for a specific polypeptide (and therefore protein)', 'Allele: one of two or more alternative forms of a gene found at the same locus on homologous chromosomes'],
+    facts: ['Chromosomes: thread-like structures in the nucleus made of DNA and protein; humans have 46 (23 pairs)', 'Dominant allele: expressed when one or two copies are present (capital letter, e.g. B)', 'Recessive allele: only expressed when two copies are present (lowercase, e.g. b)', 'Homozygous: two identical alleles (BB or bb); Heterozygous: two different alleles (Bb)', 'Genotype: allele combination an organism carries; Phenotype: observable characteristic expressed', 'Sex determination: XX = female; XY = male — sex chromosomes are the 23rd pair', 'Punnett square: grid used to predict the genotype and phenotype ratios of offspring'],
+    formulae: ['Probability (%) = (number with trait ÷ total offspring) × 100']
+  },
+  'sci-bio-topics-17': {
+    defs: ['Variation: differences in characteristics between individuals of the same species', 'Natural selection: differential survival and reproduction of individuals with favourable traits'],
+    facts: ['Continuous variation: gradual range of values (height, mass) — influenced by many genes and environment', 'Discontinuous variation: distinct categories with no intermediate forms (blood group, tongue-rolling)', 'Mutation: random change in DNA base sequence; can be spontaneous or caused by radiation/chemicals', 'Natural selection steps: variation exists → some variants better suited → these survive and reproduce more → traits passed on', 'Selective breeding (artificial selection): humans choose organisms with desired traits to breed — reduces genetic diversity', 'Genetic engineering: inserting a specific gene from one organism into another (e.g. human insulin gene into bacteria)']
+  },
+  'sci-bio-topics-18': {
+    defs: ['Ecosystem: the community of living organisms plus the non-living environment they interact with', 'Food chain: a sequence showing how energy and matter are transferred through feeding relationships'],
+    facts: ['Producer: autotroph that makes its own food via photosynthesis; always at the start of a food chain', 'Consumer: heterotroph that eats other organisms; primary (eats plants), secondary (eats primary consumers)', 'Decomposer: bacteria and fungi that break down dead organisms, returning nutrients to the soil', 'Only ~10% of energy is transferred to the next trophic level; rest is lost as heat, movement, waste', 'Pyramid of numbers: shows number of organisms at each level; can be inverted (e.g. one tree supporting many insects)', 'Carbon cycle: photosynthesis removes CO₂ from air; respiration, combustion, and decomposition return it'],
+    formulae: ['Energy efficiency (%) = (energy in next level ÷ energy in current level) × 100']
+  },
+  'sci-bio-topics-19': {
+    defs: ['Biodiversity: the variety of different species and genetic variation within an ecosystem', 'Eutrophication: excess nutrients (from fertiliser runoff) in water → algal bloom → reduced oxygen → aquatic organisms die'],
+    facts: ['Deforestation: destroys habitats, reduces biodiversity, releases stored carbon dioxide, increases soil erosion', 'Greenhouse gases (CO₂, CH₄, water vapour) trap infrared radiation → global warming', 'Global warming causes: rising sea levels, more extreme weather, shifts in species distributions', 'Air pollution: combustion releases CO₂ (warming), SO₂ (acid rain), CO (toxic), particulates (health)', 'Conservation methods: national parks, captive breeding programmes, seed banks, habitat corridors, international treaties', 'Sustainable agriculture: maintaining soil fertility, reducing pesticide use, protecting native species']
+  },
+  // ——— NEW: Science Chemistry ———
+  'sci-chem-topics-2': {
+    defs: ['Ion: atom or group of atoms that has gained or lost electrons, giving it an overall electric charge', 'Ionic bond: electrostatic attraction between oppositely charged ions in a giant lattice structure'],
+    facts: ['Metals lose electrons → positive ions (cations); non-metals gain electrons → negative ions (anions)', 'Ionic compounds: high melting/boiling points; conduct electricity when molten or dissolved (ions free to move)', 'Covalent bond: shared pair of electrons between two non-metal atoms', 'Simple covalent molecules: low melting points due to weak intermolecular forces between molecules', 'Giant covalent structures (diamond, graphite, SiO₂): very high melting points, strong bonds throughout', 'Metallic bonding: sea of delocalised electrons around positive metal ions — conducts electricity and heat well']
+  },
+  'sci-chem-topics-3': {
+    defs: ['Mole: amount of substance containing Avogadro\'s number of particles (6.02 × 10²³)', 'Molar mass: mass of one mole of a substance in g/mol; numerically equal to relative formula mass (Mr)'],
+    facts: ['Relative atomic mass (Ar): average mass of atoms of an element relative to 1/12 the mass of ¹²C', 'Relative formula mass (Mr): sum of Ar values of all atoms in the chemical formula', 'Empirical formula: simplest whole number ratio of atoms (e.g. CH₂O for glucose)', 'Molecular formula: actual number of atoms per molecule (e.g. C₆H₁₂O₆ for glucose)', 'Percentage yield = (actual yield ÷ theoretical yield) × 100'],
+    formulae: ['n = m/M  (moles = mass ÷ molar mass)', 'c = n/V  (concentration = moles ÷ volume in dm³)', 'Avogadro constant: Nₐ = 6.02 × 10²³ mol⁻¹']
+  },
+  'sci-chem-topics-4': {
+    defs: ['Electrolysis: the breakdown of an ionic compound (electrolyte) using an electric current', 'Electrolyte: ionic substance in solution or molten state that conducts electricity by ion movement'],
+    facts: ['Cathode: negative electrode — positive ions (cations) gain electrons here (reduction occurs)', 'Anode: positive electrode — negative ions (anions) lose electrons here (oxidation occurs)', 'Electroplating: depositing a thin metal layer on an object using electrolysis to improve appearance or protection', 'Electrolysis of water: H₂ gas produced at cathode, O₂ gas produced at anode (2:1 volume ratio)', 'Electrolysis of brine (NaCl solution): Cl₂ at anode, H₂ at cathode, NaOH solution remains', 'Active electrode dissolves if made from the same metal being deposited (used in copper refining)']
+  },
+  'sci-chem-topics-5': {
+    defs: ['Exothermic reaction: releases energy to surroundings — temperature of surroundings increases', 'Endothermic reaction: absorbs energy from surroundings — temperature of surroundings decreases'],
+    facts: ['Bond breaking is endothermic (requires energy); bond forming is exothermic (releases energy)', 'Overall exothermic if energy released (bond forming) > energy absorbed (bond breaking)', 'Examples of exothermic: combustion, neutralisation, respiration, oxidation reactions', 'Examples of endothermic: thermal decomposition, photosynthesis, dissolving ammonium nitrate', 'Activation energy: minimum energy particles must have to react; catalysts provide a lower energy pathway'],
+    formulae: ['Q = mcΔT  (heat energy = mass × specific heat capacity × temperature change)']
+  },
+  'sci-chem-topics-6': {
+    defs: ['Rate of reaction: change in amount of reactant consumed (or product formed) per unit time', 'Catalyst: substance that increases the rate of a reaction without being used up — lowers activation energy'],
+    facts: ['Higher concentration → more particles per unit volume → more frequent collisions → faster rate', 'Higher temperature → particles have more kinetic energy → more energetic and more frequent collisions', 'Smaller particle size (larger surface area) → more particles exposed at surface → more collisions', 'Catalysts provide an alternative reaction pathway with a lower activation energy', 'Reversible reaction: can proceed in both forward and reverse directions (shown with ⇌)', 'Le Chatelier\'s Principle: a system at equilibrium responds to a change by shifting to oppose that change'],
+    formulae: ['Rate = amount of reactant used (or product formed) ÷ time']
+  },
+  'sci-chem-topics-8': {
+    defs: ['Period: a horizontal row in the periodic table — elements have the same number of electron shells', 'Group: a vertical column — elements have the same number of outer shell electrons → similar chemical properties'],
+    facts: ['Group 1 (alkali metals): soft, react with water → metal hydroxide + H₂; reactivity increases down group as outer electron is further from nucleus', 'Group 7 (halogens): diatomic molecules; more reactive halogens displace less reactive ones from their salts', 'Group 0 (noble gases): full outer electron shell → unreactive; used in balloons (He) and lighting (Ar)', 'Transition metals: high density, high melting points, good conductors, form coloured compounds, act as catalysts', 'Across a period (left to right): atomic radius decreases, metal to non-metal character changes']
+  },
+  'sci-chem-topics-9': {
+    defs: ['Reactivity series: ranking of metals from most to least reactive (K > Na > Ca > Mg > Al > Zn > Fe > Cu)', 'Ore: rock containing a metal compound in sufficient concentration for economic extraction'],
+    facts: ['More reactive metals displace less reactive metals from solutions (displacement reaction)', 'Very reactive metals (Na, K, Ca, Mg, Al): extracted by electrolysis of molten compounds', 'Less reactive metals (Zn, Fe, Cu): extracted by reduction with carbon or carbon monoxide', 'Blast furnace: iron ore + coke + limestone → iron + CO₂; CO reduces Fe₂O₃', 'Rusting: iron reacts with O₂ and water → iron(III) oxide (Fe₂O₃·H₂O); only iron and steel rust', 'Rust prevention: painting, galvanising (zinc coating), using stainless steel (alloy), sacrificial protection (zinc block)']
+  },
+  'sci-chem-topics-10': {
+    defs: ['Greenhouse gas: gas that absorbs and re-emits infrared radiation, trapping heat in the atmosphere'],
+    facts: ['Main greenhouse gases: CO₂ (from combustion), methane (from farming/landfill), water vapour', 'Global warming effects: rising sea levels, more extreme weather, melting ice caps, habitat loss', 'Acid rain: SO₂ and NO₂ from burning fossil fuels dissolve in rain → pH < 5.6 → damages ecosystems', 'Water treatment steps: screening → sedimentation → filtration → chlorination', 'Hard water: contains dissolved Ca²⁺ and Mg²⁺ ions → prevents soap lathering, forms limescale in pipes', 'Carbon monoxide (CO) from incomplete combustion: colourless, odourless, toxic — binds to haemoglobin']
+  },
+  'sci-chem-topics-11': {
+    defs: ['Hydrocarbon: organic compound containing only carbon and hydrogen atoms', 'Alkane: saturated hydrocarbon with only single C–C bonds; general formula CₙH₂ₙ₊₂'],
+    facts: ['Alkenes: unsaturated hydrocarbons with one C=C double bond; general formula CₙH₂ₙ; decolourise bromine water', 'Fractional distillation separates crude oil by boiling point; shorter carbon chains = lower boiling point', 'Cracking: breaks large alkane molecules into smaller, more useful alkanes and alkenes (thermal or catalytic)', 'Addition polymerisation: many alkene monomers (e.g. ethene) join to form a long chain polymer (poly(ethene))', 'Ethanol production: fermentation of sugars using yeast (anaerobic); or addition of steam to ethene (industrial)', 'Carboxylic acids (−COOH group): weak acids; ethanoic acid is in vinegar; react with alcohols to form esters']
+  },
+  'sci-chem-topics-12': {
+    defs: ['Chromatography: technique for separating components of a mixture based on how they travel through a medium'],
+    facts: ['Paper/TLC chromatography: Rf value identifies a substance; pure substance gives one spot at constant Rf', 'Distillation: separates liquids by boiling point; simple for large differences, fractional for close boiling points', 'Filtration: separates an insoluble solid from a liquid mixture', 'Crystallisation: obtains a pure solid from solution by carefully evaporating the solvent', 'Tests: H₂ — "pop" with lit splint; O₂ — relights glowing splint; CO₂ — turns limewater milky; Cl₂ — bleaches damp litmus', 'Flame tests: Li = red, Na = yellow, K = lilac, Ca = orange-red, Cu = green'],
+    formulae: ['Rf = distance moved by substance ÷ distance moved by solvent front']
+  },
+  // ——— NEW: Science Physics ———
+  'sci-phys-topics-2': {
+    defs: ['Specific heat capacity: energy required to raise the temperature of 1 kg of a substance by 1°C (or 1 K)', 'Latent heat: energy absorbed or released during a change of state with no temperature change'],
+    facts: ['Conduction: heat transfer through vibrating particles passing energy along; best in metals', 'Convection: heat transfer in fluids — warm fluid less dense, rises; cool fluid sinks, creating convection current', 'Radiation (infrared): electromagnetic wave transfer; travels through vacuum; dark matt surfaces best absorbers/emitters', 'White/shiny surfaces are poor absorbers and poor emitters of infrared radiation', 'Changes of state: melting (solid→liquid), boiling (liquid→gas) absorb energy; freezing, condensing release energy'],
+    formulae: ['Q = mcΔT  (thermal energy = mass × specific heat capacity × temperature change)', 'Q = mL  (energy during change of state = mass × specific latent heat)']
+  },
+  'sci-phys-topics-3': {
+    defs: ['Transverse wave: oscillation is perpendicular to the direction of energy transfer (e.g. light, water waves)', 'Longitudinal wave: oscillation is parallel to the direction of energy transfer (e.g. sound waves)'],
+    facts: ['Wave properties: amplitude (max displacement), wavelength (λ, distance per cycle), frequency (f, cycles per second), speed (v)', 'Reflection: angle of incidence = angle of reflection (both measured from the normal to the surface)', 'Refraction: waves change direction when their speed changes at a boundary (e.g. light into glass)', 'Total internal reflection: occurs when angle of incidence exceeds the critical angle; used in optical fibres', 'EM spectrum (lowest to highest frequency): radio → microwave → infrared → visible → UV → X-ray → gamma ray', 'Sound is a longitudinal wave; travels fastest in solids, then liquids, then gases; cannot travel through a vacuum'],
+    formulae: ['v = fλ  (wave speed = frequency × wavelength)']
+  },
+  'sci-phys-topics-5': {
+    defs: ['Radioactive decay: spontaneous emission of radiation from an unstable nucleus, changing it to a more stable form', 'Half-life: time for the activity (or number of undecayed nuclei) of a radioactive sample to halve'],
+    facts: ['Alpha (α): helium nucleus (2p, 2n); stopped by paper/skin; high ionising power; dangerous if swallowed', 'Beta (β): fast-moving electron from nucleus; stopped by a few mm aluminium; moderate ionising power', 'Gamma (γ): high-frequency electromagnetic radiation; needs thick lead/concrete to stop; least ionising, most penetrating', 'Nuclear fission: heavy nucleus (e.g. ²³⁵U) splits into two smaller nuclei + neutrons + energy (chain reaction in reactors)', 'Nuclear fusion: two light nuclei merge (e.g. hydrogen isotopes → helium); powers the Sun; requires extreme temperature/pressure', 'Uses: gamma used in cancer radiotherapy and sterilising equipment; alpha used in smoke detectors; beta used in medical tracers'],
+    formulae: ['Remaining nuclei after n half-lives: N = N₀ × (½)ⁿ']
+  },
+  'sci-phys-topics-6': {
+    defs: ['Light-year: distance light travels in one year (~9.46 × 10¹⁵ m); used to measure interstellar distances', 'Main sequence star: stable star fusing hydrogen into helium in its core, balanced by gravity and radiation pressure'],
+    facts: ['Solar system: the Sun plus 8 planets, moons, dwarf planets, asteroids, and comets', 'Galaxy: billions of stars held together by gravity; our galaxy is the Milky Way', 'Universe: contains billions of galaxies; estimated age ≈ 13.8 billion years', 'Red-shift: light from distant galaxies is stretched to longer (redder) wavelengths — evidence they are moving away', 'Big Bang theory: the universe began from an extremely hot, dense point ~13.8 billion years ago and has been expanding since', 'Star life cycle (small): nebula → protostar → main sequence → red giant → white dwarf; large stars end as supernovae → neutron star or black hole']
+  },
+  // ——— NEW: Additional Mathematics ———
+  'am-topics-3': {
+    defs: ['Linear inequality: a statement that one linear expression is greater or less than another', 'Modulus function |x|: the absolute value (magnitude) of x — always non-negative'],
+    facts: ['Solve linear inequality like an equation BUT reverse the inequality sign when multiplying or dividing by a negative number', 'Quadratic inequality: find the roots of the equation first, then use the graph shape to determine the solution set', '|x| < a ⟺ −a < x < a; |x| > a ⟺ x < −a or x > a', 'Set notation for solutions: {x : x > 3}, or interval notation: (3, ∞)', 'Sketch a graph to identify regions where the inequality is satisfied'],
+    formulae: ['|x − a| < b ⟺ a − b < x < a + b']
+  },
+  'am-topics-4': {
+    defs: ['Surd: an irrational root that cannot be simplified to a rational number (e.g. √5, ∛7)', 'Rationalise: rewrite a fraction to remove surds from the denominator'],
+    facts: ['Laws of indices: aᵐ × aⁿ = aᵐ⁺ⁿ; aᵐ ÷ aⁿ = aᵐ⁻ⁿ; (aᵐ)ⁿ = aᵐⁿ; a⁰ = 1; a⁻ⁿ = 1/aⁿ', 'Fractional index: a^(m/n) = ⁿ√(aᵐ); e.g. 8^(2/3) = (∛8)² = 4', 'Simplify surds: √(ab) = √a × √b', 'Rationalise 1/√a by multiplying by √a/√a', 'Rationalise 1/(a + √b) by multiplying numerator and denominator by the conjugate (a − √b)'],
+    formulae: ['aᵐ × aⁿ = aᵐ⁺ⁿ', '(aᵐ)ⁿ = aᵐⁿ', 'a^(p/q) = ᵍ√(aᵖ)']
+  },
+  'am-topics-5': {
+    defs: ['Remainder Theorem: when polynomial f(x) is divided by (x − a), the remainder equals f(a)', 'Factor Theorem: (x − a) is a factor of f(x) if and only if f(a) = 0'],
+    facts: ['To factorise a cubic: use factor theorem to find one root, divide out the factor, then factorise the remaining quadratic', 'Try factors of the constant term as candidate roots when applying factor theorem', 'Polynomial long division: similar to numerical long division; find how many times leading term divides', 'If f(a) = 0 then (x − a) is a factor and a is a root (x-intercept) of the curve y = f(x)'],
+    formulae: ['f(x) = (x − a) × Q(x) + R  where R = f(a)  (quotient Q(x) plus remainder R)']
+  },
+  'am-topics-6': {
+    defs: ['Simultaneous equations: two or more equations that are all satisfied by the same set of values'],
+    facts: ['Linear + linear: solve by elimination (add/subtract equations) or substitution', 'Linear + quadratic: substitute the linear equation into the quadratic to form a single quadratic', 'Number of solutions depends on discriminant: Δ > 0 → two solutions; Δ = 0 → one solution (line tangent to curve); Δ < 0 → no real solutions', 'Graphically: solutions are the coordinates of intersection points of the two graphs', 'Always verify solutions satisfy BOTH original equations'],
+    formulae: ['Discriminant Δ = b² − 4ac determines the number of real intersection points']
+  },
+  'am-topics-8': {
+    defs: ['Gradient of a straight line: rate of change of y with respect to x; a measure of the line\'s steepness'],
+    facts: ['Equation of a line: y = mx + c where m = gradient and c = y-intercept', 'Gradient between two points: m = (y₂ − y₁) ÷ (x₂ − x₁)', 'Parallel lines have equal gradients', 'Perpendicular lines: product of their gradients equals −1 (m₁ × m₂ = −1)', 'Collinear points lie on the same straight line — check by computing gradient between consecutive pairs'],
+    formulae: ['m = (y₂ − y₁) / (x₂ − x₁)', 'Distance = √[(x₂−x₁)² + (y₂−y₁)²]', 'Midpoint = ((x₁+x₂)/2, (y₁+y₂)/2)', 'Perpendicular gradient: m₂ = −1/m₁']
+  },
+  'am-topics-9': {
+    defs: ['Radian: the angle at the centre of a circle subtended by an arc equal in length to the radius'],
+    facts: ['π radians = 180°; to convert degrees → radians: multiply by π/180', 'To convert radians → degrees: multiply by 180/π', 'Arc length and sector area formulae require the angle to be in radians', 'Area of a circular segment = sector area − triangle area'],
+    formulae: ['Arc length: s = rθ  (r = radius, θ in radians)', 'Sector area: A = ½r²θ', 'Area of triangle within sector: ½r² sin θ', 'Segment area: ½r²(θ − sin θ)']
+  },
+  'am-topics-11': {
+    defs: ['Permutation: an ordered arrangement of objects from a set', 'Combination: a selection of objects from a set where order does not matter'],
+    facts: ['n! (n factorial) = n × (n−1) × … × 2 × 1; by definition, 0! = 1', 'Key distinction: permutations count order; combinations do not', 'Arrangements with restrictions: fix the restricted items first, then count arrangements of the rest', 'Arrangements in a circle: (n−1)! for n distinct objects (fix one position as reference)', 'Identical items: divide total arrangements by the factorial of the count of identical items'],
+    formulae: ['nPr = n! / (n−r)!', 'nCr = n! / (r!(n−r)!)', 'nCr = nC(n−r)  (symmetry)']
+  },
+  'am-topics-12': {
+    defs: ['Binomial theorem: a formula for expanding (a + b)ⁿ without repeated multiplication'],
+    facts: ['Pascal\'s Triangle: each entry is the sum of the two entries directly above; rows give binomial coefficients', 'The general term of the expansion is Tᵣ₊₁ = ⁿCᵣ aⁿ⁻ʳ bʳ where r starts at 0', 'To find a specific term: set the power of the required variable equal to r and solve', 'Binomial approximation: (1 + x)ⁿ ≈ 1 + nx + n(n−1)/2! x² (valid for |x| < 1, used for small x)'],
+    formulae: ['(a + b)ⁿ = Σ ⁿCᵣ aⁿ⁻ʳ bʳ  for r = 0 to n', 'General term: T_{r+1} = ⁿCᵣ aⁿ⁻ʳ bʳ']
+  },
+  'am-topics-13': {
+    defs: ['Vector: a quantity that has both magnitude (size) and direction', 'Unit vector: a vector with magnitude equal to exactly 1'],
+    facts: ['Vectors can be represented as column vectors (x, y) or in i-j notation (xi + yj)', 'Vectors add head-to-tail (triangle law); parallelogram law gives the resultant', 'Scalar multiplication changes the magnitude and can reverse direction', 'Position vector of P: OP⃗ = vector from origin O to point P', 'Collinear points: AP⃗ = k × AB⃗ for some scalar k, meaning vectors are parallel and share a point'],
+    formulae: ['|a| = √(x² + y²)  for a = (x, y)', 'Unit vector: â = a / |a|', 'AB⃗ = OB⃗ − OA⃗']
+  },
+  'am-topics-17': {
+    defs: ['Kinematics: the branch of mechanics studying motion without considering the forces causing it', 'Displacement: the distance moved in a specified direction (a vector quantity)'],
+    facts: ['Displacement-time graph: gradient = velocity; straight line = constant velocity; curved = acceleration', 'Velocity-time graph: gradient = acceleration; area under graph = displacement', 'Equations of motion (suvat) are only valid when acceleration is constant', 'For variable acceleration: v = ds/dt (differentiate s for v); a = dv/dt (differentiate v for a)', 'Integrate v with respect to t to find s; integrate a with respect to t to find v (add constant of integration)'],
+    formulae: ['v = u + at', 's = ut + ½at²', 'v² = u² + 2as', 's = ½(u + v)t', 'v = ∫a dt + c;  s = ∫v dt + c']
+  },
+  // ——— NEW: Global Perspectives ———
+  'gp-topics-1': {
+    defs: ['Demographic change: shifts in a population\'s size, age structure, or geographic distribution over time'],
+    facts: ['Global population exceeded 8 billion in 2022; most growth is concentrated in developing nations', 'Ageing population: more elderly people, fewer young workers → pressure on pensions, healthcare, and social services', 'Youth bulge: large young population → potential economic growth OR pressure on jobs and education', 'Total fertility rate (TFR): average children per woman; TFR below 2.1 means population will eventually decline', 'Urbanisation: over 55% of world population now lives in cities; rapid urbanisation creates infrastructure pressures', 'Migration can partially offset the effects of ageing or declining populations in high-income countries']
+  },
+  'gp-topics-2': {
+    defs: ['Education for All (EFA): UNESCO global initiative to provide quality education to every person worldwide', 'Literacy: the ability to read, write, and use numbers to a functional level in everyday life'],
+    facts: ['UN Sustainable Development Goal 4: ensure inclusive and equitable quality education for all by 2030', 'Over 300 million children globally still lack access to adequate schooling', 'Gender gap: girls are disproportionately excluded from education in sub-Saharan Africa and parts of South Asia', 'Education increases earning potential, reduces poverty, improves health outcomes, and strengthens democracy', 'Barriers to education: poverty, conflict, distance to schools, disability, gender norms, child labour', 'Digital education can broaden access but risks widening the digital divide for communities without internet']
+  },
+  'gp-topics-3': {
+    defs: ['Unemployment: the state of being able and willing to work but not having a paid job', 'Gig economy: a labour market characterised by short-term freelance contracts rather than permanent employment'],
+    facts: ['Types of unemployment: cyclical (demand falls in recession), structural (skills mismatch), frictional (between jobs)', 'Youth unemployment is particularly high in many countries, limiting economic participation and social inclusion', 'Automation and AI are displacing routine manual and cognitive jobs, while creating demand for digital skills', 'Trade unions protect workers through collective bargaining for fair pay and conditions', 'Multinational corporations create jobs in developing nations but may exploit cheaper labour and fewer regulations', 'Universal Basic Income (UBI): proposed policy to give all citizens a regular unconditional payment — debated globally']
+  },
+  'gp-topics-4': {
+    defs: ['Non-renewable energy: finite sources that will be depleted (coal, oil, natural gas, uranium)', 'Renewable energy: sources naturally replenished on a human timescale (solar, wind, hydro, geothermal, tidal)'],
+    facts: ['Fossil fuels currently supply ~80% of global energy; combustion releases CO₂, contributing to climate change', 'Nuclear energy: low carbon but produces radioactive waste; risk of accidents (Chernobyl 1986, Fukushima 2011)', 'Solar and wind power are growing rapidly but are intermittent — require energy storage or backup systems', 'Energy security: ensuring reliable and affordable energy supplies; drives geopolitical tensions (e.g. oil dependency)', 'Energy poverty: ~770 million people lack access to electricity, limiting education, health, and economic development', 'Fracking: hydraulic fracturing to extract shale gas; controversial due to risks of water contamination and earthquakes']
+  },
+  'gp-topics-5': {
+    defs: ['Globalisation: the increasing economic, political, social, and cultural interconnection of the world', 'Free trade: the exchange of goods and services between countries without tariffs, quotas, or other trade barriers'],
+    facts: ['Multinational corporations (MNCs) operate across many countries; may transfer technology but can avoid local taxes', 'Global supply chains: products are assembled from components made in many different countries', 'Cultural globalisation: spread of ideas, music, food, and media globally; risks cultural homogenisation', 'WTO (World Trade Organization): oversees international trade rules and resolves trade disputes', 'Anti-globalisation arguments: increases inequality, exploits developing nations, damages local industries', 'Benefits of globalisation: economic growth, technology transfer, cultural exchange, lower consumer prices']
+  },
+  'gp-topics-6': {
+    defs: ['Rule of law: the principle that all people and institutions are subject to and accountable under the law', 'Restorative justice: approach that focuses on rehabilitating offenders and repairing harm rather than just punishing'],
+    facts: ['Crime rates vary widely between countries due to inequality, poverty, policing levels, and cultural factors', 'Organised transnational crime includes drug trafficking, human trafficking, and cybercrime', 'Capital punishment is used in ~55 countries; debated on grounds of deterrence, human rights, and wrongful execution', 'Cybercrime is the fastest-growing crime type globally, including fraud, hacking, and identity theft', 'Drug policy debate: prohibition vs harm-reduction (e.g. Portugal\'s decriminalisation showed reduced drug harm)', 'High recidivism rates in punitive prison systems suggest rehabilitation programmes are more effective long-term']
+  },
+  'gp-topics-7': {
+    defs: ['Migration: the movement of people from one place to another with the intention of settling there temporarily or permanently', 'Refugee: a person forced to flee their home country due to persecution, armed conflict, or natural disaster'],
+    facts: ['UNHCR (2022): over 100 million people are forcibly displaced — the highest number ever recorded', 'Economic migrants move for better employment opportunities and living standards', 'Brain drain: highly skilled workers leave developing countries, creating a talent shortage at home', 'Remittances: money sent home by migrants; crucial for many developing economies (exceeds foreign aid globally)', 'Climate migration: rising sea levels, droughts, and extreme weather are increasing displacement', 'EU freedom of movement: allows citizens to live and work in any member state — a model of managed migration']
+  },
+  'gp-topics-8': {
+    defs: ['Absolute poverty: lacking the basic necessities for survival — World Bank line: less than $2.15/day (2022)', 'Relative poverty: having an income significantly below the average in one\'s own society, limiting full participation'],
+    facts: ['Gini coefficient measures income inequality: 0 = perfect equality; 1 = total inequality', 'Extreme global poverty declined for decades but COVID-19 reversed progress in many regions', 'Root causes of poverty: lack of education, poor governance, conflict, geographic isolation, and colonial history', 'The richest 1% own more wealth than the bottom 50% of the global population combined (Oxfam, 2023)', 'Microfinance: small loans to entrepreneurs in developing countries (e.g. Grameen Bank, Bangladesh)', '"Trade not aid" argument: sustainable development requires fair trade rules, not just charity']
+  },
+  'gp-topics-9': {
+    defs: ['Commercialisation of sport: the transformation of sport into a profit-driven industry through sponsorship, broadcasting, and branding', 'Doping: the use of prohibited substances or methods to enhance athletic performance'],
+    facts: ['Sport as "soft power": nations use sporting success to build international prestige and diplomacy', 'Mega-events (Olympics, World Cup): boost tourism and national pride but can displace communities and drain public funds', 'Physical activity has proven mental and physical health benefits; governments invest in sport for public health', 'Gender inequality in sport persists: women receive less pay, media coverage, and investment than men', 'E-sports (competitive gaming) are growing rapidly and challenging traditional definitions of sport', 'WADA (World Anti-Doping Agency) enforces global anti-doping rules and coordinates testing across all sports']
+  },
+  'gp-topics-10': {
+    defs: ['Sustainable development: development that meets the needs of the present without compromising future generations\'s ability to meet their needs', 'Carbon footprint: total greenhouse gas emissions caused directly and indirectly by an individual, organisation, or product'],
+    facts: ['UN Sustainable Development Goals (SDGs): 17 goals adopted by all 193 UN member states in 2015; deadline 2030', 'Paris Agreement (2015): nations committed to limiting global warming to 1.5–2°C above pre-industrial levels', 'Circular economy: design products to be reused, repaired, and recycled rather than discarded as waste', 'Tragedy of the commons: shared resources (fishing stocks, clean air) are overexploited without collective management rules', 'Climate change effects: rising sea levels, more intense storms, droughts, biodiversity loss, food insecurity', 'Individual vs systemic change: debate over whether personal lifestyle choices or government/corporate policy is the primary driver of sustainability']
+  },
+  'gp-topics-11': {
+    defs: ['Digital divide: the gap between people who have access to modern information technology and those who do not', 'Artificial intelligence: computer systems that perform tasks normally requiring human intelligence'],
+    facts: ['Over 5 billion internet users globally (2024) but ~2.7 billion remain offline, mostly in developing countries', 'Social media connects people globally but amplifies misinformation and creates echo chambers', 'Surveillance capitalism: business model of collecting user data to target advertising (e.g. Google, Meta)', 'Automation threatens routine jobs while creating new demand for digital, creative, and social skills', 'AI ethics concerns: algorithmic bias, privacy violations, lack of accountability, autonomous weapons', 'Cybersecurity is an increasing threat to individuals, businesses, critical infrastructure, and national security']
+  },
+  'gp-topics-12': {
+    defs: ['Culture: the shared values, beliefs, customs, behaviours, and artefacts that characterise a group of people', 'Cultural imperialism: the domination of one culture over others through media, trade, and political influence'],
+    facts: ['Cultural identity provides a sense of belonging and community but can also lead to exclusion of others', 'UNESCO World Heritage Sites: protect places of outstanding cultural or natural significance for humanity', 'Diaspora communities: groups living outside their country of origin who maintain their cultural traditions', 'Religion is a major source of cultural identity; religious extremism can be a source of conflict', 'Traditional practices may be valued cultural heritage or may violate human rights (e.g. child marriage, FGM)', 'Youth culture often drives social and cultural change, sometimes creating tension with older generations']
+  },
+  'gp-topics-13': {
+    defs: ['Infrastructure: the fundamental physical systems a society needs to function (roads, power grids, water supply, internet)', 'Sustainable transport: methods of moving people and goods that minimise environmental impact'],
+    facts: ['Lack of infrastructure limits economic development and access to education and healthcare in rural areas', 'Belt and Road Initiative (China): large-scale infrastructure investment in Asia, Africa, and Europe; debated as development vs "debt trap diplomacy"', 'Electric vehicles reduce local air pollution but depend on clean electricity generation and require rare mineral mining', 'Aviation emits ~2.5% of global CO₂; it is difficult to decarbonise; carbon offset schemes are controversial', 'Investment in public transport is more energy-efficient per passenger than private car use', 'Smart cities use sensor networks and data analytics to manage traffic, waste, and energy more efficiently']
+  },
+  'gp-topics-14': {
+    defs: ['Food security: when all people, at all times, have physical, social, and economic access to sufficient, safe, and nutritious food', 'Water scarcity: the lack of sufficient available freshwater resources to meet the demands of water users'],
+    facts: ['~828 million people are chronically hungry (FAO 2022); about one-third of all food produced globally is wasted', 'Industrial agriculture produces high yields but causes soil degradation, water overuse, and pesticide pollution', 'GM crops can increase yield and pest resistance; controversial due to ecological risks and corporate control', 'Only 3% of Earth\'s water is fresh; agriculture uses ~70% of all freshwater withdrawals', 'Drip irrigation delivers water directly to plant roots — reduces agricultural water use by up to 70%', 'Virtual water: water embedded in exported food/products; water-stressed nations effectively "export" their scarce water']
+  },
+  'gp-topics-15': {
+    defs: ['Armed conflict: organised use of violence between states or non-state groups for political, territorial, or resource objectives', 'Peacebuilding: the long-term process of addressing root causes of conflict and creating conditions for lasting peace'],
+    facts: ['UN Security Council: 5 permanent members (USA, UK, France, Russia, China) each with veto power over resolutions', 'Proxy war: a conflict where external powers support opposing sides without direct military involvement (e.g. Syria, Yemen)', 'Civilian casualties: modern conflicts increasingly harm civilian populations; protected by Geneva Conventions', 'Terrorism: use of violence to achieve political/ideological aims; responses include policing and addressing root causes', 'Nuclear deterrence (MAD): theory that mutual assured destruction prevents major powers from going to war', 'Post-conflict reconstruction requires transitional justice, economic rebuilding, and social reconciliation']
+  },
+  'gp-topics-16': {
+    defs: ['Pandemic: an epidemic of infectious disease that spreads across multiple countries or continents', 'Universal Health Coverage (UHC): ensuring all people receive health services they need without financial hardship'],
+    facts: ['COVID-19 pandemic (from 2020): demonstrated global interconnectedness; accelerated vaccine and mRNA technology development', 'Non-communicable diseases (NCDs): heart disease, cancer, diabetes — now the leading causes of death worldwide', 'Communicable diseases (HIV/AIDS, malaria, TB): still cause millions of deaths annually, mainly in low-income countries', 'WHO (World Health Organization): coordinates global health responses and sets international health standards', 'Vaccine hesitancy: refusal or reluctance to vaccinate despite availability — a major barrier to disease eradication', 'Social determinants of health: poverty, education level, clean water access, and sanitation affect health outcomes more than healthcare access alone']
+  },
+  'gp-topics-17': {
+    defs: ['Human rights: the basic rights and freedoms to which every person is entitled regardless of nationality, sex, ethnicity, or religion', 'Universal Declaration of Human Rights (UDHR): landmark UN document (1948) listing 30 fundamental human rights for all people'],
+    facts: ['Civil and political rights: right to life, fair trial, free speech, freedom from torture, right to vote', 'Economic, social, and cultural rights: right to work, education, healthcare, and an adequate standard of living', 'Amnesty International and Human Rights Watch: NGOs that monitor and campaign against human rights abuses', 'Sovereignty vs intervention: debate over when outside actors are justified in intervening in a state\'s internal affairs', 'LGBTQ+ rights: legal in most Western nations but criminalised in approximately 70 countries as of 2024', 'Intersectionality: multiple forms of discrimination (e.g. race + gender + class) compound each other']
+  },
+  'gp-topics-18': {
+    defs: ['Lingua franca: a language used as a common means of communication between groups with different native languages', 'Language endangerment: a language is at risk of dying out because fewer people, especially children, are learning it'],
+    facts: ['Approximately 7,000 languages exist today; roughly half are endangered and may disappear within a century', 'English as a global lingua franca facilitates international trade and science but creates a power imbalance', 'Language loss means cultural loss: each language encodes unique knowledge, metaphors, and ways of understanding the world', 'Sign languages: hundreds of distinct national sign languages exist globally; separate from spoken languages', 'Multilingualism is linked to cognitive flexibility, cultural empathy, and economic advantages', 'AI translation technology is improving rapidly but still struggles with nuance, idiom, and cultural context']
   }
 };
 
@@ -2100,25 +2890,32 @@ function getTopicState() {
 
 function renderTopics() {
   const saved = getTopicState();
+  const userNotes = getUserNotes();
   Object.keys(topicData).forEach(listId => {
     const el = document.getElementById(listId);
     if (!el) return;
     el.innerHTML = topicData[listId].map(([num, name]) => {
       const key = listId + '-' + num + '-' + name.substring(0,10);
+      const safeKey = key.replace(/[^a-z0-9]/gi, '-');
       const state = saved[key] || 0;
       const cls = state === 1 ? 'shaky' : state === 2 ? 'confident' : '';
       const noteKey = listId.replace('-topics','').replace('ict-theory','ict-theory').replace('ict-practical','ict-practical') + '-topics-' + num;
       const notes = topicNotes[noteKey] || topicNotes[listId + '-' + num] || null;
-      const notesHtml = notes ? `<div class="topic-notes" id="tn-${key.replace(/[^a-z0-9]/gi,'-')}">
+      const notesHtml = notes ? `<div class="topic-notes" id="tn-${safeKey}">
         ${notes.defs ? `<div class="tn-label">Key Definitions</div><ul>${notes.defs.map(d=>`<li>${d}</li>`).join('')}</ul>` : ''}
         ${notes.formulae ? `<div class="tn-label">Formulae</div><ul>${notes.formulae.map(f=>`<li><span class="formula">${f}</span></li>`).join('')}</ul>` : ''}
         ${notes.facts ? `<div class="tn-label">Key Facts</div><ul>${notes.facts.map(f=>`<li>${f}</li>`).join('')}</ul>` : ''}
       </div>` : '';
+      const hasNote = !!userNotes[key];
+      const escapedKey = key.replace(/'/g, "\\'");
+      const userNoteHtml = `<textarea class="topic-note-area${hasNote ? ' open' : ''}" id="una-${safeKey}" onclick="event.stopPropagation()" oninput="saveTopicNote('${escapedKey}',this)" placeholder="Your personal notes...">${userNotes[key] ? userNotes[key].replace(/</g,'&lt;') : ''}</textarea>`;
       return `<div class="topic-item" onclick="expandTopic(this)">
         <span class="topic-num">${num}</span>
         <span class="topic-name">${name}</span>
+        <button class="topic-note-btn${hasNote ? ' has-note' : ''}" data-key="${key}" onclick="toggleTopicNote(this,event)" title="Personal notes">📝</button>
         <div class="topic-check ${cls}" data-key="${key}" onclick="toggleCheck(this, event)"></div>
         ${notesHtml}
+        ${userNoteHtml}
       </div>`;
     }).join('');
   });
@@ -2142,6 +2939,7 @@ function toggleCheck(el, e) {
   }
   localStorage.setItem('igcse-topics', JSON.stringify(saved));
   renderConfidenceBars();
+  recordActivity(0);
 }
 
 function renderConfidenceBars() {
@@ -2171,45 +2969,6 @@ renderTopics();
 renderConfidenceBars();
 
 // ========== EXAM TRACKER ==========
-function renderTracker() {
-  const grid = document.getElementById('trackerGrid');
-  const now = new Date();
-
-  grid.innerHTML = Object.keys(subjects).map(key => {
-    const s = subjects[key];
-    const examsHtml = s.exams.map(ex => {
-      let daysLeft = null;
-      let badgeHtml = '';
-      if (ex.iso) {
-        const examDate = new Date(ex.iso + 'T00:00:00');
-        daysLeft = Math.ceil((examDate - now) / (1000*60*60*24));
-        let badgeClass = 'ok';
-        if (daysLeft <= 0) badgeClass = 'done';
-        else if (daysLeft < 60) badgeClass = 'urgent';
-        else if (daysLeft < 90) badgeClass = 'soon';
-        badgeHtml = daysLeft <= 0
-          ? '<span class="days-badge done">Done</span>'
-          : `<span class="days-badge ${badgeClass}">${daysLeft}d</span>`;
-      } else {
-        badgeHtml = '<span class="days-badge ok" style="opacity:0.5">CW</span>';
-      }
-
-      return `<div class="tracker-exam">
-        <div>
-          <div style="font-weight:500">${ex.paper}</div>
-          <div class="te-date">${ex.date} · ${ex.session} · ${ex.duration}${ex.code !== '—' ? ' · <span style="opacity:0.6">' + ex.code + '</span>' : ''}</div>
-        </div>
-        ${badgeHtml}
-      </div>`;
-    }).join('');
-
-    return `<div class="tracker-subject">
-      <div class="ts-name">${s.name}</div>
-      <div class="ts-code">${s.code}</div>
-      ${examsHtml}
-    </div>`;
-  }).join('');
-}
 renderTracker();
 
 // ========== PAST PAPERS HUB ==========
@@ -2317,8 +3076,8 @@ function getGrade(pct, bounds) {
 const paperOptions = {
   ict:      [
     { label: 'Paper 1 — Theory',                                    max: 80  },
-    { label: 'Paper 2 — Document Production, Databases & Pres.',    max: 80  },
-    { label: 'Paper 3 — Spreadsheets & Data Manipulation',          max: 80  }
+    { label: 'Paper 2 — Document Production, Databases & Pres.',    max: 70  },
+    { label: 'Paper 3 — Spreadsheets & Data Manipulation',          max: 70  }
   ],
   cs:       [
     { label: 'Paper 1 — Computer Systems',                          max: 75  },
@@ -2471,7 +3230,7 @@ function renderAstarPanel() {
     </div>`;
   }).join('');
   const hasAny = Object.keys(TT_SUBJECTS).some(id => getSubjAvgPct(id) !== null);
-  el.innerHTML = `<h4 style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:10px">A* Tracker</h4>
+  el.innerHTML = `<h4 style="font-family:'Syne',sans-serif;font-size:18px;margin-bottom:10px">A* Tracker</h4>
     <p style="color:var(--text3);font-size:12px;margin-bottom:16px">${hasAny
       ? 'Based on your logged past paper scores. Green = on track, amber = close, red = needs work.'
       : 'Log past paper scores below to track your A* trajectory per subject.'}</p>
@@ -2748,6 +3507,952 @@ if (!localStorage.getItem('igcse-scores')) {
 renderScores();      // also calls renderAstarPanel() and renderTimetable()
 onSubjectChange();   // populate paper dropdown on load
 buildImportTable();  // pre-populate import form rows
+
+// ========== GRADE CALCULATOR ==========
+const subjColors = { ict:'var(--blue)', cs:'var(--purple)', business:'var(--green)',
+  engfirst:'var(--accent)', englit:'var(--pink)', science:'var(--red)',
+  addmath:'var(--cyan)', gp:'var(--teal)' };
+
+function renderGradeCalc() {
+  const el = document.getElementById('gcGrid');
+  if (!el) return;
+  const scores = JSON.parse(localStorage.getItem('igcse-scores') || '[]');
+  el.innerHTML = Object.keys(paperOptions).map(subj => {
+    const papers = paperOptions[subj];
+    const bounds = gradeBoundaries[subj];
+    const totalMax = papers.reduce((s, p) => s + p.max, 0);
+    const paperRows = papers.map((p, i) => {
+      // pre-fill with best logged score for this paper
+      const logged = scores.filter(s => s.subj === subj &&
+        s.paper.toLowerCase().includes(p.label.split('—')[0].trim().toLowerCase()));
+      const best = logged.length ? Math.max(...logged.map(s => s.score)) : '';
+      return `<div class="gc-paper-row">
+        <span class="gc-paper-label">${p.label.split('—')[1]?.trim() || p.label}</span>
+        <input class="gc-paper-input" type="number" min="0" max="${p.max}"
+          id="gc-${subj}-${i}" value="${best}" placeholder="—" oninput="updateGcCard('${subj}')">
+        <span class="gc-paper-max">/${p.max}</span>
+      </div>`;
+    }).join('');
+    return `<div class="gc-card" id="gcc-${subj}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+        <span style="width:8px;height:8px;border-radius:50%;background:${subjColors[subj]};flex-shrink:0;display:inline-block"></span>
+        <h4>${subjNames[subj]}</h4>
+      </div>
+      <div class="gc-subcode">${(subjects[subj]||{}).code||''} · Total: ${totalMax} marks</div>
+      ${paperRows}
+      <div class="gc-results" id="gcr-${subj}"></div>
+    </div>`;
+  }).join('');
+  Object.keys(paperOptions).forEach(s => updateGcCard(s));
+}
+
+function updateGcCard(subj) {
+  const papers = paperOptions[subj];
+  const bounds = gradeBoundaries[subj];
+  const totalMax = papers.reduce((s, p) => s + p.max, 0);
+  let enteredTotal = 0, enteredMax = 0;
+  let allEntered = true;
+  papers.forEach((p, i) => {
+    const inp = document.getElementById(`gc-${subj}-${i}`);
+    if (!inp) return;
+    const v = inp.value.trim();
+    if (v !== '' && v !== '—') { enteredTotal += Math.min(parseFloat(v)||0, p.max); enteredMax += p.max; }
+    else allEntered = false;
+  });
+  const remainingMax = totalMax - enteredMax;
+  const el = document.getElementById(`gcr-${subj}`);
+  if (!el) return;
+  if (enteredMax === 0) { el.innerHTML = '<div style="font-size:12px;color:var(--text3)">Enter scores above to see what you need</div>'; return; }
+  const gradeRows = [
+    { g: 'A*', cls: 'astar', pct: bounds.astar },
+    { g: 'A',  cls: 'a',     pct: bounds.a },
+    { g: 'B',  cls: 'b',     pct: bounds.b },
+    { g: 'C',  cls: 'c',     pct: bounds.c }
+  ].map(({ g, cls, pct }) => {
+    const needed = Math.ceil(totalMax * pct / 100) - enteredTotal;
+    let label, extraCls = '';
+    if (needed <= 0) { label = 'Already achieved ✓'; extraCls = 'achieved'; }
+    else if (remainingMax <= 0) { label = 'No papers remaining'; extraCls = 'impossible'; }
+    else if (needed > remainingMax) { label = `Need ${needed}/${remainingMax} — not achievable`; extraCls = 'impossible'; }
+    else { const needPct = Math.round(needed / remainingMax * 100); label = `Need <strong>${needed}/${remainingMax}</strong> on remaining (${needPct}%)`; }
+    return `<div class="gc-grade-row">
+      <span class="gc-grade-chip ${cls}">${g}</span>
+      <span class="gc-need ${extraCls}">${label}</span>
+    </div>`;
+  }).join('');
+  const currentPct = Math.round(enteredTotal / enteredMax * 100);
+  el.innerHTML = `<div style="font-size:11px;color:var(--text3);margin-bottom:8px">
+    Entered so far: ${enteredTotal}/${enteredMax} (${currentPct}%)
+  </div>${gradeRows}`;
+}
+
+// ========== FORMULA SHEET ==========
+const fsSubjInfo = {
+  ict:      { name:'ICT', color:'var(--blue)' },
+  cs:       { name:'Computer Science', color:'var(--purple)' },
+  business: { name:'Business Studies', color:'var(--green)' },
+  science:  { name:'Sciences', color:'var(--red)' },
+  addmath:  { name:'Add Maths', color:'var(--cyan)' }
+};
+
+function renderFormulaSheet() {
+  const el = document.getElementById('formulaSheet');
+  if (!el) return;
+  // group formulae by subject
+  const grouped = {};
+  Object.entries(topicNotes).forEach(([noteKey, notes]) => {
+    if (!notes.formulae || !notes.formulae.length) return;
+    const tdKey = noteKey.replace(/-\d+$/, '');
+    let subj = null;
+    for (const [s, keys] of Object.entries(subjectTopics)) { if (keys.includes(tdKey)) { subj = s; break; } }
+    if (!subj) return;
+    if (!grouped[subj]) grouped[subj] = [];
+    grouped[subj].push({ topic: getTopicName(noteKey), formulae: notes.formulae });
+  });
+  el.innerHTML = Object.entries(grouped).map(([subj, groups]) => {
+    const info = fsSubjInfo[subj] || { name: subj, color: 'var(--text3)' };
+    const cards = groups.map(g => `<div class="fs-card">
+      <div class="fs-card-title">${g.topic}</div>
+      ${g.formulae.map(f => `<div class="fs-formula">${f}</div>`).join('')}
+    </div>`).join('');
+    return `<div class="fs-subject">
+      <div class="fs-subject-title">
+        <span class="fs-subject-dot" style="background:${info.color}"></span>
+        ${info.name}
+      </div>
+      <div class="fs-cards">${cards}</div>
+    </div>`;
+  }).join('');
+}
+
+// ========== SHARED FLASHCARD UTILITIES ==========
+function getTopicName(noteKey) {
+  const tdKey = noteKey.replace(/-\d+$/, '');
+  const num = noteKey.match(/-(\d+)$/)[1];
+  const list = topicData[tdKey] || [];
+  // match exact string OR strip letter prefix (e.g. 'B1' → '1', 'P4' → '4')
+  const entry = list.find(([n]) => String(n) === num || String(n).replace(/^[A-Za-z]+/, '') === num);
+  return entry ? entry[1] : noteKey;
+}
+
+function getFlashcards(subjFilter) {
+  const cards = [];
+  Object.entries(topicNotes).forEach(([noteKey, notes]) => {
+    const tdKey = noteKey.replace(/-\d+$/, '');
+    let subj = null;
+    for (const [s, keys] of Object.entries(subjectTopics)) { if (keys.includes(tdKey)) { subj = s; break; } }
+    if (!subj) return;
+    if (subjFilter && subjFilter !== 'all' && subj !== subjFilter) return;
+    const topicName = getTopicName(noteKey);
+    (notes.defs || []).forEach((def, i) => {
+      const term = def.split(':')[0].trim();
+      const q = `Define: ${term}`;
+      cards.push({ id: `${noteKey}-d${i}`, subj, topicName, type: 'def', question: q, answer: def, name: q });
+    });
+    (notes.formulae || []).forEach((f, i) => {
+      const label = f.split('=')[0].trim();
+      const q = `${label} = ?`;
+      cards.push({ id: `${noteKey}-m${i}`, subj, topicName, type: 'formula', question: q, answer: f, name: q });
+    });
+    (notes.facts || []).forEach((fact, i) => {
+      cards.push({ id: `${noteKey}-f${i}`, subj, topicName, type: 'fact', question: topicName, answer: fact, name: fact.length > 60 ? fact.slice(0, 57) + '…' : fact });
+    });
+  });
+  return cards;
+}
+
+// ========== FLASHCARDS ==========
+let fcDeck = [], fcIndex = 0, fcQuizMode = false;
+
+function initFlashcards() {
+  const subj = document.getElementById('fcSubject')?.value || 'all';
+  fcDeck = getFlashcards(subj);
+  fcIndex = 0;
+  fcQuizMode = false;
+  showCard();
+}
+
+function startQuiz() {
+  const subj = document.getElementById('fcSubject')?.value || 'all';
+  const all = getFlashcards(subj);
+  // prioritise due/new cards, fill rest randomly
+  const sr = getSRData();
+  const now = Date.now();
+  const due = all.filter(c => { const d = sr[c.id]; return !d || d.next <= now; });
+  const shuffle = arr => arr.sort(() => Math.random() - 0.5);
+  fcDeck = shuffle(due).concat(shuffle(all.filter(c => { const d = sr[c.id]; return d && d.next > now; }))).slice(0, 5);
+  fcIndex = 0;
+  fcQuizMode = true;
+  showCard();
+}
+
+function shuffleFlashcards() {
+  fcDeck = fcDeck.sort(() => Math.random() - 0.5);
+  fcIndex = 0;
+  showCard();
+}
+
+function showCard() {
+  if (!fcDeck.length) {
+    document.getElementById('fcFront').innerHTML = '<div class="fc-topic-name">No cards available</div>';
+    document.getElementById('fcBack').innerHTML = '';
+    document.getElementById('fcCounter').textContent = '0 / 0';
+    document.getElementById('fcRate').style.display = 'none';
+    return;
+  }
+  const card = fcDeck[fcIndex];
+  document.getElementById('fcInner').classList.remove('flipped');
+  const typeLabels = { def: '📖 Definition', formula: '🔢 Formula', fact: '💡 Key Fact' };
+  document.getElementById('fcFront').innerHTML = `
+    <div class="fc-subj-tag">${subjNames[card.subj] || card.subj}</div>
+    <div class="fc-topic-label">${card.topicName}</div>
+    <span class="fc-type-badge fc-type-${card.type}">${typeLabels[card.type] || card.type}</span>
+    <div class="fc-question-text">${card.question}</div>
+    <div class="fc-tap-hint">Tap to reveal →</div>`;
+  const answerHtml = card.type === 'formula'
+    ? `<div class="fc-type-badge fc-type-formula" style="margin-bottom:12px">Answer</div><span class="fc-answer-formula">${card.answer}</span>`
+    : `<div class="fc-type-badge fc-type-${card.type}" style="margin-bottom:12px">Answer</div><div class="fc-answer-content">${card.answer}</div>`;
+  document.getElementById('fcBack').innerHTML = answerHtml;
+  document.getElementById('fcCounter').textContent = `${fcIndex + 1} / ${fcDeck.length}`;
+  document.getElementById('fcRate').style.display = 'none';
+}
+
+function flipCard() {
+  const inner = document.getElementById('fcInner');
+  inner.classList.toggle('flipped');
+  if (inner.classList.contains('flipped')) {
+    document.getElementById('fcRate').style.display = fcQuizMode ? 'flex' : 'none';
+  }
+}
+
+function nextCard() { if (fcDeck.length) { fcIndex = (fcIndex + 1) % fcDeck.length; showCard(); } }
+function prevCard() { if (fcDeck.length) { fcIndex = (fcIndex - 1 + fcDeck.length) % fcDeck.length; showCard(); } }
+
+function rateCard(passed) {
+  const card = fcDeck[fcIndex];
+  updateSR(card.id, passed);
+  recordActivity(0);
+  // advance to next
+  fcIndex = (fcIndex + 1) % fcDeck.length;
+  showCard();
+  renderReviewQueue();
+}
+
+// ========== SPACED REPETITION ==========
+const SR_KEY = 'igcse-sr';
+
+function getSRData() { return JSON.parse(localStorage.getItem(SR_KEY) || '{}'); }
+function saveSRData(d) { localStorage.setItem(SR_KEY, JSON.stringify(d)); }
+
+function updateSR(topicId, passed) {
+  const d = getSRData();
+  const prev = d[topicId] || { interval: 1, next: 0 };
+  const newInterval = passed ? Math.min(prev.interval * 2, 30) : 1;
+  d[topicId] = { interval: newInterval, next: Date.now() + newInterval * 86400000, lastPassed: passed };
+  saveSRData(d);
+  syncTopicConfidence();
+}
+
+function renderReviewQueue() {
+  const el = document.getElementById('rqContent');
+  if (!el) return;
+  const sr = getSRData();
+  const now = Date.now();
+  const all = getFlashcards('all');
+  const due = [], upcoming = [];
+  all.forEach(card => {
+    const d = sr[card.id];
+    if (!d) return; // never reviewed — not scheduled yet
+    if (d.next <= now) due.push({ ...card, overdue: Math.floor((now - d.next) / 86400000) });
+    else upcoming.push({ ...card, daysLeft: Math.ceil((d.next - now) / 86400000) });
+  });
+  const totalReviewed = Object.keys(sr).length;
+  const totalCards = all.length;
+  const statsHtml = `<div class="rq-stats">
+    <div class="rq-stat"><strong>${due.length}</strong>Due today</div>
+    <div class="rq-stat"><strong>${totalReviewed}</strong>Scheduled</div>
+    <div class="rq-stat"><strong>${totalCards - totalReviewed}</strong>Not yet started</div>
+  </div>`;
+  if (!due.length && !upcoming.length) {
+    el.innerHTML = statsHtml + `<div class="rq-empty">Nothing due yet — complete some flashcards in Quiz mode to build your review schedule.</div>`;
+    return;
+  }
+  const makeItem = (c, badge) => `<div class="rq-item" onclick="jumpToFlashcard('${c.id}')">
+    <span class="rq-item-dot" style="background:${subjColors[c.subj]}"></span>
+    <span class="rq-item-name">${c.name}</span>
+    <span class="rq-item-subj" style="font-size:11px;color:var(--text3)">${subjNames[c.subj]||c.subj}</span>
+    ${badge}
+  </div>`;
+  let html = statsHtml;
+  if (due.length) html += `<div class="rq-section"><div class="rq-section-title">Due Today (${due.length})</div>
+    <div class="rq-items">${due.map(c => makeItem(c, `<span class="rq-item-overdue">${c.overdue > 0 ? c.overdue+'d overdue' : 'Today'}</span>`)).join('')}</div></div>`;
+  const soon = upcoming.filter(c => c.daysLeft <= 3);
+  if (soon.length) html += `<div class="rq-section"><div class="rq-section-title">Coming Up (next 3 days)</div>
+    <div class="rq-items">${soon.map(c => makeItem(c, `<span class="rq-item-interval">in ${c.daysLeft}d</span>`)).join('')}</div></div>`;
+  el.innerHTML = html;
+}
+
+function jumpToFlashcard(topicId) {
+  const tdKey = topicId.replace(/-\d+$/, '');
+  let subj = null;
+  for (const [s, keys] of Object.entries(subjectTopics)) { if (keys.includes(tdKey)) { subj = s; break; } }
+  navigateTo('flashcards');
+  const sel = document.getElementById('fcSubject');
+  if (sel && subj) { sel.value = subj; }
+  fcDeck = getFlashcards(subj || 'all');
+  const idx = fcDeck.findIndex(c => c.id.startsWith(topicId + '-'));
+  fcIndex = Math.max(0, idx);
+  fcQuizMode = true;
+  showCard();
+}
+
+// ========== POMODORO TIMER ==========
+const POMO_KEY = 'igcse-pomodoro';
+let pomoTimer = null, pomoSeconds = 25 * 60, pomoRunning = false, pomoPhaseWork = true, pomoSession = 0;
+
+function getPomoData() { return JSON.parse(localStorage.getItem(POMO_KEY) || '{}'); }
+function savePomoData(d) { localStorage.setItem(POMO_KEY, JSON.stringify(d)); }
+
+function togglePomo() {
+  const w = document.getElementById('pomodoroWidget');
+  const visible = w.style.display !== 'none';
+  w.style.display = visible ? 'none' : 'block';
+  document.getElementById('pomoSidebarBtn').classList.toggle('active', !visible);
+  if (!visible) renderPomoStats();
+}
+function hidePomo() {
+  document.getElementById('pomodoroWidget').style.display = 'none';
+  document.getElementById('pomoSidebarBtn').classList.remove('active');
+}
+
+function pomoStartStop() {
+  if (pomoRunning) {
+    clearInterval(pomoTimer);
+    pomoRunning = false;
+    document.getElementById('pomoStartBtn').textContent = '▶ Resume';
+  } else {
+    pomoRunning = true;
+    document.getElementById('pomoStartBtn').textContent = '⏸ Pause';
+    pomoTimer = setInterval(() => {
+      pomoSeconds--;
+      updatePomoDisplay();
+      if (pomoSeconds <= 0) {
+        clearInterval(pomoTimer);
+        pomoRunning = false;
+        if (pomoPhaseWork) {
+          // log completed session
+          const subj = document.getElementById('pomoSubject').value;
+          const data = getPomoData();
+          data[subj] = (data[subj] || 0) + 25;
+          savePomoData(data);
+          recordActivity(25);
+          pomoSession++;
+          pomoPhaseWork = false;
+          pomoSeconds = 5 * 60;
+          document.getElementById('pomoPhase').textContent = 'Break';
+          document.getElementById('pomoTitle').textContent = '☕ Take a break';
+        } else {
+          pomoPhaseWork = true;
+          pomoSeconds = 25 * 60;
+          document.getElementById('pomoPhase').textContent = 'Focus';
+          document.getElementById('pomoTitle').textContent = 'Study Session';
+        }
+        document.getElementById('pomoStartBtn').textContent = '▶ Start';
+        renderPomoStats();
+      }
+    }, 1000);
+  }
+}
+
+function pomoReset() {
+  clearInterval(pomoTimer);
+  pomoRunning = false;
+  pomoPhaseWork = true;
+  pomoSeconds = 25 * 60;
+  document.getElementById('pomoStartBtn').textContent = '▶ Start';
+  document.getElementById('pomoPhase').textContent = 'Focus';
+  document.getElementById('pomoTitle').textContent = 'Study Session';
+  updatePomoDisplay();
+}
+
+function updatePomoDisplay() {
+  const m = Math.floor(pomoSeconds / 60), s = pomoSeconds % 60;
+  document.getElementById('pomoTime').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+function renderPomoStats() {
+  const el = document.getElementById('pomoStats');
+  if (!el) return;
+  const data = getPomoData();
+  const lines = Object.entries(data).map(([s, m]) => `${subjNames[s]||s}: ${Math.round(m/60*10)/10}h`);
+  el.innerHTML = lines.length ? `Today's sessions: ${pomoSession} · ` + lines.join(' · ') : `Sessions today: ${pomoSession}`;
+}
+
+// ========== F5: EXAM STRATEGY ==========
+const examStrategy = {
+  ict:      'Use correct terminology in every answer and name files exactly as instructed — marks are lost for wrong file formats and imprecise naming.',
+  cs:       'Write pseudocode in Cambridge notation with DECLARE statements and proper indentation; show every trace table step with a ruler.',
+  business: 'Use the company name and data from the case study in every answer — generic theory scores limited marks.',
+  engfirst: 'Plan your composition for 5 minutes; open with something striking and vary sentence length throughout.',
+  englit:   'Avoid plot summary — analyse language choices and link technique → effect → theme in every paragraph.',
+  science:  'Show all working for calculations even if the final answer is wrong; method marks are available.',
+  addmath:  'Show all algebraic steps — unsupported calculator answers score zero; leave answers in exact form on Paper 1.',
+  gp:       'Focus on skills not content — always give reasoned judgements with evidence from the sources provided.'
+};
+
+// ========== F1: STREAK TRACKING ==========
+const STREAK_KEY = 'igcse-streak';
+
+function getTodayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function recordActivity(mins) {
+  const data = JSON.parse(localStorage.getItem(STREAK_KEY) || '{}');
+  const today = getTodayKey();
+  if (!data[today]) data[today] = { minutes: 0, actions: 0 };
+  data[today].minutes += mins;
+  data[today].actions += 1;
+  localStorage.setItem(STREAK_KEY, JSON.stringify(data));
+  renderStreak();
+}
+
+function renderStreak() {
+  const gridEl = document.getElementById('streakGrid');
+  const statsEl = document.getElementById('streakStats');
+  if (!gridEl || !statsEl) return;
+  const data = JSON.parse(localStorage.getItem(STREAK_KEY) || '{}');
+  const todayKey = getTodayKey();
+
+  // Build 84-day window (12 weeks), starting from the Monday 12 weeks ago
+  const today = new Date();
+  const dow = today.getDay(); // 0=Sun
+  const daysToMonday = dow === 0 ? 6 : dow - 1;
+  const startDate = new Date(today);
+  startDate.setDate(startDate.getDate() - daysToMonday - 77);
+  const days = [];
+  for (let i = 0; i < 84; i++) {
+    const d = new Date(startDate);
+    d.setDate(startDate.getDate() + i);
+    days.push(d.toISOString().slice(0, 10));
+  }
+
+  // Current streak (consecutive days back from today)
+  let currentStreak = 0;
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const k = d.toISOString().slice(0, 10);
+    if (data[k] && data[k].actions > 0) {
+      currentStreak++;
+    } else {
+      if (i > 0) break;
+    }
+  }
+
+  // Longest streak
+  const allActive = Object.keys(data).filter(k => data[k].actions > 0).sort();
+  let longest = 0, runLen = 0, prevD = null;
+  allActive.forEach(k => {
+    const d = new Date(k + 'T00:00:00');
+    if (prevD) {
+      const diff = Math.round((d - prevD) / 86400000);
+      runLen = diff === 1 ? runLen + 1 : 1;
+    } else { runLen = 1; }
+    longest = Math.max(longest, runLen);
+    prevD = d;
+  });
+
+  const activeDays = Object.keys(data).filter(k => data[k] && data[k].actions > 0).length;
+  statsEl.innerHTML = `
+    <div class="streak-stat"><div class="ss-val">${currentStreak}</div><div class="ss-lbl">Current Streak</div></div>
+    <div class="streak-stat"><div class="ss-val">${longest}</div><div class="ss-lbl">Longest Streak</div></div>
+    <div class="streak-stat"><div class="ss-val">${activeDays}</div><div class="ss-lbl">Active Days</div></div>`;
+
+  gridEl.innerHTML = days.map(k => {
+    const a = data[k] ? data[k].actions : 0;
+    let lvl = 0;
+    if (a >= 1 && a <= 2) lvl = 1;
+    else if (a >= 3 && a <= 5) lvl = 2;
+    else if (a >= 6 && a <= 9) lvl = 3;
+    else if (a >= 10) lvl = 4;
+    const isToday = k === todayKey;
+    const isFuture = k > todayKey;
+    if (isFuture) return `<div class="streak-cell" style="opacity:0.2" title="${k}"></div>`;
+    return `<div class="streak-cell${lvl ? ' l'+lvl : ''}${isToday ? ' today' : ''}" title="${k}: ${a} actions"></div>`;
+  }).join('');
+}
+
+// ========== F2: SYNC TOPIC CONFIDENCE ==========
+function syncTopicConfidence() {
+  const sr = getSRData();
+  const allCards = getFlashcards('all');
+  const byNote = {};
+  allCards.forEach(card => {
+    const noteKey = card.id.replace(/-[dmf]\d+$/, '');
+    if (!byNote[noteKey]) byNote[noteKey] = [];
+    byNote[noteKey].push(card);
+  });
+  const topicState = getTopicState();
+  Object.entries(byNote).forEach(([noteKey, cards]) => {
+    const tdKey = noteKey.replace(/-\d+$/, '');
+    const numMatch = noteKey.match(/-(\d+)$/);
+    if (!numMatch || !topicData[tdKey]) return;
+    const num = numMatch[1];
+    const entry = topicData[tdKey].find(([n]) => String(n) === num || String(n).replace(/^[A-Za-z]+/, '') === num);
+    if (!entry) return;
+    const key = tdKey + '-' + num + '-' + entry[1].substring(0, 10);
+    const reviewed = cards.filter(c => sr[c.id] !== undefined);
+    if (reviewed.length === 0) return;
+    const passedLast = cards.filter(c => sr[c.id] && sr[c.id].lastPassed === true);
+    const newState = passedLast.length === cards.length ? 2 : 1;
+    if (newState > (topicState[key] || 0)) topicState[key] = newState;
+  });
+  localStorage.setItem('igcse-topics', JSON.stringify(topicState));
+  renderConfidenceBars();
+}
+
+// ========== F3: MOCK EXAM MODE ==========
+let mockMode = false, mockQueue = [], mockIndex = 0, mockResults = [], mockTimerInterval = null;
+
+function startMockExam() {
+  const all = getFlashcards('all');
+  const sr = getSRData();
+  const now = Date.now();
+  const due = all.filter(c => { const d = sr[c.id]; return !d || d.next <= now; });
+  const rest = all.filter(c => { const d = sr[c.id]; return d && d.next > now; });
+  const shuffle = a => [...a].sort(() => Math.random() - 0.5);
+  mockQueue = shuffle(due).concat(shuffle(rest)).slice(0, 20);
+  if (mockQueue.length === 0) { alert('No flashcards available. Add some notes first.'); return; }
+  mockIndex = 0;
+  mockResults = [];
+  mockMode = true;
+  showMockCard();
+}
+
+function showMockCard() {
+  clearInterval(mockTimerInterval);
+  const card = mockQueue[mockIndex];
+  if (!card) { showMockResults(); return; }
+  let timeLeft = 30;
+
+  // Build mock UI replacing #fcDeck contents
+  const deckEl = document.getElementById('fcDeck');
+  deckEl.innerHTML = `
+    <div class="mock-header">
+      <h4>📝 Mock Exam</h4>
+      <div class="mock-progress">Card ${mockIndex + 1} of ${mockQueue.length}</div>
+    </div>
+    <div class="mock-timer-bar"><div class="mock-timer-fill" id="mockTimerFill" style="width:100%"></div></div>
+    <div class="fc-card" id="fcCard" onclick="flipCard()" style="cursor:pointer">
+      <div class="fc-inner" id="fcInner">
+        <div class="fc-front" id="fcFront"></div>
+        <div class="fc-back" id="fcBack"></div>
+      </div>
+    </div>
+    <div class="mock-btns">
+      <button class="btn-rate fail" onclick="mockAnswer(false)">✗ Don't know</button>
+      <button class="btn-rate pass" onclick="mockAnswer(true)">✓ Know it</button>
+    </div>`;
+
+  // Render card faces
+  const typeBadge = card.type === 'def' ? 'fc-type-def' : card.type === 'formula' ? 'fc-type-formula' : 'fc-type-fact';
+  const typeLabel = card.type === 'def' ? 'Definition' : card.type === 'formula' ? 'Formula' : 'Key Fact';
+  document.getElementById('fcFront').innerHTML = `
+    <span class="fc-type-badge ${typeBadge}">${typeLabel}</span>
+    <div class="fc-topic-label">${card.topicName}</div>
+    <div class="fc-question-text">${card.question}</div>
+    <div class="fc-tap-hint">Tap to reveal</div>`;
+  const answerHtml = card.type === 'formula'
+    ? `<code class="fc-answer-formula">${card.answer}</code>`
+    : `<div class="fc-answer-content">${card.answer}</div>`;
+  document.getElementById('fcBack').innerHTML = `
+    <span class="fc-type-badge ${typeBadge}">${typeLabel}</span>
+    <div class="fc-topic-label">${card.topicName}</div>
+    <div class="fc-back-label">Answer</div>
+    ${answerHtml}`;
+  document.getElementById('fcInner').classList.remove('flipped');
+
+  // Start 30s countdown
+  const fillEl = document.getElementById('mockTimerFill');
+  mockTimerInterval = setInterval(() => {
+    timeLeft--;
+    if (fillEl) fillEl.style.width = Math.max(0, (timeLeft / 30) * 100) + '%';
+    if (timeLeft <= 0) {
+      clearInterval(mockTimerInterval);
+      mockAnswer(false); // auto-fail on timeout
+    }
+  }, 1000);
+}
+
+function mockAnswer(passed) {
+  clearInterval(mockTimerInterval);
+  const card = mockQueue[mockIndex];
+  mockResults.push({ card, passed });
+  updateSR(card.id, passed);
+  recordActivity(0);
+  mockIndex++;
+  if (mockIndex < mockQueue.length) {
+    showMockCard();
+  } else {
+    showMockResults();
+  }
+}
+
+function showMockResults() {
+  mockMode = false;
+  const correct = mockResults.filter(r => r.passed).length;
+  const total = mockResults.length;
+  const pct = Math.round((correct / total) * 100);
+
+  // Breakdown by type
+  const byType = { def: [0,0], formula: [0,0], fact: [0,0] };
+  mockResults.forEach(r => {
+    const t = r.card.type;
+    byType[t][0] += r.passed ? 1 : 0;
+    byType[t][1]++;
+  });
+  const typeRows = Object.entries(byType).filter(([,v]) => v[1] > 0).map(([t,[c,tot]]) =>
+    `<tr><td>${t === 'def' ? 'Definitions' : t === 'formula' ? 'Formulae' : 'Key Facts'}</td><td>${c}/${tot}</td><td>${Math.round(c/tot*100)}%</td></tr>`).join('');
+
+  // Save to mock log
+  const log = JSON.parse(localStorage.getItem('igcse-mock-log') || '[]');
+  log.push({ date: new Date().toISOString(), total, correct, pct, breakdown: { def: byType.def, formula: byType.formula, fact: byType.fact } });
+  localStorage.setItem('igcse-mock-log', JSON.stringify(log));
+
+  const deckEl = document.getElementById('fcDeck');
+  deckEl.innerHTML = `
+    <div class="mock-results">
+      <h4>Mock Exam Complete</h4>
+      <div class="mock-score-big">${correct}/${total}</div>
+      <div style="font-size:16px;color:var(--text2);margin-bottom:8px">${pct}%</div>
+      <table class="mock-breakdown">
+        <tr><th>Type</th><th>Score</th><th>%</th></tr>
+        ${typeRows}
+      </table>
+      <button class="btn-eb-primary" onclick="endMockExam()" style="margin-top:8px">Back to Flashcards</button>
+    </div>`;
+}
+
+function endMockExam() {
+  mockMode = false;
+  initFlashcards();
+  renderReviewQueue();
+}
+
+// ========== F4: EXAM DAY BRIEFING ==========
+function renderTracker() {
+  const grid = document.getElementById('trackerGrid');
+  const now = new Date();
+  grid.innerHTML = Object.keys(subjects).map(key => {
+    const s = subjects[key];
+    const examsHtml = s.exams.map((ex, exIdx) => {
+      let badgeHtml = '';
+      if (ex.iso) {
+        const examDate = new Date(ex.iso + 'T00:00:00');
+        const daysLeft = Math.ceil((examDate - now) / (1000*60*60*24));
+        let badgeClass = daysLeft <= 0 ? 'done' : daysLeft < 60 ? 'urgent' : daysLeft < 90 ? 'soon' : 'ok';
+        badgeHtml = daysLeft <= 0
+          ? '<span class="days-badge done">Done</span>'
+          : `<span class="days-badge ${badgeClass}">${daysLeft}d</span>`;
+      } else {
+        badgeHtml = '<span class="days-badge ok" style="opacity:0.5">CW</span>';
+      }
+      return `<div class="tracker-exam" onclick="openExamBriefing('${key}',${exIdx})">
+        <div>
+          <div style="font-weight:500">${ex.paper}</div>
+          <div class="te-date">${ex.date} · ${ex.session} · ${ex.duration}${ex.code !== '—' ? ' · <span style="opacity:0.6">' + ex.code + '</span>' : ''}</div>
+        </div>
+        ${badgeHtml}
+      </div>`;
+    }).join('');
+    return `<div class="tracker-subject">
+      <div class="ts-name">${s.name}</div>
+      <div class="ts-code">${s.code}</div>
+      ${examsHtml}
+    </div>`;
+  }).join('');
+}
+
+function openExamBriefing(subjKey, examIdx) {
+  const s = subjects[subjKey];
+  const ex = s.exams[examIdx];
+  const topicState = getTopicState();
+  const listIds = subjectTopics[subjKey] || [];
+
+  // Collect all topics for this subject, sorted by state (weakest first)
+  const allTopics = [];
+  listIds.forEach(lid => {
+    (topicData[lid] || []).forEach(([num, name]) => {
+      const k = lid + '-' + num + '-' + name.substring(0, 10);
+      allTopics.push({ name, state: topicState[k] || 0 });
+    });
+  });
+  allTopics.sort((a, b) => a.state - b.state);
+  const weakest = allTopics.slice(0, 5);
+
+  const weakChips = weakest.length
+    ? weakest.map(t => `<span class="eb-chip ${t.state === 0 ? 'weak' : 'amber'}">${t.name}</span>`).join('')
+    : '<span style="color:var(--text3);font-size:13px">No topics found — open the subject to check them off.</span>';
+
+  // Collect formulae
+  const formulae = [];
+  listIds.forEach(lid => {
+    (topicData[lid] || []).forEach(([num]) => {
+      const nk = lid + '-' + num;
+      const notes = topicNotes[nk] || topicNotes[lid.replace('-topics','') + '-topics-' + num] || null;
+      if (notes && notes.formulae) formulae.push(...notes.formulae);
+    });
+  });
+  const formulaeHtml = formulae.length
+    ? formulae.slice(0, 8).map(f => `<span class="eb-formula">${f}</span>`).join('')
+    : '<span style="color:var(--text3);font-size:13px">No formulae in notes for this subject.</span>';
+
+  const strategy = examStrategy[subjKey] || 'Read each question carefully and manage your time across all parts.';
+
+  document.getElementById('ebContent').innerHTML = `
+    <div class="eb-subject">${s.code} · ${ex.session}</div>
+    <div class="eb-title">${s.name} — ${ex.paper}</div>
+    <div class="eb-meta">${ex.date} · ${ex.duration}</div>
+    <div class="eb-section">
+      <div class="eb-section-label">Weakest Topics (revise these first)</div>
+      <div class="eb-chips">${weakChips}</div>
+    </div>
+    <div class="eb-section">
+      <div class="eb-section-label">Key Formulae</div>
+      <div>${formulaeHtml}</div>
+    </div>
+    <div class="eb-section">
+      <div class="eb-section-label">Exam Strategy</div>
+      <div class="eb-strategy">${strategy}</div>
+    </div>
+    <div class="eb-actions">
+      <button class="btn-eb-primary" onclick="navigateTo('${subjKey}');closeExamBriefing()">Start Focused Review</button>
+      <button class="btn-secondary" onclick="closeExamBriefing()">Close</button>
+    </div>`;
+
+  document.getElementById('examBriefing').classList.remove('hidden');
+}
+
+function closeExamBriefing() {
+  document.getElementById('examBriefing').classList.add('hidden');
+}
+
+function closeExamBriefingOverlay(e) {
+  if (e.target === document.getElementById('examBriefing')) closeExamBriefing();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeExamBriefing(); });
+
+// ========== F5: PAST PAPER LOG ==========
+function getPaperLog() { return JSON.parse(localStorage.getItem('igcse-paper-log') || '[]'); }
+function savePaperLog(d) { localStorage.setItem('igcse-paper-log', JSON.stringify(d)); }
+
+function sparkline(vals) {
+  if (vals.length < 2) return '';
+  const w = 60, h = 20, pad = 2;
+  const min = Math.min(...vals), max = Math.max(...vals);
+  const range = max - min || 1;
+  const pts = vals.map((v, i) => {
+    const x = pad + (i / (vals.length - 1)) * (w - pad * 2);
+    const y = h - pad - ((v - min) / range) * (h - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="vertical-align:middle">
+    <polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>
+    ${vals.map((v, i) => {
+      const x = pad + (i / (vals.length - 1)) * (w - pad * 2);
+      const y = h - pad - ((v - min) / range) * (h - pad * 2);
+      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2" fill="var(--accent)"/>`;
+    }).join('')}
+  </svg>`;
+}
+
+function renderPaperLog(subj) {
+  const panelIds = { ict:'ict-paperlog', cs:'cs-paperlog', business:'bus-paperlog',
+    engfirst:'ef-paperlog', englit:'el-paperlog', science:'sci-paperlog',
+    addmath:'am-paperlog', gp:'gp-paperlog' };
+  const el = document.getElementById(panelIds[subj]);
+  if (!el) return;
+  const papers = (paperOptions[subj] || []).map(p => `<option value="${p.label}" data-max="${p.max}">${p.label}</option>`).join('');
+  const log = getPaperLog().filter(e => e.subj === subj);
+
+  // Group by paper for sparklines
+  const byPaper = {};
+  log.forEach(e => { (byPaper[e.paper] = byPaper[e.paper] || []).push(e); });
+
+  const rows = log.length ? log.map((e, i) => {
+    const pct = Math.round((e.score / e.max) * 100);
+    const cls = pct >= 70 ? 'good' : pct >= 50 ? 'ok' : 'low';
+    const paperHistory = byPaper[e.paper] || [];
+    const trendSvg = paperHistory.length >= 3 && paperHistory[paperHistory.length - 1] === e
+      ? sparkline(paperHistory.map(h => Math.round(h.score / h.max * 100))) : '';
+    return `<tr>
+      <td>${e.year || '—'}</td>
+      <td style="max-width:200px">${e.paper}</td>
+      <td>${e.score}/${e.max}</td>
+      <td><span class="pct ${cls}">${pct}%</span></td>
+      <td>${e.date || '—'}</td>
+      <td>${trendSvg}</td>
+      <td><button class="del-btn score-table" onclick="deletePaperAttempt(${getPaperLog().indexOf(e)})" title="Delete">×</button></td>
+    </tr>`;
+  }).join('') : `<tr><td colspan="7" class="pl-empty">No attempts logged yet for ${subjNames[subj] || subj}.</td></tr>`;
+
+  el.innerHTML = `
+    <h3>Paper Log — ${subjNames[subj] || subj}</h3>
+    <div class="pl-form">
+      <label>Year<input id="pl-year-${subj}" type="text" placeholder="2024"></label>
+      <label>Paper<select id="pl-paper-${subj}" onchange="document.getElementById('pl-max-${subj}').value=this.options[this.selectedIndex].dataset.max">${papers}</select></label>
+      <label>Score<input id="pl-score-${subj}" type="number" min="0" placeholder="62"></label>
+      <label>Out of<input id="pl-max-${subj}" type="number" min="1" placeholder="80" value="${(paperOptions[subj]||[])[0]?.max||''}"></label>
+      <button class="btn-pl-log" onclick="logPaperAttempt('${subj}')">Log Attempt</button>
+    </div>
+    <table class="pl-table">
+      <tr><th>Year</th><th>Paper</th><th>Score</th><th>%</th><th>Date</th><th>Trend</th><th></th></tr>
+      ${rows}
+    </table>`;
+
+  // Set initial max from first paper option
+  const paperSel = document.getElementById(`pl-paper-${subj}`);
+  const maxInp = document.getElementById(`pl-max-${subj}`);
+  if (paperSel && maxInp) maxInp.value = paperSel.options[paperSel.selectedIndex]?.dataset.max || '';
+}
+
+function logPaperAttempt(subj) {
+  const year  = document.getElementById(`pl-year-${subj}`)?.value.trim();
+  const paper = document.getElementById(`pl-paper-${subj}`)?.value;
+  const score = parseFloat(document.getElementById(`pl-score-${subj}`)?.value);
+  const max   = parseFloat(document.getElementById(`pl-max-${subj}`)?.value);
+  if (!paper || isNaN(score) || isNaN(max) || max <= 0) { alert('Please fill in Score and Out of fields.'); return; }
+  const log = getPaperLog();
+  log.push({ subj, paper, year, score, max, date: new Date().toLocaleDateString() });
+  savePaperLog(log);
+  renderPaperLog(subj);
+}
+
+function deletePaperAttempt(idx) {
+  const log = getPaperLog();
+  log.splice(idx, 1);
+  savePaperLog(log);
+  // Re-render the visible paper log panel
+  const panels = ['ict','cs','business','engfirst','englit','science','addmath','gp'];
+  panels.forEach(s => {
+    const panelIds = { ict:'ict-paperlog', cs:'cs-paperlog', business:'bus-paperlog',
+      engfirst:'ef-paperlog', englit:'el-paperlog', science:'sci-paperlog',
+      addmath:'am-paperlog', gp:'gp-paperlog' };
+    const el = document.getElementById(panelIds[s]);
+    if (el && el.classList.contains('active')) renderPaperLog(s);
+  });
+}
+
+// ========== F6: PER-TOPIC PERSONAL NOTES ==========
+function getUserNotes() { return JSON.parse(localStorage.getItem('igcse-topic-notes') || '{}'); }
+function saveUserNotes(d) { localStorage.setItem('igcse-topic-notes', JSON.stringify(d)); }
+
+let noteDebounceTimers = {};
+
+function toggleTopicNote(btn, e) {
+  e.stopPropagation();
+  const key = btn.dataset.key;
+  const safeKey = key.replace(/[^a-z0-9]/gi, '-');
+  const area = document.getElementById('una-' + safeKey);
+  if (!area) return;
+  area.classList.toggle('open');
+  if (area.classList.contains('open')) area.focus();
+}
+
+function saveTopicNote(key, area) {
+  clearTimeout(noteDebounceTimers[key]);
+  noteDebounceTimers[key] = setTimeout(() => {
+    const notes = getUserNotes();
+    const val = area.value.trim();
+    if (val) { notes[key] = area.value; } else { delete notes[key]; }
+    saveUserNotes(notes);
+    // Update button highlight
+    const safeKey = key.replace(/[^a-z0-9]/gi, '-');
+    const btn = document.querySelector(`.topic-note-btn[data-key="${CSS.escape(key)}"]`);
+    if (btn) btn.classList.toggle('has-note', !!val);
+  }, 500);
+}
+
+// ========== F7: PRINT REVISION SHEET ==========
+function printRevisionSheet(subj) {
+  const s = subjects[subj] || {};
+  const name = subjNames[subj] || subj;
+  const code = s.code || '';
+  const examDates = (s.exams || []).map(e => `${e.paper}: ${e.date}`).join('<br>');
+  const listIds = subjectTopics[subj] || [];
+  const topicState = getTopicState();
+
+  // Collect all notes for this subject
+  const defs = [], formulae = [], facts = [], topicsList = [];
+  listIds.forEach(lid => {
+    (topicData[lid] || []).forEach(([num, topicName]) => {
+      const nk1 = lid + '-' + num;
+      const nk2 = lid.replace('-topics','') + '-topics-' + num;
+      const notes = topicNotes[nk1] || topicNotes[nk2] || null;
+      if (notes) {
+        if (notes.defs) notes.defs.forEach(d => defs.push({ topic: topicName, text: d }));
+        if (notes.formulae) notes.formulae.forEach(f => formulae.push({ topic: topicName, text: f }));
+        if (notes.facts) notes.facts.forEach(f => facts.push({ topic: topicName, text: f }));
+      }
+      const key = lid + '-' + num + '-' + topicName.substring(0, 10);
+      const state = topicState[key] || 0;
+      topicsList.push({ num, name: topicName, state });
+    });
+  });
+
+  const stateLabel = s => s === 2 ? '✓' : s === 1 ? '~' : '○';
+  const defsHtml = defs.length ? `<h2>Definitions</h2><table border="1" cellpadding="6" cellspacing="0" style="width:100%;border-collapse:collapse">
+    <tr><th>Topic</th><th>Term &amp; Definition</th></tr>
+    ${defs.map(d => `<tr><td style="width:30%">${d.topic}</td><td>${d.text}</td></tr>`).join('')}
+    </table>` : '';
+
+  const formulaeHtml = formulae.length ? `<h2>Formulae</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    ${formulae.map(f => `<div style="padding:6px;border:1px solid #ccc;font-family:monospace;font-size:11pt">${f.text}</div>`).join('')}
+    </div>` : '';
+
+  const factsHtml = facts.length ? `<h2>Key Facts</h2><ul>
+    ${facts.map(f => `<li><strong>${f.topic}:</strong> ${f.text}</li>`).join('')}
+    </ul>` : '';
+
+  const topicsHtml = topicsList.length ? `<h2>Topics Checklist</h2><table border="1" cellpadding="5" cellspacing="0" style="width:100%;border-collapse:collapse">
+    <tr><th>#</th><th>Topic</th><th>Status</th></tr>
+    ${topicsList.map(t => `<tr><td>${t.num}</td><td>${t.name}</td><td style="text-align:center">${stateLabel(t.state)}</td></tr>`).join('')}
+    </table>` : '';
+
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <title>${name} Revision Sheet</title>
+    <style>
+      body { font-family: Georgia, serif; font-size: 11pt; color: #111; line-height: 1.5; margin: 20mm; }
+      h1 { font-size: 20pt; margin-bottom: 4px; }
+      h2 { font-size: 14pt; margin-top: 20px; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+      table { border-color: #aaa; }
+      th { background: #eee; }
+      ul { padding-left: 20px; }
+      li { margin-bottom: 4px; }
+      @media print { body { margin: 10mm; } }
+    </style></head><body>
+    <h1>${name} — Revision Sheet</h1>
+    <p style="color:#555;font-size:10pt">Syllabus code: ${code} &nbsp;|&nbsp; Generated: ${new Date().toLocaleDateString()}</p>
+    ${examDates ? `<p style="font-size:10pt"><strong>Exam dates:</strong><br>${examDates}</p>` : ''}
+    ${defsHtml}${formulaeHtml}${factsHtml}${topicsHtml}
+    </body></html>`;
+
+  const win = window.open('', '_blank');
+  if (!win) { alert('Pop-up blocked — please allow pop-ups for this page.'); return; }
+  win.document.write(html);
+  win.document.close();
+  setTimeout(() => win.print(), 300);
+}
+
+// ========== INIT NEW FEATURES ==========
+renderGradeCalc();
+renderFormulaSheet();
+initFlashcards();
+renderReviewQueue();
+renderPomoStats();
+renderStreak();
 </script>
 </body>
 </html>
