@@ -344,15 +344,185 @@ main {
   transition: all 0.2s;
   flex-shrink: 0;
 }
-.topic-item .topic-check.checked {
+.topic-item .topic-check.shaky {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.topic-item .topic-check.shaky::after {
+  content: '~';
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 700;
+}
+.topic-item .topic-check.confident {
   background: var(--green);
   border-color: var(--green);
 }
-.topic-item .topic-check.checked::after {
+.topic-item .topic-check.confident::after {
   content: '✓';
   color: var(--bg);
   font-size: 12px;
   font-weight: 700;
+}
+/* confidence bar on subject cards */
+.conf-bar {
+  display: flex;
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 14px;
+  background: var(--border);
+}
+.conf-bar .cb-shaky   { background: var(--accent); }
+.conf-bar .cb-confident { background: var(--green); }
+.conf-bar .cb-none    { background: var(--border); }
+/* topic notes expansion */
+.topic-item { flex-wrap: wrap; cursor: pointer; }
+.topic-notes {
+  display: none;
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.topic-notes.open { display: block; }
+.topic-notes ul { padding-left: 18px; margin: 4px 0; }
+.topic-notes li { margin-bottom: 3px; }
+.topic-notes .tn-label {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+.topic-notes .tn-label:first-child { margin-top: 0; }
+.topic-notes .formula {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--surface3);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--cyan);
+}
+/* past papers hub */
+.pp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.pp-subject {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.pp-subject h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+.pp-subject .pp-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 14px;
+}
+.pp-links { display: flex; flex-direction: column; gap: 8px; }
+.pp-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 13px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 13px;
+  transition: border-color 0.2s;
+}
+.pp-link:hover { border-color: var(--accent); color: var(--accent); }
+.pp-link .pp-icon { font-size: 15px; flex-shrink: 0; }
+.pp-link .pp-desc { font-size: 11px; color: var(--text3); }
+/* score tracker */
+.score-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.score-form label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text2); }
+.score-form input, .score-form select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+}
+.score-form input:focus, .score-form select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.score-form .btn-log {
+  align-self: end;
+  padding: 9px 18px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.score-form .btn-log:hover { background: var(--accent2); }
+.score-subject-block { margin-bottom: 28px; }
+.score-subject-block h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+.score-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.score-table th {
+  text-align: left;
+  padding: 7px 10px;
+  color: var(--text3);
+  font-size: 11px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+.score-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+.score-table .pct { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.score-table .pct.good { color: var(--green); }
+.score-table .pct.ok   { color: var(--accent); }
+.score-table .pct.low  { color: var(--red); }
+.score-table .del-btn {
+  background: none;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+}
+.score-table .del-btn:hover { color: var(--red); }
+.grade-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 /* EXAM TIMELINE */
@@ -559,6 +729,8 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
     <div class="nav-tab" data-section="science">Co-ordinated Sciences</div>
     <div class="nav-tab" data-section="addmath">Add Maths</div>
     <div class="nav-tab" data-section="gp">Global Perspectives</div>
+    <div class="nav-tab" data-section="papers">Past Papers</div>
+    <div class="nav-tab" data-section="progress">Progress</div>
   </div>
 </nav>
 
@@ -579,6 +751,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
         <span>📊 240 marks</span>
         <span>🕐 ~5h total</span>
       </div>
+      <div class="conf-bar" id="cb-ict"></div>
     </div>
     <div class="subject-card" onclick="goToSubject('cs')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--purple),var(--blue))"></div>
@@ -589,6 +762,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
         <span>📊 150 marks</span>
         <span>🕐 3h 30m</span>
       </div>
+      <div class="conf-bar" id="cb-cs"></div>
     </div>
     <div class="subject-card" onclick="goToSubject('business')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--green),var(--teal))"></div>
@@ -599,6 +773,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
         <span>📊 160 marks</span>
         <span>🕐 3h total</span>
       </div>
+      <div class="conf-bar" id="cb-business"></div>
     </div>
     <div class="subject-card" onclick="goToSubject('engfirst')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--accent),var(--orange))"></div>
@@ -629,6 +804,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
         <span>📊 220 marks</span>
         <span>🕐 ~4h 45m</span>
       </div>
+      <div class="conf-bar" id="cb-science"></div>
     </div>
     <div class="subject-card" onclick="goToSubject('addmath')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--cyan),var(--blue))"></div>
@@ -639,6 +815,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
         <span>📊 160 marks</span>
         <span>🕐 4h total</span>
       </div>
+      <div class="conf-bar" id="cb-addmath"></div>
     </div>
     <div class="subject-card" onclick="goToSubject('gp')">
       <div class="color-bar" style="background:linear-gradient(90deg,var(--teal),var(--green))"></div>
@@ -649,6 +826,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
         <span>📊 200 marks</span>
         <span>🕐 Exam + CW</span>
       </div>
+      <div class="conf-bar" id="cb-gp"></div>
     </div>
   </div>
 
@@ -1263,6 +1441,52 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
   </div>
 </div>
 
+<!-- ========== PAST PAPERS ========== -->
+<div class="section" id="papers">
+  <h3>Past Papers Hub</h3>
+  <p>Official Cambridge IGCSE past papers are published on the Cambridge International website. Free access is also available via the resource sites below. Papers from 2019–2024 are the most useful for the current syllabus.</p>
+  <div class="note" style="margin-bottom:24px">
+    <strong>Best approach:</strong> Work through the most recent 3–4 sessions under timed conditions, then check every answer against the mark scheme before moving to an older paper. Use examiner reports to understand why marks are awarded the way they are.
+  </div>
+  <div class="pp-grid" id="ppGrid"></div>
+</div>
+
+<!-- ========== PROGRESS ========== -->
+<div class="section" id="progress">
+  <h3>Progress Tracker</h3>
+  <p>Log your past paper scores here. Your percentage and predicted grade are shown automatically using June 2025 grade boundaries as a reference.</p>
+
+  <div class="score-form" id="scoreForm">
+    <label>Subject
+      <select id="sf-subject">
+        <option value="ict">ICT (0417)</option>
+        <option value="cs">Computer Science (0478)</option>
+        <option value="business">Business Studies (0450)</option>
+        <option value="engfirst">English 1st Lang (0500)</option>
+        <option value="englit">English Lit (0475)</option>
+        <option value="science">Co-ord Sciences (0654)</option>
+        <option value="addmath">Add Maths (0606)</option>
+        <option value="gp">Global Perspectives (0457)</option>
+      </select>
+    </label>
+    <label>Paper
+      <input id="sf-paper" type="text" placeholder="e.g. Paper 1">
+    </label>
+    <label>Session
+      <input id="sf-session" type="text" placeholder="e.g. June 2024">
+    </label>
+    <label>Score
+      <input id="sf-score" type="number" min="0" placeholder="e.g. 62">
+    </label>
+    <label>Out of
+      <input id="sf-max" type="number" min="1" placeholder="e.g. 80">
+    </label>
+    <button class="btn-log" onclick="logScore()">Log Score</button>
+  </div>
+
+  <div id="scoreResults"></div>
+</div>
+
 </main>
 
 <script>
@@ -1467,38 +1691,235 @@ document.querySelectorAll('.detail-tab').forEach(tab => {
   });
 });
 
-// ========== RENDER TOPICS ==========
-function renderTopics() {
-  const saved = JSON.parse(localStorage.getItem('igcse-checked') || '{}');
+// ========== TOPIC NOTES DATA ==========
+const topicNotes = {
+  // ICT Theory
+  'ict-theory-topics-1': {
+    defs: ['Computer system = hardware + software + data working together to perform tasks'],
+    facts: ['Input → Process → Output → Storage (IPO model)', 'Embedded systems have dedicated functions (e.g. washing machine controller)', 'GUI vs CLI: GUI uses icons/windows, CLI uses typed commands']
+  },
+  'ict-theory-topics-2': {
+    defs: ['Input device: hardware that sends data into the computer', 'Output device: hardware that receives processed data from the computer'],
+    facts: ['OMR reads pencil marks; OCR reads printed text; MICR reads magnetic ink (cheques)', 'NFC operates within ~10 cm; RFID can be passive (no battery) or active', 'Biometrics: fingerprint, iris, voice — used for authentication']
+  },
+  'ict-theory-topics-3': {
+    defs: ['Primary storage: RAM/ROM — directly accessed by CPU; fast, limited', 'Secondary storage: persistent after power off (HDD, SSD, optical, flash)'],
+    facts: ['RAM = volatile (loses data without power); ROM = non-volatile', 'SSD faster than HDD, no moving parts, more expensive per GB', 'Cloud storage: remote servers accessed via internet']
+  },
+  'ict-theory-topics-4': {
+    defs: ['Network: two or more devices connected to share resources/data', 'LAN = Local Area Network (single building); WAN = Wide Area Network (multiple sites)'],
+    facts: ['Bus, star, mesh topologies — star most common in schools', 'Bandwidth = max data transfer rate; latency = delay', 'Wi-Fi uses radio waves; Ethernet uses cables', 'IP address identifies device; MAC address identifies NIC']
+  },
+  'ict-theory-topics-8': {
+    defs: ['Encryption: converting data into unreadable form using a key', 'Firewall: monitors and controls incoming/outgoing network traffic based on rules'],
+    facts: ['Phishing: fake emails/sites to steal credentials', 'Strong password: 8+ chars, uppercase, lowercase, number, symbol', 'Two-factor authentication (2FA) adds extra security layer', 'Backup: copy stored separately to restore after data loss']
+  },
+  // ICT Practical
+  'ict-practical-topics-20': {
+    defs: ['Cell reference: identifies a cell (e.g. B4); absolute reference locks it ($B$4)'],
+    facts: ['=IF(condition, true_value, false_value)', '=VLOOKUP(lookup_val, table_range, col_index, FALSE)', '=COUNTIF(range, criteria)', '=SUMIF(range, criteria, sum_range)', 'Always use cell references in formulae, not hardcoded values']
+  },
+  'ict-practical-topics-21': {
+    defs: ['HTML tag: <tagname>content</tagname>', 'CSS class: .classname { property: value; }'],
+    facts: ['Internal CSS: inside <style> tags in <head>', 'External CSS: separate .css file linked with <link>', 'div = block element; span = inline element', 'Class selector (.) applies to multiple elements; id (#) must be unique']
+  },
+  // CS
+  'cs-topics1-1': {
+    defs: ['Bit: single binary digit (0 or 1)', 'Byte: 8 bits', 'ASCII: 7-bit standard encoding 128 characters'],
+    facts: ['Binary to denary: sum of place values (128, 64, 32, 16, 8, 4, 2, 1)', 'Hex digits: 0–9 then A(10) B(11) C(12) D(13) E(14) F(15)', 'Convert binary → hex: group into nibbles (4 bits)', 'Image resolution: more pixels = higher quality, larger file size', 'Colour depth: bits per pixel; 8-bit = 256 colours; 24-bit = 16.7M colours'],
+    formulae: ['File size (image) = width × height × colour depth (bits)']
+  },
+  'cs-topics1-3': {
+    defs: ['CPU: Central Processing Unit — carries out instructions', 'RAM: Random Access Memory — volatile, stores running programs/data', 'ROM: Read-Only Memory — non-volatile, stores boot instructions'],
+    facts: ['Fetch-Decode-Execute cycle: PC → MAR → MDR → IR → CU → ALU', 'Clock speed (GHz), number of cores, cache size all affect CPU performance', 'Cache: small fast memory inside/near CPU; L1 fastest, L3 largest']
+  },
+  'cs-topics2-7': {
+    defs: ['Algorithm: step-by-step solution to a problem', 'Decomposition: breaking a problem into smaller sub-problems', 'Abstraction: removing unnecessary detail to focus on what matters'],
+    facts: ['Pseudocode uses plain English structure — no fixed syntax', 'Flowchart shapes: oval=start/end, parallelogram=I/O, rectangle=process, diamond=decision', 'Trace table: manually follow through algorithm tracking variable values']
+  },
+  'cs-topics2-8': {
+    defs: ['Variable: named storage location whose value can change', 'Constant: named value that cannot change during execution'],
+    facts: ['FOR loop: known number of iterations', 'WHILE loop: pre-condition check', 'REPEAT-UNTIL: post-condition (always runs at least once)', 'Procedure: named block of code, no return value', 'Function: named block, returns a value', 'Array index starts at 0 (usually)'],
+    formulae: ['Array declaration: DECLARE name : ARRAY[0:n-1] OF DataType']
+  },
+  'cs-topics2-10': {
+    defs: ['Boolean logic: operations on TRUE/FALSE values using gates'],
+    facts: ['NOT: inverts; AND: both true → true; OR: either true → true', 'NAND = NOT(AND); NOR = NOT(OR); XOR = one but not both', 'Truth table: list all input combinations, show output'],
+    formulae: ['NAND(A,B) = NOT(A AND B)', 'XOR(A,B) = (A OR B) AND NOT(A AND B)']
+  },
+  // Business
+  'bus-topics-1': {
+    defs: ['Business: organisation that produces goods/services to satisfy needs/wants', 'Entrepreneur: person who takes risk to start a business seeking profit'],
+    facts: ['Primary sector: extracting raw materials', 'Secondary: manufacturing', 'Tertiary: services', 'Sole trader: unlimited liability; limited company: liability limited to investment', 'Stakeholders: anyone with interest in the business (internal/external)']
+  },
+  'bus-topics-3': {
+    defs: ['Market: buyers and sellers of a product', 'Market research: collecting data about customers and competitors'],
+    facts: ['4Ps: Product, Price, Place, Promotion', 'Primary research: surveys/interviews (new data); secondary: existing data', 'Price skimming: high initial price; penetration: low to gain share', 'USP = Unique Selling Point']
+  },
+  'bus-topics-4': {
+    defs: ['Production: process of making goods/services', 'Productivity: output per worker per time period'],
+    facts: ['Job production: one-off items (high quality, expensive)', 'Batch production: groups of identical items', 'Flow production: continuous, automated (mass market)', 'Quality control: checking finished products; quality assurance: building quality in']
+  },
+  'bus-topics-5': {
+    defs: ['Revenue: income from sales = price × quantity', 'Profit = Revenue − Total Costs', 'Fixed costs: do not change with output (rent)', 'Variable costs: change with output (raw materials)'],
+    formulae: ['Break-even output = Fixed Costs ÷ (Selling Price − Variable Cost per unit)', 'Profit = Revenue − Total Costs', 'Gross profit = Revenue − Cost of Sales']
+  },
+  // Science: Biology
+  'sci-bio-topics-1': {
+    defs: ['Cell: basic structural and functional unit of life'],
+    facts: ['Animal cell: cell membrane, cytoplasm, nucleus, mitochondria, ribosomes', 'Plant cell adds: cell wall (cellulose), vacuole, chloroplasts', 'Diffusion: net movement from high → low concentration (no energy needed)', 'Osmosis: diffusion of water across partially permeable membrane'],
+    formulae: ['Magnification = image size ÷ actual size']
+  },
+  'sci-bio-topics-3': {
+    defs: ['Photosynthesis: process where plants make glucose using light energy'],
+    formulae: ['6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (in light, with chlorophyll)', 'Aerobic respiration: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy', 'Anaerobic (animals): glucose → lactic acid + energy', 'Anaerobic (yeast): glucose → ethanol + CO₂ + energy'],
+    facts: ['Limiting factors for photosynthesis: light intensity, CO₂ concentration, temperature']
+  },
+  // Science: Chemistry
+  'sci-chem-topics-1': {
+    defs: ['Element: pure substance of one type of atom', 'Compound: two or more elements chemically combined', 'Mixture: substances mixed but not chemically combined — can be separated physically'],
+    facts: ['Proton: +1 charge, in nucleus', 'Neutron: no charge, in nucleus', 'Electron: −1 charge, shells', 'Atomic number = protons; mass number = protons + neutrons', 'Isotopes: same element, different neutron count (same protons)']
+  },
+  'sci-chem-topics-7': {
+    defs: ['Acid: produces H⁺ ions in water; pH < 7', 'Alkali: produces OH⁻ ions in water; pH > 7', 'Salt: formed when acid reacts with base/metal/carbonate'],
+    facts: ['Neutralisation: acid + alkali → salt + water', 'acid + metal → salt + hydrogen', 'acid + carbonate → salt + water + CO₂', 'Universal indicator shows pH; litmus only acid/alkali', 'Strong acid fully ionises (HCl, H₂SO₄, HNO₃)']
+  },
+  // Science: Physics
+  'sci-phys-topics-1': {
+    defs: ['Speed: distance per unit time', 'Velocity: speed in a given direction (vector)', 'Acceleration: rate of change of velocity'],
+    formulae: ['s = d/t  (speed = distance ÷ time)', 'a = (v−u)/t  (acceleration)', 'F = ma  (Newton\'s 2nd Law)', 'W = mg  (weight = mass × g, where g = 10 N/kg)', 'KE = ½mv²', 'GPE = mgh', 'Momentum = mv', 'p = F/A  (pressure = force ÷ area)']
+  },
+  'sci-phys-topics-4': {
+    defs: ['Electrical current: rate of flow of charge', 'Voltage (p.d.): energy transferred per unit charge', 'Resistance: opposition to current flow'],
+    formulae: ['V = IR  (Ohm\'s Law)', 'P = IV = I²R = V²/R', 'E = Pt  (energy = power × time)', 'Q = It  (charge = current × time)', 'Series: R_total = R₁+R₂; V shared; I same', '1/R_total = 1/R₁+1/R₂ (parallel); I shared; V same']
+  },
+  // Add Maths
+  'am-topics-1': {
+    defs: ['Function: each input maps to exactly one output', 'f⁻¹(x): inverse function — swaps x and y, then rearrange'],
+    facts: ['Domain: set of input values; Range: set of output values', 'Composite fg(x) means f(g(x)) — apply g first', 'For f⁻¹ to exist as a function, f must be one-to-one'],
+    formulae: ['To find inverse: let y=f(x), swap x↔y, rearrange for y']
+  },
+  'am-topics-2': {
+    defs: ['Quadratic: ax² + bx + c = 0', 'Discriminant (Δ): determines nature of roots'],
+    formulae: ['x = (−b ± √(b²−4ac)) / 2a', 'Discriminant: Δ = b²−4ac', 'Δ > 0: two real distinct roots', 'Δ = 0: one repeated root', 'Δ < 0: no real roots', 'Completing square: a(x+p)²+q where p=b/2a'],
+    facts: ['Vertex at x = −b/2a', 'a>0: U-shape (min); a<0: ∩-shape (max)']
+  },
+  'am-topics-7': {
+    formulae: ['aˣ = e^(x ln a)', 'log_a(x) = ln(x)/ln(a)', 'log(AB) = log A + log B', 'log(A/B) = log A − log B', 'log(Aⁿ) = n log A', 'ln(eˣ) = x; e^(ln x) = x'],
+    facts: ['ln = natural log (base e)', 'log without base = log₁₀', 'Exponential growth: y = Ae^(kt); decay: k < 0']
+  },
+  'am-topics-10': {
+    formulae: ['sin²θ + cos²θ = 1', '1 + tan²θ = sec²θ', '1 + cot²θ = cosec²θ', 'sin(A±B) = sinA cosB ± cosA sinB', 'cos(A±B) = cosA cosB ∓ sinA sinB', 'tan(A±B) = (tanA±tanB)/(1∓tanA tanB)', 'sin2A = 2sinA cosA', 'cos2A = cos²A − sin²A = 1−2sin²A = 2cos²A−1'],
+    facts: ['CAST diagram: All positive (1st), Sin (2nd), Tan (3rd), Cos (4th)', 'Period of sinx/cosx = 360°; tanx = 180°', 'Amplitude: coefficient of trig function']
+  },
+  'am-topics-15': {
+    formulae: ['d/dx(xⁿ) = nxⁿ⁻¹', 'd/dx(eˣ) = eˣ', 'd/dx(ln x) = 1/x', 'd/dx(sin x) = cos x', 'd/dx(cos x) = −sin x', 'Chain rule: dy/dx = (dy/du)(du/dx)', 'Product rule: d/dx(uv) = u(dv/dx) + v(du/dx)', 'Quotient rule: d/dx(u/v) = (v(du/dx)−u(dv/dx))/v²'],
+    facts: ['Set dy/dx = 0 to find stationary points', 'd²y/dx² > 0: minimum; < 0: maximum']
+  },
+  'am-topics-16': {
+    formulae: ['∫xⁿ dx = xⁿ⁺¹/(n+1) + c  (n ≠ −1)', '∫eˣ dx = eˣ + c', '∫1/x dx = ln|x| + c', '∫sin x dx = −cos x + c', '∫cos x dx = sin x + c', 'Area = ∫[a to b] y dx  (above x-axis)'],
+    facts: ['Definite integral: substitute limits b then a, subtract', 'Area below x-axis comes out negative — take absolute value', 'Always add +c for indefinite integrals']
+  },
+  'am-topics-14': {
+    formulae: ['Matrix addition: add corresponding elements', 'Scalar multiply: multiply every element by k', 'AB: row of A × column of B (only if cols of A = rows of B)', 'det(A) = ad − bc  for 2×2', 'A⁻¹ = (1/det) × [d −b; −c a]'],
+    facts: ['AA⁻¹ = I (identity matrix)', 'det = 0: matrix is singular (no inverse)', 'AX = B → X = A⁻¹B']
+  }
+};
 
+// ========== RENDER TOPICS ==========
+const subjectTopics = {
+  ict:      ['ict-theory-topics', 'ict-practical-topics'],
+  cs:       ['cs-topics1', 'cs-topics2'],
+  business: ['bus-topics'],
+  science:  ['sci-bio-topics', 'sci-chem-topics', 'sci-phys-topics'],
+  addmath:  ['am-topics'],
+  gp:       ['gp-topics']
+};
+
+function getTopicState() {
+  // migrate old igcse-checked format
+  const old = localStorage.getItem('igcse-checked');
+  if (old && !localStorage.getItem('igcse-topics')) {
+    const oldData = JSON.parse(old);
+    const migrated = {};
+    Object.keys(oldData).forEach(k => { if (oldData[k]) migrated[k] = 2; });
+    localStorage.setItem('igcse-topics', JSON.stringify(migrated));
+    localStorage.removeItem('igcse-checked');
+  }
+  return JSON.parse(localStorage.getItem('igcse-topics') || '{}');
+}
+
+function renderTopics() {
+  const saved = getTopicState();
   Object.keys(topicData).forEach(listId => {
     const el = document.getElementById(listId);
     if (!el) return;
     el.innerHTML = topicData[listId].map(([num, name]) => {
       const key = listId + '-' + num + '-' + name.substring(0,10);
-      const checked = saved[key] ? 'checked' : '';
-      return `<div class="topic-item">
+      const state = saved[key] || 0;
+      const cls = state === 1 ? 'shaky' : state === 2 ? 'confident' : '';
+      const noteKey = listId.replace('-topics','').replace('ict-theory','ict-theory').replace('ict-practical','ict-practical') + '-topics-' + num;
+      const notes = topicNotes[noteKey] || topicNotes[listId + '-' + num] || null;
+      const notesHtml = notes ? `<div class="topic-notes" id="tn-${key.replace(/[^a-z0-9]/gi,'-')}">
+        ${notes.defs ? `<div class="tn-label">Key Definitions</div><ul>${notes.defs.map(d=>`<li>${d}</li>`).join('')}</ul>` : ''}
+        ${notes.formulae ? `<div class="tn-label">Formulae</div><ul>${notes.formulae.map(f=>`<li><span class="formula">${f}</span></li>`).join('')}</ul>` : ''}
+        ${notes.facts ? `<div class="tn-label">Key Facts</div><ul>${notes.facts.map(f=>`<li>${f}</li>`).join('')}</ul>` : ''}
+      </div>` : '';
+      return `<div class="topic-item" onclick="expandTopic(this)">
         <span class="topic-num">${num}</span>
         <span class="topic-name">${name}</span>
-        <div class="topic-check ${checked}" data-key="${key}" onclick="toggleCheck(this, event)"></div>
+        <div class="topic-check ${cls}" data-key="${key}" onclick="toggleCheck(this, event)"></div>
+        ${notesHtml}
       </div>`;
     }).join('');
   });
 }
 
+function expandTopic(item) {
+  const notes = item.querySelector('.topic-notes');
+  if (notes) notes.classList.toggle('open');
+}
+
 function toggleCheck(el, e) {
   e.stopPropagation();
-  el.classList.toggle('checked');
-  const saved = JSON.parse(localStorage.getItem('igcse-checked') || '{}');
-  if (el.classList.contains('checked')) {
-    saved[el.dataset.key] = true;
+  const saved = getTopicState();
+  const cur = saved[el.dataset.key] || 0;
+  const next = cur >= 2 ? 0 : cur + 1;
+  el.className = 'topic-check' + (next === 1 ? ' shaky' : next === 2 ? ' confident' : '');
+  if (next > 0) {
+    saved[el.dataset.key] = next;
   } else {
     delete saved[el.dataset.key];
   }
-  localStorage.setItem('igcse-checked', JSON.stringify(saved));
+  localStorage.setItem('igcse-topics', JSON.stringify(saved));
+  renderConfidenceBars();
+}
+
+function renderConfidenceBars() {
+  const saved = getTopicState();
+  Object.keys(subjectTopics).forEach(subjId => {
+    const bar = document.getElementById('cb-' + subjId);
+    if (!bar) return;
+    let total = 0, shaky = 0, confident = 0;
+    subjectTopics[subjId].forEach(listId => {
+      (topicData[listId] || []).forEach(([num, name]) => {
+        const key = listId + '-' + num + '-' + name.substring(0,10);
+        total++;
+        const s = saved[key] || 0;
+        if (s === 1) shaky++;
+        else if (s === 2) confident++;
+      });
+    });
+    const none = total - shaky - confident;
+    bar.innerHTML = `
+      <div class="cb-none" style="flex:${none}"></div>
+      <div class="cb-shaky" style="flex:${shaky}"></div>
+      <div class="cb-confident" style="flex:${confident}"></div>`;
+  });
 }
 
 renderTopics();
+renderConfidenceBars();
 
 // ========== EXAM TRACKER ==========
 function renderTracker() {
@@ -1541,6 +1962,181 @@ function renderTracker() {
   }).join('');
 }
 renderTracker();
+
+// ========== PAST PAPERS HUB ==========
+const pastPapers = [
+  { id: 'ict',      name: 'ICT', code: '0417',
+    links: [
+      { label: 'Cambridge Official — Past Papers', desc: 'Requires free CIE account', url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-information-and-communication-technology-0417/past-papers/', icon: '🏛' },
+      { label: 'PapaCambridge — ICT 0417', desc: 'Free PDFs, all sessions', url: 'https://papacambridge.com/cambridge-igcse/information-communication-technology-0417/', icon: '📄' },
+      { label: 'GCE Guide — ICT 0417', desc: 'Papers + mark schemes', url: 'https://gceguide.com/igcse/ict/0417/', icon: '📄' }
+    ]
+  },
+  { id: 'cs',       name: 'Computer Science', code: '0478',
+    links: [
+      { label: 'Cambridge Official — Past Papers', desc: 'Requires free CIE account', url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-computer-science-0478/past-papers/', icon: '🏛' },
+      { label: 'PapaCambridge — CS 0478', desc: 'Free PDFs, all sessions', url: 'https://papacambridge.com/cambridge-igcse/computer-science-0478/', icon: '📄' },
+      { label: 'GCE Guide — CS 0478', desc: 'Papers + mark schemes', url: 'https://gceguide.com/igcse/computer-science/0478/', icon: '📄' }
+    ]
+  },
+  { id: 'business', name: 'Business Studies', code: '0450',
+    links: [
+      { label: 'Cambridge Official — Past Papers', desc: 'Requires free CIE account', url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-business-studies-0450/past-papers/', icon: '🏛' },
+      { label: 'PapaCambridge — Business 0450', desc: 'Free PDFs, all sessions', url: 'https://papacambridge.com/cambridge-igcse/business-studies-0450/', icon: '📄' },
+      { label: 'GCE Guide — Business 0450', desc: 'Papers + mark schemes', url: 'https://gceguide.com/igcse/business-studies/0450/', icon: '📄' }
+    ]
+  },
+  { id: 'engfirst', name: 'English First Language', code: '0500',
+    links: [
+      { label: 'Cambridge Official — Past Papers', desc: 'Requires free CIE account', url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-first-language-0500/past-papers/', icon: '🏛' },
+      { label: 'PapaCambridge — English 0500', desc: 'Free PDFs, all sessions', url: 'https://papacambridge.com/cambridge-igcse/english-first-language-0500/', icon: '📄' },
+      { label: 'GCE Guide — English 0500', desc: 'Papers + mark schemes', url: 'https://gceguide.com/igcse/english/0500/', icon: '📄' }
+    ]
+  },
+  { id: 'englit',   name: 'English Literature', code: '0475',
+    links: [
+      { label: 'Cambridge Official — Past Papers', desc: 'Requires free CIE account', url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-literature-0475/past-papers/', icon: '🏛' },
+      { label: 'PapaCambridge — Literature 0475', desc: 'Free PDFs, all sessions', url: 'https://papacambridge.com/cambridge-igcse/literature-english-0475/', icon: '📄' },
+      { label: 'GCE Guide — Literature 0475', desc: 'Papers + mark schemes', url: 'https://gceguide.com/igcse/english-literature/0475/', icon: '📄' }
+    ]
+  },
+  { id: 'science',  name: 'Co-ordinated Sciences', code: '0654',
+    links: [
+      { label: 'Cambridge Official — Past Papers', desc: 'Requires free CIE account', url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-co-ordinated-sciences-double-award-0654/past-papers/', icon: '🏛' },
+      { label: 'PapaCambridge — Science 0654', desc: 'Free PDFs, all sessions', url: 'https://papacambridge.com/cambridge-igcse/co-ordinated-sciences-double-award-0654/', icon: '📄' },
+      { label: 'GCE Guide — Science 0654', desc: 'Papers + mark schemes', url: 'https://gceguide.com/igcse/sciences/co-ordinated-sciences/0654/', icon: '📄' }
+    ]
+  },
+  { id: 'addmath',  name: 'Additional Mathematics', code: '0606',
+    links: [
+      { label: 'Cambridge Official — Past Papers', desc: 'Requires free CIE account', url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-additional-mathematics-0606/past-papers/', icon: '🏛' },
+      { label: 'PapaCambridge — Add Maths 0606', desc: 'Free PDFs, all sessions', url: 'https://papacambridge.com/cambridge-igcse/additional-mathematics-0606/', icon: '📄' },
+      { label: 'GCE Guide — Add Maths 0606', desc: 'Papers + mark schemes', url: 'https://gceguide.com/igcse/additional-mathematics/0606/', icon: '📄' }
+    ]
+  },
+  { id: 'gp',       name: 'Global Perspectives', code: '0457',
+    links: [
+      { label: 'Cambridge Official — Past Papers', desc: 'Requires free CIE account', url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-global-perspectives-0457/past-papers/', icon: '🏛' },
+      { label: 'PapaCambridge — Global Persp. 0457', desc: 'Free PDFs, all sessions', url: 'https://papacambridge.com/cambridge-igcse/global-perspectives-0457/', icon: '📄' },
+      { label: 'GCE Guide — Global Perspectives 0457', desc: 'Papers + mark schemes', url: 'https://gceguide.com/igcse/global-perspectives/0457/', icon: '📄' }
+    ]
+  }
+];
+
+document.getElementById('ppGrid').innerHTML = pastPapers.map(s => `
+  <div class="pp-subject">
+    <h4>${s.name}</h4>
+    <div class="pp-code">${s.code}</div>
+    <div class="pp-links">
+      ${s.links.map(l => `
+        <a class="pp-link" href="${l.url}" target="_blank" rel="noopener">
+          <span class="pp-icon">${l.icon}</span>
+          <span>
+            <div>${l.label}</div>
+            <div class="pp-desc">${l.desc}</div>
+          </span>
+        </a>`).join('')}
+    </div>
+  </div>`).join('');
+
+// ========== SCORE TRACKER ==========
+const gradeBoundaries = {
+  ict:      { astar: 82, a: 68, b: 54, c: 42 },
+  cs:       { astar: 83, a: 69, b: 55, c: 43 },
+  business: { astar: 82, a: 68, b: 54, c: 42 },
+  engfirst: { astar: 85, a: 72, b: 59, c: 47 },
+  englit:   { astar: 87, a: 74, b: 61, c: 48 },
+  science:  { astar: 83, a: 70, b: 57, c: 44 },
+  addmath:  { astar: 81, a: 66, b: 51, c: 37 },
+  gp:       { astar: 80, a: 65, b: 52, c: 40 }
+};
+
+const subjNames = {
+  ict:'ICT', cs:'Computer Science', business:'Business Studies',
+  engfirst:'English 1st Lang', englit:'English Lit',
+  science:'Co-ord Sciences', addmath:'Add Maths', gp:'Global Perspectives'
+};
+
+function getGrade(pct, bounds) {
+  if (pct >= bounds.astar) return { g: 'A*', cls: 'grade-astar' };
+  if (pct >= bounds.a)     return { g: 'A',  cls: 'grade-a' };
+  if (pct >= bounds.b)     return { g: 'B',  cls: '' };
+  if (pct >= bounds.c)     return { g: 'C',  cls: '' };
+  return { g: 'U', cls: '' };
+}
+
+function loadScores() { return JSON.parse(localStorage.getItem('igcse-scores') || '[]'); }
+function saveScores(s) { localStorage.setItem('igcse-scores', JSON.stringify(s)); }
+
+function logScore() {
+  const subj = document.getElementById('sf-subject').value;
+  const paper = document.getElementById('sf-paper').value.trim();
+  const session = document.getElementById('sf-session').value.trim();
+  const score = parseInt(document.getElementById('sf-score').value);
+  const max = parseInt(document.getElementById('sf-max').value);
+  if (!paper || !session || isNaN(score) || isNaN(max) || max <= 0 || score < 0) {
+    alert('Please fill in all fields with valid values.'); return;
+  }
+  const scores = loadScores();
+  scores.push({ subj, paper, session, score, max, date: new Date().toISOString().slice(0,10) });
+  saveScores(scores);
+  document.getElementById('sf-paper').value = '';
+  document.getElementById('sf-session').value = '';
+  document.getElementById('sf-score').value = '';
+  document.getElementById('sf-max').value = '';
+  renderScores();
+}
+
+function deleteScore(idx) {
+  const scores = loadScores();
+  scores.splice(idx, 1);
+  saveScores(scores);
+  renderScores();
+}
+
+function renderScores() {
+  const scores = loadScores();
+  const bySubj = {};
+  scores.forEach((s, i) => {
+    if (!bySubj[s.subj]) bySubj[s.subj] = [];
+    bySubj[s.subj].push({ ...s, idx: i });
+  });
+
+  const el = document.getElementById('scoreResults');
+  if (!Object.keys(bySubj).length) {
+    el.innerHTML = '<p style="color:var(--text3);margin-top:8px">No scores logged yet. Complete a past paper and log your result above.</p>';
+    return;
+  }
+
+  el.innerHTML = Object.keys(bySubj).map(subjId => {
+    const entries = bySubj[subjId];
+    const bounds = gradeBoundaries[subjId] || { astar:85, a:70, b:55, c:42 };
+    const rows = entries.map(e => {
+      const pct = Math.round(e.score / e.max * 100);
+      const grade = getGrade(pct, bounds);
+      const pctCls = pct >= bounds.a ? 'good' : pct >= bounds.c ? 'ok' : 'low';
+      return `<tr>
+        <td>${e.session}</td>
+        <td>${e.paper}</td>
+        <td>${e.score}/${e.max}</td>
+        <td class="pct ${pctCls}">${pct}%</td>
+        <td><span class="grade-chip grade-${grade.g.replace('*','star').toLowerCase()}" style="background:${pct>=bounds.astar?'var(--green)':pct>=bounds.a?'var(--blue)':pct>=bounds.b?'var(--accent)':pct>=bounds.c?'var(--orange)':'var(--red)'};color:var(--bg)">${grade.g}</span></td>
+        <td><button class="del-btn" onclick="deleteScore(${e.idx})">✕</button></td>
+      </tr>`;
+    }).join('');
+    const avg = Math.round(entries.reduce((s,e)=>s+e.score/e.max*100,0)/entries.length);
+    const avgGrade = getGrade(avg, bounds);
+    return `<div class="score-subject-block">
+      <h4>${subjNames[subjId] || subjId} — avg ${avg}% (predicted ${avgGrade.g})</h4>
+      <table class="score-table">
+        <tr><th>Session</th><th>Paper</th><th>Score</th><th>%</th><th>Grade</th><th></th></tr>
+        ${rows}
+      </table>
+    </div>`;
+  }).join('');
+}
+
+renderScores();
 </script>
 </body>
 </html>
