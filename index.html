@@ -2732,6 +2732,19 @@ function renderTimetable() {
   document.getElementById('ttGrid').innerHTML = html;
 }
 
+// Seed school report grades on first load (RC1 Dec 2025)
+if (!localStorage.getItem('igcse-scores')) {
+  localStorage.setItem('igcse-scores', JSON.stringify([
+    { subj:'ict',      paper:'Paper 1 — Theory',                          session:'School RC1 Dec 2025', score:72,  max:80,  date:'2025-12-01' },
+    { subj:'cs',       paper:'Paper 1 — Computer Systems',                session:'School RC1 Dec 2025', score:68,  max:75,  date:'2025-12-01' },
+    { subj:'addmath',  paper:'Paper 1 — Non-Calculator',                  session:'School RC1 Dec 2025', score:60,  max:80,  date:'2025-12-01' },
+    { subj:'business', paper:'Paper 1 — Short Answer & Data Response',    session:'School RC1 Dec 2025', score:60,  max:80,  date:'2025-12-01' },
+    { subj:'engfirst', paper:'Paper 1 — Reading',                         session:'School RC1 Dec 2025', score:60,  max:80,  date:'2025-12-01' },
+    { subj:'englit',   paper:'Paper 1 — Poetry & Prose',                  session:'School RC1 Dec 2025', score:35,  max:50,  date:'2025-12-01' },
+    { subj:'gp',       paper:'Component 1 — Written Exam',                session:'School RC1 Dec 2025', score:49,  max:70,  date:'2025-12-01' },
+    { subj:'science',  paper:'Paper 4 — Theory (Extended)',               session:'School RC1 Dec 2025', score:84,  max:120, date:'2025-12-01' }
+  ]));
+}
 renderScores();      // also calls renderAstarPanel() and renderTimetable()
 onSubjectChange();   // populate paper dropdown on load
 buildImportTable();  // pre-populate import form rows
