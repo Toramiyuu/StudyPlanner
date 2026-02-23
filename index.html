@@ -2576,8 +2576,8 @@ const EXAM_EVENTS = [
   { date:'2026-06-03', label:'Science P2 MCQ'    }
 ];
 
-const SLOT_NAMES  = ['9:00 AM', '2:00 PM', '7:00 PM'];
-const SLOT_RANGES = ['9:00 – 9:45 AM', '2:00 – 2:45 PM', '7:00 – 7:45 PM'];
+const SLOT_NAMES  = ['9:00 AM', '10:15 AM', '11:30 AM', '1:30 PM', '3:30 PM', '7:00 PM'];
+const SLOT_RANGES = ['9:00–10:00 AM', '10:15–11:15 AM', '11:30 AM–12:30 PM', '1:30–2:30 PM', '3:30–4:30 PM', '7:00–8:00 PM'];
 
 const TT_TOPIC_AREAS = {
   ict:      ['Databases','Spreadsheets','Document Production','Networks & Security','Hardware & Software','Data Representation','Presentation','Web Authoring'],
@@ -2626,14 +2626,14 @@ function ttDaySchedule(date) {
   if (ttExamOnDay(ds)) return 'exam';
   const dow = date.getDay(); // 0=Sun
   if (dow === 0) return 'rest';
-  const slots = dow === 6 ? 2 : 3;
+  const slots = dow === 6 ? 4 : 6;
   const seed = date.getDate() * 31 + date.getMonth() * 373;
   const subjIds = Object.keys(TT_SUBJECTS);
   const scored = subjIds
     .map(id => ({ id, p: ttPriority(id, date) }))
     .filter(x => x.p > 0)
     .sort((a, b) => b.p - a.p);
-  const top = scored.slice(0, 5).map(x => x.id);
+  const top = scored.slice(0, slots).map(x => x.id);
   const pool = ttShuffle(top, seed);
   const picked = [];
   for (let i = 0; i < slots; i++) picked.push(pool[i % pool.length]);
@@ -2690,7 +2690,7 @@ function renderTimetable() {
   }
 
   // slot rows
-  for (let slot = 0; slot < 3; slot++) {
+  for (let slot = 0; slot < SLOT_NAMES.length; slot++) {
     html += `<div class="tt-slot-label">${SLOT_NAMES[slot]}</div>`;
     for (let d = 0; d < 7; d++) {
       const date = new Date(ws); date.setDate(ws.getDate() + d);
@@ -2699,15 +2699,15 @@ function renderTimetable() {
       const sched = ttDaySchedule(date);
 
       if (sched === 'exam') {
-        if (slot === 1) {
+        if (slot === 2) {
           const ev = ttExamOnDay(ds);
-          html += `<div class="tt-cell tt-exam-day${isPast?' past':''}" style="grid-row:span 1"><span>${ev.label}</span></div>`;
+          html += `<div class="tt-cell tt-exam-day${isPast?' past':''}"><span>${ev.label}</span></div>`;
         } else {
           html += `<div class="tt-cell empty"></div>`;
         }
       } else if (sched === 'rest') {
-        if (slot === 1) {
-          html += `<div class="tt-cell rest">Rest Day</div>`;
+        if (slot === 2) {
+          html += `<div class="tt-cell rest">Rest Day ☕</div>`;
         } else {
           html += `<div class="tt-cell empty"></div>`;
         }
