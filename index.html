@@ -1458,7 +1458,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
 
   <div class="score-form" id="scoreForm">
     <label>Subject
-      <select id="sf-subject">
+      <select id="sf-subject" onchange="onSubjectChange()">
         <option value="ict">ICT (0417)</option>
         <option value="cs">Computer Science (0478)</option>
         <option value="business">Business Studies (0450)</option>
@@ -1470,7 +1470,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       </select>
     </label>
     <label>Paper
-      <input id="sf-paper" type="text" placeholder="e.g. Paper 1">
+      <select id="sf-paper" onchange="onPaperChange()"></select>
     </label>
     <label>Session
       <input id="sf-session" type="text" placeholder="e.g. June 2024">
@@ -2065,12 +2065,65 @@ function getGrade(pct, bounds) {
   return { g: 'U', cls: '' };
 }
 
+const paperOptions = {
+  ict:      [
+    { label: 'Paper 1 — Theory',                                    max: 80  },
+    { label: 'Paper 2 — Document Production, Databases & Pres.',    max: 80  },
+    { label: 'Paper 3 — Spreadsheets & Data Manipulation',          max: 80  }
+  ],
+  cs:       [
+    { label: 'Paper 1 — Computer Systems',                          max: 75  },
+    { label: 'Paper 2 — Algorithms, Programming & Logic',           max: 75  }
+  ],
+  business: [
+    { label: 'Paper 1 — Short Answer & Data Response',              max: 80  },
+    { label: 'Paper 2 — Case Study',                                max: 80  }
+  ],
+  engfirst: [
+    { label: 'Paper 1 — Reading',                                   max: 80  },
+    { label: 'Paper 2 — Directed Writing & Composition',            max: 80  }
+  ],
+  englit:   [
+    { label: 'Paper 1 — Poetry & Prose',                            max: 50  },
+    { label: 'Paper 2 — Drama',                                     max: 50  }
+  ],
+  science:  [
+    { label: 'Paper 2 — Multiple Choice (Extended)',                max: 40  },
+    { label: 'Paper 4 — Theory (Extended)',                         max: 120 },
+    { label: 'Paper 5/6 — Practical / Alt to Practical',           max: 60  }
+  ],
+  addmath:  [
+    { label: 'Paper 1 — Non-Calculator',                            max: 80  },
+    { label: 'Paper 2 — Calculator',                                max: 80  }
+  ],
+  gp:       [
+    { label: 'Component 1 — Written Exam',                          max: 70  },
+    { label: 'Component 2 — Individual Report',                     max: 60  },
+    { label: 'Component 3 — Team Project',                          max: 70  }
+  ]
+};
+
+function onSubjectChange() {
+  const subj = document.getElementById('sf-subject').value;
+  const paperSel = document.getElementById('sf-paper');
+  paperSel.innerHTML = (paperOptions[subj] || [])
+    .map(p => `<option value="${p.label}" data-max="${p.max}">${p.label}</option>`)
+    .join('');
+  onPaperChange();
+}
+
+function onPaperChange() {
+  const paperSel = document.getElementById('sf-paper');
+  const opt = paperSel.options[paperSel.selectedIndex];
+  if (opt) document.getElementById('sf-max').value = opt.dataset.max;
+}
+
 function loadScores() { return JSON.parse(localStorage.getItem('igcse-scores') || '[]'); }
 function saveScores(s) { localStorage.setItem('igcse-scores', JSON.stringify(s)); }
 
 function logScore() {
   const subj = document.getElementById('sf-subject').value;
-  const paper = document.getElementById('sf-paper').value.trim();
+  const paper = document.getElementById('sf-paper').value;
   const session = document.getElementById('sf-session').value.trim();
   const score = parseInt(document.getElementById('sf-score').value);
   const max = parseInt(document.getElementById('sf-max').value);
@@ -2080,10 +2133,9 @@ function logScore() {
   const scores = loadScores();
   scores.push({ subj, paper, session, score, max, date: new Date().toISOString().slice(0,10) });
   saveScores(scores);
-  document.getElementById('sf-paper').value = '';
   document.getElementById('sf-session').value = '';
   document.getElementById('sf-score').value = '';
-  document.getElementById('sf-max').value = '';
+  onSubjectChange(); // reset paper dropdown + max
   renderScores();
 }
 
@@ -2137,6 +2189,7 @@ function renderScores() {
 }
 
 renderScores();
+onSubjectChange(); // populate paper dropdown on load
 </script>
 </body>
 </html>
