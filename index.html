@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IGCSE 2026 Study Planner — PRD</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --surface2: #1a1a24;
+  --surface3: #22222f;
+  --border: #2a2a3a;
+  --text: #e8e8f0;
+  --text2: #9999aa;
+  --text3: #666678;
+  --accent: #f0c040;
+  --accent2: #e8a020;
+  --green: #40d080;
+  --red: #f06060;
+  --blue: #60a0f0;
+  --purple: #a070f0;
+  --orange: #f08040;
+  --pink: #f060a0;
+  --cyan: #40d0d0;
+  --teal: #40c0a0;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+::selection { background: var(--accent); color: var(--bg); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* HEADER */
+.hero {
+  padding: 60px 40px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 400px;
+  background: radial-gradient(ellipse at 30% 0%, rgba(240,192,64,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 0%, rgba(96,160,240,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero * { position: relative; z-index: 1; }
+.badge {
+  display: inline-block;
+  background: rgba(240,192,64,0.1);
+  border: 1px solid rgba(240,192,64,0.2);
+  color: var(--accent);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.1;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.subtitle {
+  font-size: 18px;
+  color: var(--text2);
+  font-weight: 300;
+  max-width: 600px;
+}
+
+/* COUNTDOWN */
+.countdown-strip {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.countdown-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: center;
+  min-width: 100px;
+}
+.countdown-card .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--accent);
+}
+.countdown-card .lbl {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+.nav-inner::-webkit-scrollbar { height: 0; }
+.nav-tab {
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+  user-select: none;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* MAIN */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+/* OVERVIEW SECTION */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+.subject-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.subject-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(240,192,64,0.08);
+}
+.subject-card .color-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.subject-card .code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+.subject-card .name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.subject-card .meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text2);
+}
+.subject-card .meta span { display: flex; align-items: center; gap: 4px; }
+
+/* SUBJECT DETAIL */
+.subject-header {
+  margin-bottom: 32px;
+}
+.subject-header .back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text3);
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: color 0.2s;
+}
+.subject-header .back:hover { color: var(--accent); }
+.subject-header h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  margin-bottom: 6px;
+}
+.subject-header .syllabus-code {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  font-size: 14px;
+}
+
+/* TABS inside subject */
+.detail-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+  overflow-x: auto;
+}
+.detail-tab {
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.detail-tab:hover { color: var(--text); }
+.detail-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.detail-panel { display: none; }
+.detail-panel.active { display: block; animation: fadeIn 0.25s ease; }
+
+/* PAPER CARDS */
+.paper-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.paper-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.paper-card .paper-meta {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.paper-card .paper-meta .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* GRADE TABLE */
+.grade-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 16px 0;
+}
+.grade-table th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text3);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.grade-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(42,42,58,0.5);
+}
+.grade-table tr:hover td { background: rgba(255,255,255,0.02); }
+.grade-astar { color: var(--accent); font-weight: 600; }
+.grade-a { color: var(--green); font-weight: 600; }
+
+/* TOPIC LIST */
+.topic-list {
+  display: grid;
+  gap: 8px;
+}
+.topic-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.topic-item:hover { border-color: var(--accent); }
+.topic-item .topic-num {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  font-size: 12px;
+  min-width: 36px;
+}
+.topic-item .topic-name { flex: 1; }
+.topic-item .topic-check {
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.topic-item .topic-check.checked {
+  background: var(--green);
+  border-color: var(--green);
+}
+.topic-item .topic-check.checked::after {
+  content: '✓';
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* EXAM TIMELINE */
+.timeline {
+  position: relative;
+  padding-left: 24px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 24px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 6px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+.timeline-item .date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.timeline-item .event {
+  font-size: 14px;
+  font-weight: 500;
+}
+.timeline-item .event-meta {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* TIPS */
+.tip-card {
+  background: rgba(240,192,64,0.05);
+  border: 1px solid rgba(240,192,64,0.15);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.tip-card .tip-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  background: var(--surface2);
+  border-radius: 6px;
+  height: 8px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  transition: width 0.5s ease;
+}
+
+/* INFO GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.info-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.info-box .info-label {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.info-box .info-value {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  margin-bottom: 16px;
+  margin-top: 24px;
+}
+h3:first-child { margin-top: 0; }
+
+p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
+
+.note {
+  background: var(--surface2);
+  border-left: 3px solid var(--blue);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--text2);
+  margin: 16px 0;
+}
+
+/* TRACKER SECTION */
+.tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.tracker-subject {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.tracker-subject .ts-name {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.tracker-subject .ts-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 12px;
+}
+.tracker-exam {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid rgba(42,42,58,0.4);
+  font-size: 13px;
+}
+.tracker-exam .te-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+}
+.days-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.days-badge.urgent { background: rgba(240,96,96,0.15); color: var(--red); }
+.days-badge.soon { background: rgba(240,128,64,0.15); color: var(--orange); }
+.days-badge.ok { background: rgba(64,208,128,0.15); color: var(--green); }
+.days-badge.done { background: rgba(128,128,128,0.15); color: var(--text2); text-decoration: line-through; }
+
+@media (max-width: 768px) {
+  .hero, main { padding: 24px 20px; }
+  nav { padding: 0 16px; }
+  .overview-grid { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr 1fr; }
+  .tracker-grid { grid-template-columns: 1fr; }
+  .countdown-strip { gap: 8px; }
+  .countdown-card { padding: 12px 16px; min-width: 70px; }
+  .countdown-card .num { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">Product Requirements Document</div>
+  <h1>IGCSE 2026<br>Study Planner</h1>
+  <p class="subtitle">Cambridge CAIE · May/June 2026 Session · 8 Subjects · Complete exam intelligence & revision tracker</p>
+
+  <div class="countdown-strip" id="countdown"></div>
+</div>
+
+<nav>
+  <div class="nav-inner" id="mainNav">
+    <div class="nav-tab active" data-section="overview">Overview</div>
+    <div class="nav-tab" data-section="tracker">Exam Tracker</div>
+    <div class="nav-tab" data-section="ict">ICT</div>
+    <div class="nav-tab" data-section="cs">Computer Science</div>
+    <div class="nav-tab" data-section="business">Business Studies</div>
+    <div class="nav-tab" data-section="engfirst">English 1st Lang</div>
+    <div class="nav-tab" data-section="englit">English Lit</div>
+    <div class="nav-tab" data-section="science">Co-ordinated Sciences</div>
+    <div class="nav-tab" data-section="addmath">Add Maths</div>
+    <div class="nav-tab" data-section="gp">Global Perspectives</div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ========== OVERVIEW ========== -->
+<div class="section active" id="overview">
+  <h3>Your 8 Subjects at a Glance</h3>
+  <p>The May/June 2026 CAIE session (Zone 4) runs from 1 April (ICT practicals) to 9 June 2026, with results released on 20 August 2026. Below is every subject you're sitting with its syllabus code, number of papers, and total marks.</p>
+
+  <div class="overview-grid">
+    <div class="subject-card" onclick="goToSubject('ict')">
+      <div class="color-bar" style="background:linear-gradient(90deg,var(--blue),var(--cyan))"></div>
+      <div class="code">0417</div>
+      <div class="name">ICT</div>
+      <div class="meta">
+        <span>📄 3 Papers</span>
+        <span>📊 200 marks</span>
+        <span>🕐 ~5h total</span>
+      </div>
+    </div>
+    <div class="subject-card" onclick="goToSubject('cs')">
+      <div class="color-bar" style="background:linear-gradient(90deg,var(--purple),var(--blue))"></div>
+      <div class="code">0478</div>
+      <div class="name">Computer Science</div>
+      <div class="meta">
+        <span>📄 2 Papers</span>
+        <span>📊 150 marks</span>
+        <span>🕐 3h 30m</span>
+      </div>
+    </div>
+    <div class="subject-card" onclick="goToSubject('business')">
+      <div class="color-bar" style="background:linear-gradient(90deg,var(--green),var(--teal))"></div>
+      <div class="code">0450</div>
+      <div class="name">Business Studies</div>
+      <div class="meta">
+        <span>📄 2 Papers</span>
+        <span>📊 160 marks</span>
+        <span>🕐 3h total</span>
+      </div>
+    </div>
+    <div class="subject-card" onclick="goToSubject('engfirst')">
+      <div class="color-bar" style="background:linear-gradient(90deg,var(--accent),var(--orange))"></div>
+      <div class="code">0500</div>
+      <div class="name">English First Language</div>
+      <div class="meta">
+        <span>📄 2 Papers</span>
+        <span>📊 80+ marks</span>
+        <span>🕐 ~3h 45m</span>
+      </div>
+    </div>
+    <div class="subject-card" onclick="goToSubject('englit')">
+      <div class="color-bar" style="background:linear-gradient(90deg,var(--pink),var(--purple))"></div>
+      <div class="code">0475</div>
+      <div class="name">English Literature</div>
+      <div class="meta">
+        <span>📄 2–4 Papers</span>
+        <span>📊 100 marks</span>
+        <span>🕐 ~3h+</span>
+      </div>
+    </div>
+    <div class="subject-card" onclick="goToSubject('science')">
+      <div class="color-bar" style="background:linear-gradient(90deg,var(--red),var(--orange))"></div>
+      <div class="code">0654</div>
+      <div class="name">Co-ordinated Sciences (Double Award)</div>
+      <div class="meta">
+        <span>📄 3 Papers</span>
+        <span>📊 220 marks</span>
+        <span>🕐 ~4h 45m</span>
+      </div>
+    </div>
+    <div class="subject-card" onclick="goToSubject('addmath')">
+      <div class="color-bar" style="background:linear-gradient(90deg,var(--cyan),var(--blue))"></div>
+      <div class="code">0606</div>
+      <div class="name">Additional Mathematics</div>
+      <div class="meta">
+        <span>📄 2 Papers</span>
+        <span>📊 160 marks</span>
+        <span>🕐 4h total</span>
+      </div>
+    </div>
+    <div class="subject-card" onclick="goToSubject('gp')">
+      <div class="color-bar" style="background:linear-gradient(90deg,var(--teal),var(--green))"></div>
+      <div class="code">0457</div>
+      <div class="name">Global Perspectives</div>
+      <div class="meta">
+        <span>📄 3 Components</span>
+        <span>📊 200 marks</span>
+        <span>🕐 Exam + CW</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:24px">
+    <strong>Note on Grade Boundaries:</strong> The grade thresholds shown in each subject are from the June 2025 session (the most recent available data). Actual 2026 boundaries will be set after your exams are marked and may differ. Use these as approximate targets for your revision.
+  </div>
+</div>
+
+<!-- ========== EXAM TRACKER ========== -->
+<div class="section" id="tracker">
+  <h3>Exam Countdown Tracker</h3>
+  <p>All exam dates for the May/June 2026 session from the <strong>Zone 4 final timetable</strong>. ICT practicals start as early as April. Papers are listed in chronological order per subject. Your school will sit one variant of each ICT practical paper — confirm which with your exam centre.</p>
+
+  <div class="tracker-grid" id="trackerGrid"></div>
+
+  <div class="note" style="margin-top:24px">
+    <strong>Results Day:</strong> Thursday 20 August 2026. Dates are from the official Cambridge Zone 4 final timetable (v1, Oct 2025). AM/PM sessions shown — actual start times set by your centre's Key Times.
+  </div>
+</div>
+
+<!-- ========== ICT ========== -->
+<div class="section" id="ict">
+  <div class="subject-header">
+    <div class="back" onclick="goToSubject('overview')">← Back to Overview</div>
+    <h2>Information & Communication Technology</h2>
+    <div class="syllabus-code">0417 · Syllabus 2026–2028</div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" data-panel="ict-papers">Papers & Marks</div>
+    <div class="detail-tab" data-panel="ict-syllabus">Syllabus Topics</div>
+    <div class="detail-tab" data-panel="ict-grades">Grade Boundaries</div>
+    <div class="detail-tab" data-panel="ict-tips">Exam Strategy</div>
+  </div>
+
+  <div class="detail-panel active" id="ict-papers">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Total Papers</div><div class="info-value">3</div></div>
+      <div class="info-box"><div class="info-label">Total Marks</div><div class="info-value">200</div></div>
+      <div class="info-box"><div class="info-label">Grades Available</div><div class="info-value">A*–G</div></div>
+      <div class="info-box"><div class="info-label">Calculator</div><div class="info-value">N/A</div></div>
+    </div>
+
+    <div class="paper-card">
+      <h4>Paper 1 — Theory</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 1h 30min</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 40% weighting</span>
+      </div>
+      <p>Multiple-choice, short-answer & structured questions covering ALL theory sections (Sections 1–16). Each question set within a real-world ICT context.</p>
+      <p><strong>Key topics:</strong> Input/output devices (OMR, OCR, RFID, NFC, biometrics), storage types, networks (LAN/WAN, protocols, internet), safety & security (encryption, firewalls, backups), impact of ICT (ethical, social, economic), and emerging technologies.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 2 — Document Production, Databases & Presentations</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 2h 30min</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 40% weighting</span>
+      </div>
+      <p>Practical test. You complete tasks using word processing, database, and presentation software. Tasks must be followed precisely — format, content, accuracy all credited. You produce evidence documents and printouts.</p>
+      <p><strong>Covers:</strong> Section 17 (Document Production), Section 18 (Databases), Section 19 (Presentations).</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 3 — Spreadsheets & Data Manipulation</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 2h 30min</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 40% weighting</span>
+      </div>
+      <p>Practical test covering spreadsheets, data analysis, and web authoring. You work with formulae, functions, charts, CSS stylesheets, and HTML.</p>
+      <p><strong>Covers:</strong> Section 20 (Spreadsheets & Data Graphs), Section 21 (Web Authoring including CSS).</p>
+    </div>
+    <div class="note">Papers 2 and 3 are weighted 40% each but together they make up 60% of your total mark alongside Paper 1's 40%. File naming and correct save format are mark-bearing — don't lose easy marks.</div>
+  </div>
+
+  <div class="detail-panel" id="ict-syllabus">
+    <h3>Theory Content (Paper 1)</h3>
+    <div class="topic-list" id="ict-theory-topics"></div>
+    <h3>Practical Content (Papers 2 & 3)</h3>
+    <div class="topic-list" id="ict-practical-topics"></div>
+  </div>
+
+  <div class="detail-panel" id="ict-grades">
+    <h3>Grade Boundaries (June 2025 Reference)</h3>
+    <p>Based on June 2025 thresholds. Your 2026 boundaries will be set after marking.</p>
+    <table class="grade-table">
+      <tr><th>Grade</th><th>Approx. % Needed (Overall)</th><th>Meaning</th></tr>
+      <tr><td class="grade-astar">A*</td><td>~80–85%+</td><td>Exceptional performance across all papers</td></tr>
+      <tr><td class="grade-a">A</td><td>~68–75%</td><td>Strong command of theory + accurate practical work</td></tr>
+      <tr><td>B</td><td>~55–65%</td><td>Good understanding with minor practical errors</td></tr>
+      <tr><td>C</td><td>~42–50%</td><td>Adequate knowledge, some gaps in practical skills</td></tr>
+      <tr><td>D</td><td>~35–40%</td><td>Basic understanding</td></tr>
+    </table>
+    <div class="note">ICT practical papers often have high grade boundaries because marks are awarded for precise output. File format, naming, and exact formatting are critical.</div>
+  </div>
+
+  <div class="detail-panel" id="ict-tips">
+    <h3>Exam Strategy & Tips</h3>
+    <div class="tip-card"><div class="tip-label">Paper 1 Strategy</div>Use correct terminology in every answer — "RAM", "protocol", "encryption", not vague terms. Every theory topic from Sections 1–16 is examinable. Practise past paper questions under timed conditions.</div>
+    <div class="tip-card"><div class="tip-label">Practical Papers</div>Read each task instruction word-by-word. Follow formats exactly (font size, alignment, cell references). Always save in the correct file format. Name files exactly as instructed. Produce screenshots as evidence.</div>
+    <div class="tip-card"><div class="tip-label">High-Frequency Topics</div>Spreadsheet functions (IF, VLOOKUP, COUNTIF), mail merge, database queries, CSS classes vs inline styles, and web page structure appear in almost every session.</div>
+  </div>
+</div>
+
+<!-- ========== COMPUTER SCIENCE ========== -->
+<div class="section" id="cs">
+  <div class="subject-header">
+    <div class="back" onclick="goToSubject('overview')">← Back to Overview</div>
+    <h2>Computer Science</h2>
+    <div class="syllabus-code">0478 · Syllabus 2026–2028</div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" data-panel="cs-papers">Papers & Marks</div>
+    <div class="detail-tab" data-panel="cs-syllabus">Syllabus Topics</div>
+    <div class="detail-tab" data-panel="cs-grades">Grade Boundaries</div>
+    <div class="detail-tab" data-panel="cs-tips">Exam Strategy</div>
+  </div>
+
+  <div class="detail-panel active" id="cs-papers">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Total Papers</div><div class="info-value">2</div></div>
+      <div class="info-box"><div class="info-label">Total Marks</div><div class="info-value">150</div></div>
+      <div class="info-box"><div class="info-label">Grades Available</div><div class="info-value">A*–G</div></div>
+      <div class="info-box"><div class="info-label">Calculator</div><div class="info-value">Not Allowed</div></div>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 1 — Computer Systems</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 1h 45min</span>
+        <span class="tag">📊 75 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Short-answer and structured questions on Topics 1–6: Data Representation, Data Transmission, Hardware, Software, The Internet, Automated & Emerging Technologies.</p>
+      <p><strong>Most tested:</strong> Binary/hex conversions, logic gates, CPU architecture (fetch-decode-execute), types of memory, network protocols, cybersecurity, AI/robotics.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 2 — Algorithms, Programming & Logic</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 1h 45min</span>
+        <span class="tag">📊 75 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Short-answer, structured questions, and a final 15-mark scenario question. Topics 7–10: Algorithm Design, Programming, Databases, Boolean Logic.</p>
+      <p><strong>Critical:</strong> The final scenario question (15 marks, ~30 min) requires writing a complete algorithm in pseudocode. Trace tables, dry runs, and correcting code are common throughout.</p>
+    </div>
+  </div>
+
+  <div class="detail-panel" id="cs-syllabus">
+    <h3>Paper 1: Computer Systems (Topics 1–6)</h3>
+    <div class="topic-list" id="cs-topics1"></div>
+    <h3>Paper 2: Algorithms & Programming (Topics 7–10)</h3>
+    <div class="topic-list" id="cs-topics2"></div>
+  </div>
+
+  <div class="detail-panel" id="cs-grades">
+    <h3>Grade Boundaries (June 2025 — Option AX: P1 Var 1 + P2 Var 1)</h3>
+    <table class="grade-table">
+      <tr><th>Grade</th><th>Overall /150</th><th>Approx %</th></tr>
+      <tr><td class="grade-astar">A*</td><td>116</td><td>77%</td></tr>
+      <tr><td class="grade-a">A</td><td>94</td><td>63%</td></tr>
+      <tr><td>B</td><td>72</td><td>48%</td></tr>
+      <tr><td>C</td><td>50</td><td>33%</td></tr>
+      <tr><td>D</td><td>42</td><td>28%</td></tr>
+      <tr><td>E</td><td>35</td><td>23%</td></tr>
+    </table>
+    <div class="note">These are from the June 2025 Option AX combination. Your paper variant may differ. Paper 1 A-grade threshold was 45/75 (60%), Paper 2 was 49/75 (65%).</div>
+  </div>
+
+  <div class="detail-panel" id="cs-tips">
+    <h3>Exam Strategy & Tips</h3>
+    <div class="tip-card"><div class="tip-label">Paper 1</div>Learn definitions precisely — examiners award marks for correct terminology like "ALU", "protocol", "compiler". Binary/hex questions are free marks with practice. Logic gates: draw truth tables for NAND, NOR, XOR — they appear every session.</div>
+    <div class="tip-card"><div class="tip-label">Paper 2 — Scenario Question</div>Budget 30 minutes for the final 15-mark question. Write in proper pseudocode using the Cambridge notation (not Python). Show DECLARE statements, use proper indentation, and test your logic mentally before writing.</div>
+    <div class="tip-card"><div class="tip-label">Trace Tables</div>Show every single step. One wrong variable value cascades errors. Use a ruler to keep rows aligned. Practice at least 10 past paper trace table questions before your exam.</div>
+  </div>
+</div>
+
+<!-- ========== BUSINESS STUDIES ========== -->
+<div class="section" id="business">
+  <div class="subject-header">
+    <div class="back" onclick="goToSubject('overview')">← Back to Overview</div>
+    <h2>Business Studies</h2>
+    <div class="syllabus-code">0450 · Syllabus 2026</div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" data-panel="bus-papers">Papers & Marks</div>
+    <div class="detail-tab" data-panel="bus-syllabus">Syllabus Topics</div>
+    <div class="detail-tab" data-panel="bus-grades">Grade Boundaries</div>
+    <div class="detail-tab" data-panel="bus-tips">Exam Strategy</div>
+  </div>
+
+  <div class="detail-panel active" id="bus-papers">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Total Papers</div><div class="info-value">2</div></div>
+      <div class="info-box"><div class="info-label">Total Marks</div><div class="info-value">160</div></div>
+      <div class="info-box"><div class="info-label">Grades Available</div><div class="info-value">A*–G</div></div>
+      <div class="info-box"><div class="info-label">Calculator</div><div class="info-value">Allowed</div></div>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 1 — Short Answer & Data Response</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 1h 30min</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Four questions with short answers and structured data responses. Each question introduced by stimulus material (tables, graphs, images). Covers the entire syllabus. Tests AO1–AO4 (Knowledge, Application, Analysis, Evaluation).</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 2 — Case Study</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 1h 30min</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Four questions based on a case study provided as an insert. Appendices include data in tables, graphs, newspaper extracts, adverts. You MUST use the case context in every answer — generic theory scores limited marks.</p>
+      <p><strong>Key skills:</strong> Break-even calculations, profit/loss, cash flow analysis, ratio interpretation. Always show working and include units.</p>
+    </div>
+  </div>
+
+  <div class="detail-panel" id="bus-syllabus">
+    <h3>All Syllabus Sections</h3>
+    <div class="topic-list" id="bus-topics"></div>
+  </div>
+
+  <div class="detail-panel" id="bus-grades">
+    <h3>Grade Boundaries (June 2025 Reference)</h3>
+    <table class="grade-table">
+      <tr><th>Grade</th><th>Approx. Overall %</th><th>Notes</th></tr>
+      <tr><td class="grade-astar">A*</td><td>~78–85%</td><td>Strong evaluation skills + accurate calculations</td></tr>
+      <tr><td class="grade-a">A</td><td>~65–72%</td><td>Good application to case study</td></tr>
+      <tr><td>B</td><td>~52–60%</td><td>Solid knowledge with some analysis</td></tr>
+      <tr><td>C</td><td>~40–48%</td><td>Adequate understanding of core concepts</td></tr>
+    </table>
+  </div>
+
+  <div class="detail-panel" id="bus-tips">
+    <h3>Exam Strategy & Tips</h3>
+    <div class="tip-card"><div class="tip-label">Command Words</div>"Define" = precise 1–2 line definition. "Explain" = cause + effect. "Analyse" = develop with reference to the case. "Evaluate" = balanced discussion + justified recommendation. Match your answer to the verb.</div>
+    <div class="tip-card"><div class="tip-label">Case Study (Paper 2)</div>Read the case thoroughly before answering. Use the company name, specific data, and context in EVERY answer. Own knowledge supports the case — it doesn't replace it. Practice reading pre-release material under timed conditions.</div>
+    <div class="tip-card"><div class="tip-label">Calculations</div>Memorise: Break-even = Fixed Costs ÷ (Selling Price – Variable Cost). Profit = Revenue – Total Costs. Gross Profit Margin = (Gross Profit ÷ Revenue) × 100. Always show your working and include currency/percentage symbols.</div>
+  </div>
+</div>
+
+<!-- ========== ENGLISH FIRST LANGUAGE ========== -->
+<div class="section" id="engfirst">
+  <div class="subject-header">
+    <div class="back" onclick="goToSubject('overview')">← Back to Overview</div>
+    <h2>English — First Language</h2>
+    <div class="syllabus-code">0500 · Syllabus 2024–2026</div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" data-panel="ef-papers">Papers & Marks</div>
+    <div class="detail-tab" data-panel="ef-grades">Grade Boundaries</div>
+    <div class="detail-tab" data-panel="ef-tips">Exam Strategy</div>
+  </div>
+
+  <div class="detail-panel active" id="ef-papers">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Papers Required</div><div class="info-value">2</div></div>
+      <div class="info-box"><div class="info-label">Grades Available</div><div class="info-value">A*–G</div></div>
+      <div class="info-box"><div class="info-label">Optional Comp</div><div class="info-value">Speaking/Listening</div></div>
+      <div class="info-box"><div class="info-label">Focus</div><div class="info-value">Reading + Writing</div></div>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 1 — Reading</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 2 hours</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Questions based on two or three texts. Tests explicit and implicit understanding, inference, analysis of writer's craft, and the ability to select and use information. Also includes a shorter writing task (summary or directed writing).</p>
+      <p><strong>Assessment Objectives:</strong> R1 (explicit meanings), R2 (implicit meanings & attitudes), R3 (analysis of writer's effects), R5 (select & use information), plus W2, W3, W5 for the writing task.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 2 — Directed Writing & Composition</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 2 hours</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Section A: Directed writing task using a reading text. Section B: Free composition — choice of descriptive or narrative writing. This is where the highest-quality creative writing is rewarded.</p>
+      <p><strong>Key skills:</strong> Vocabulary range, sentence variety, structural control, accurate SPaG, vivid imagery, effective openings and endings.</p>
+    </div>
+    <div class="paper-card" style="border-color: var(--text3);">
+      <h4>Component 4 — Speaking & Listening (Optional)</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ ~10–12 min</span>
+        <span class="tag">📝 Separately endorsed</span>
+      </div>
+      <p>Does NOT contribute to your overall grade. Graded 1 (highest) to 5 separately. Only take if your school offers it and you want the endorsement on your certificate.</p>
+    </div>
+  </div>
+
+  <div class="detail-panel" id="ef-grades">
+    <h3>Grade Boundaries (June 2025 Reference)</h3>
+    <table class="grade-table">
+      <tr><th>Grade</th><th>Approx. Overall %</th><th>Notes</th></tr>
+      <tr><td class="grade-astar">A*</td><td>~75–82%</td><td>Exceptional language control + sophisticated analysis</td></tr>
+      <tr><td class="grade-a">A</td><td>~62–70%</td><td>Confident, fluent writing + strong reading comprehension</td></tr>
+      <tr><td>B</td><td>~50–58%</td><td>Competent with occasional lapses in precision</td></tr>
+      <tr><td>C</td><td>~38–45%</td><td>Adequate understanding and basic writing accuracy</td></tr>
+    </table>
+  </div>
+
+  <div class="detail-panel" id="ef-tips">
+    <h3>Exam Strategy & Tips</h3>
+    <div class="tip-card"><div class="tip-label">Reading Paper</div>Quote precisely but briefly. Always explain the EFFECT of the writer's choice — don't just identify techniques. Use the PEE structure: Point → Evidence → Explanation of effect. For summary questions, be concise and avoid lifting whole sentences.</div>
+    <div class="tip-card"><div class="tip-label">Composition</div>Plan for 5 minutes before writing. Use a variety of sentence lengths. Open with something striking — not "It was a dark and stormy night." End deliberately. Descriptive writing should engage ALL senses. Narrative should have a clear arc with tension.</div>
+    <div class="tip-card"><div class="tip-label">SPaG Matters</div>Spelling, punctuation, and grammar are assessed in EVERY writing task. Use semicolons, colons, and dashes correctly for instant sophistication. Avoid comma splices — they're the most common error.</div>
+  </div>
+</div>
+
+<!-- ========== ENGLISH LITERATURE ========== -->
+<div class="section" id="englit">
+  <div class="subject-header">
+    <div class="back" onclick="goToSubject('overview')">← Back to Overview</div>
+    <h2>Literature in English</h2>
+    <div class="syllabus-code">0475 · Syllabus 2026</div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" data-panel="el-papers">Papers & Marks</div>
+    <div class="detail-tab" data-panel="el-grades">Grade Boundaries</div>
+    <div class="detail-tab" data-panel="el-tips">Exam Strategy</div>
+  </div>
+
+  <div class="detail-panel active" id="el-papers">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Compulsory</div><div class="info-value">Paper 1</div></div>
+      <div class="info-box"><div class="info-label">Choose From</div><div class="info-value">3 Routes</div></div>
+      <div class="info-box"><div class="info-label">Grades</div><div class="info-value">A*–G</div></div>
+      <div class="info-box"><div class="info-label">Texts</div><div class="info-value">Set Texts</div></div>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 1 — Poetry & Prose (Compulsory)</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 1h 30min</span>
+        <span class="tag">📊 50 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Two questions on two set texts: one poetry and one prose. Questions require close analysis of language, structure, and themes. You must demonstrate detailed knowledge of the text and offer a personal, informed response.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 2 — Drama (Option A)</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 1h 30min</span>
+        <span class="tag">📊 50 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Two questions on two drama texts (closed book). OR you can take the Paper 3 + Paper 4 / Coursework route instead.</p>
+    </div>
+    <div class="paper-card" style="border-color: var(--text3)">
+      <h4>Alternative Route: Paper 3 (Open Text) + Paper 4 (Unseen) or Coursework</h4>
+      <div class="paper-meta">
+        <span class="tag">Paper 3: 45min, 25 marks (25%)</span>
+        <span class="tag">Paper 4: 1h 15min, 25 marks (25%)</span>
+      </div>
+      <p>Paper 3: One drama question (open book). Paper 4: One unseen critical commentary question. OR Paper 3 + Component 5 (Coursework). Check with your school which route you're taking.</p>
+    </div>
+  </div>
+
+  <div class="detail-panel" id="el-grades">
+    <h3>Grade Boundaries (June 2025 Reference)</h3>
+    <table class="grade-table">
+      <tr><th>Grade</th><th>Approx. Overall %</th><th>Notes</th></tr>
+      <tr><td class="grade-astar">A*</td><td>~75–82%</td><td>Sophisticated personal response + precise textual analysis</td></tr>
+      <tr><td class="grade-a">A</td><td>~60–70%</td><td>Confident engagement with texts, well-supported arguments</td></tr>
+      <tr><td>B</td><td>~48–56%</td><td>Good knowledge with some analytical depth</td></tr>
+      <tr><td>C</td><td>~36–44%</td><td>Adequate understanding of themes and characters</td></tr>
+    </table>
+  </div>
+
+  <div class="detail-panel" id="el-tips">
+    <h3>Exam Strategy & Tips</h3>
+    <div class="tip-card"><div class="tip-label">Know Your Texts</div>There is no substitute for knowing your set texts inside out. Memorise 3–5 key quotes per character/theme for each text. Practise writing about them under timed conditions. You cannot bring texts into Paper 1 or Paper 2.</div>
+    <div class="tip-card"><div class="tip-label">Personal Response</div>Examiners want YOUR interpretation, not a textbook answer. Use phrases like "This suggests…", "The reader might feel…", "This creates an atmosphere of…". Avoid retelling the plot — analyse, don't narrate.</div>
+    <div class="tip-card"><div class="tip-label">Language Analysis</div>Comment on specific word choices, imagery, metre (for poetry), and dramatic techniques (for drama). Always link technique → effect on reader → broader theme.</div>
+  </div>
+</div>
+
+<!-- ========== COMBINED SCIENCE ========== -->
+<div class="section" id="science">
+  <div class="subject-header">
+    <div class="back" onclick="goToSubject('overview')">← Back to Overview</div>
+    <h2>Co-ordinated Sciences (Double Award)</h2>
+    <div class="syllabus-code">0654 · Syllabus 2025–2027</div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" data-panel="sci-papers">Papers & Marks</div>
+    <div class="detail-tab" data-panel="sci-syllabus">Syllabus Topics</div>
+    <div class="detail-tab" data-panel="sci-grades">Grade Boundaries</div>
+    <div class="detail-tab" data-panel="sci-tips">Exam Strategy</div>
+  </div>
+
+  <div class="detail-panel active" id="sci-papers">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Papers (Extended)</div><div class="info-value">3</div></div>
+      <div class="info-box"><div class="info-label">Total Marks</div><div class="info-value">220</div></div>
+      <div class="info-box"><div class="info-label">Award</div><div class="info-value">Double (2 grades)</div></div>
+      <div class="info-box"><div class="info-label">Calculator</div><div class="info-value">Allowed</div></div>
+    </div>
+    <div class="note">Co-ordinated Sciences is a <strong>Double Award</strong> — you receive TWO IGCSE grades (e.g. A*A*, AB, etc.). Extended candidates take Paper 2 + Paper 4 + Paper 5 or 6, eligible for grades A*A* to GG. Core candidates take Paper 1 + Paper 3 + Paper 5/6 (max grade CC).</div>
+    <div class="paper-card">
+      <h4>Paper 2 — Multiple Choice (Extended)</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 45 min</span>
+        <span class="tag">📊 40 marks</span>
+        <span class="tag">📝 30% weighting</span>
+      </div>
+      <p>40 four-option MCQs covering Core + Supplement content across Biology, Chemistry, and Physics.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 4 — Theory (Extended)</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 2 hours</span>
+        <span class="tag">📊 120 marks</span>
+        <span class="tag">📝 50% weighting</span>
+      </div>
+      <p>Short-answer and structured questions covering all three sciences (Core + Supplement). This is the heaviest paper at 50% — focus your revision here. Questions test knowledge, application, and data handling.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 5 — Practical Test OR Paper 6 — Alternative to Practical</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ P5: 2h | P6: 1h 30m</span>
+        <span class="tag">📊 60 marks</span>
+        <span class="tag">📝 20% weighting</span>
+      </div>
+      <p>Paper 5: Hands-on practical exam (6–7 exercises across all three sciences, one planning question). Paper 6: Written alternative testing experimental skills without lab work. Your school chooses which one you sit.</p>
+    </div>
+  </div>
+
+  <div class="detail-panel" id="sci-syllabus">
+    <h3>Biology Topics (B1–B19)</h3>
+    <div class="topic-list" id="sci-bio-topics"></div>
+    <h3>Chemistry Topics (C1–C12)</h3>
+    <div class="topic-list" id="sci-chem-topics"></div>
+    <h3>Physics Topics (P1–P6)</h3>
+    <div class="topic-list" id="sci-phys-topics"></div>
+  </div>
+
+  <div class="detail-panel" id="sci-grades">
+    <h3>Grade Boundaries (June 2025 Reference — Extended)</h3>
+    <table class="grade-table">
+      <tr><th>Grade</th><th>Approx. Overall %</th><th>Notes</th></tr>
+      <tr><td class="grade-astar">A*A*</td><td>~78–85%</td><td>Excellent across all three sciences + strong practical skills</td></tr>
+      <tr><td class="grade-a">AA</td><td>~65–72%</td><td>Confident recall + accurate application</td></tr>
+      <tr><td>BB</td><td>~52–60%</td><td>Good understanding with minor gaps</td></tr>
+      <tr><td>CC</td><td>~38–48%</td><td>Adequate knowledge across sciences</td></tr>
+    </table>
+    <div class="note">Co-ordinated Sciences awards TWO grades. Boundaries above are approximate based on June 2025 data. The two grades can differ (e.g. AB) depending on your performance across sciences.</div>
+  </div>
+
+  <div class="detail-panel" id="sci-tips">
+    <h3>Exam Strategy & Tips</h3>
+    <div class="tip-card"><div class="tip-label">Paper 4 is King (50%)</div>At 120 marks and 2 hours, Paper 4 is where your grade is largely decided. Practise structured questions under timed conditions. Show all working for calculations — method marks are available even if the final answer is wrong.</div>
+    <div class="tip-card"><div class="tip-label">Balance Your Revision</div>Don't neglect any of the three sciences. Physics (especially calculations) is often where students lose marks. Dedicate roughly equal time to Bio, Chem, and Physics. The MCQ paper covers all three equally.</div>
+    <div class="tip-card"><div class="tip-label">Supplement Content</div>Extended paper questions often focus heavily on Supplement material (the starred content). Prioritise learning these topics — they separate A*A*/AA from BB/CC.</div>
+    <div class="tip-card"><div class="tip-label">Practical Skills</div>Whether Paper 5 or 6: know how to draw graphs correctly (labels, units, line of best fit), record measurements with correct significant figures, identify variables (independent, dependent, controlled), and evaluate experimental procedures. The planning question can come from any science.</div>
+  </div>
+</div>
+
+<!-- ========== ADDITIONAL MATHS ========== -->
+<div class="section" id="addmath">
+  <div class="subject-header">
+    <div class="back" onclick="goToSubject('overview')">← Back to Overview</div>
+    <h2>Additional Mathematics</h2>
+    <div class="syllabus-code">0606 · Syllabus 2025–2027</div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" data-panel="am-papers">Papers & Marks</div>
+    <div class="detail-tab" data-panel="am-syllabus">Syllabus Topics</div>
+    <div class="detail-tab" data-panel="am-grades">Grade Boundaries</div>
+    <div class="detail-tab" data-panel="am-tips">Exam Strategy</div>
+  </div>
+
+  <div class="detail-panel active" id="am-papers">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Total Papers</div><div class="info-value">2</div></div>
+      <div class="info-box"><div class="info-label">Total Marks</div><div class="info-value">160</div></div>
+      <div class="info-box"><div class="info-label">Grades Available</div><div class="info-value">A*–E only</div></div>
+      <div class="info-box"><div class="info-label">Formula Booklet</div><div class="info-value">None!</div></div>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 1 — Non-Calculator</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 2 hours</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 50% weighting</span>
+        <span class="tag" style="color:var(--red)">🚫 No Calculator</span>
+      </div>
+      <p>Strong emphasis on algebraic manipulation and exact values. Questions range from short single-topic items to multi-part problems. Full syllabus is examinable. You must recall ALL formulae and identities.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Paper 2 — Calculator</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 2 hours</span>
+        <span class="tag">📊 80 marks</span>
+        <span class="tag">📝 50% weighting</span>
+        <span class="tag" style="color:var(--green)">✅ Calculator Allowed</span>
+      </div>
+      <p>Often contains real-life application problems and kinematics. Same syllabus coverage as Paper 1. Calculator reduces arithmetic burden but doesn't replace understanding.</p>
+    </div>
+    <div class="note" style="border-left-color:var(--red)"><strong>Critical:</strong> No formula booklet is provided for 0606. You MUST memorise differentiation/integration rules, trig identities, binomial theorem, and all key formulae. Unsupported calculator answers get zero marks — always show working.</div>
+  </div>
+
+  <div class="detail-panel" id="am-syllabus">
+    <h3>All Topics</h3>
+    <div class="topic-list" id="am-topics"></div>
+  </div>
+
+  <div class="detail-panel" id="am-grades">
+    <h3>Grade Boundaries (June 2025 Reference)</h3>
+    <table class="grade-table">
+      <tr><th>Grade</th><th>Approx. Overall %</th><th>Notes</th></tr>
+      <tr><td class="grade-astar">A*</td><td>~80–88%</td><td>Near-flawless algebraic manipulation + calculus</td></tr>
+      <tr><td class="grade-a">A</td><td>~65–75%</td><td>Strong across all topic areas</td></tr>
+      <tr><td>B</td><td>~50–60%</td><td>Good understanding, occasional errors in harder topics</td></tr>
+      <tr><td>C</td><td>~38–48%</td><td>Sound on core topics, struggles with multi-step problems</td></tr>
+      <tr><td>D</td><td>~28–35%</td><td>Basic competence</td></tr>
+      <tr><td>E</td><td>~20–25%</td><td>Minimum pass — below this is Unclassified</td></tr>
+    </table>
+    <div class="note">Add Maths only awards grades A*–E. There are no F or G grades. If you don't reach the E threshold, you receive U (Unclassified).</div>
+  </div>
+
+  <div class="detail-panel" id="am-tips">
+    <h3>Exam Strategy & Tips</h3>
+    <div class="tip-card"><div class="tip-label">Paper 1 (No Calculator)</div>Practice surds, exact trig values (sin 30°, cos 45°, etc.), and algebraic long division without a calculator. Every Paper 1 requires you to leave answers in exact form (e.g., 3√2, not 4.243).</div>
+    <div class="tip-card"><div class="tip-label">Calculus</div>Differentiation and integration appear in every single paper. Know: power rule, chain rule, product rule, trig derivatives, area under curves, stationary points, tangent/normal equations. Practice setting up equations from word problems.</div>
+    <div class="tip-card"><div class="tip-label">"Hence" and "Show That"</div>"Hence" means USE your previous answer. "Show that" means the answer is given — you must prove it step-by-step. If you can't do part (a), you can still attempt part (b) using the given result.</div>
+  </div>
+</div>
+
+<!-- ========== GLOBAL PERSPECTIVES ========== -->
+<div class="section" id="gp">
+  <div class="subject-header">
+    <div class="back" onclick="goToSubject('overview')">← Back to Overview</div>
+    <h2>Global Perspectives</h2>
+    <div class="syllabus-code">0457 · Syllabus 2025–2027</div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" data-panel="gp-papers">Components & Marks</div>
+    <div class="detail-tab" data-panel="gp-syllabus">Topics</div>
+    <div class="detail-tab" data-panel="gp-grades">Grade Boundaries</div>
+    <div class="detail-tab" data-panel="gp-tips">Exam Strategy</div>
+  </div>
+
+  <div class="detail-panel active" id="gp-papers">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Components</div><div class="info-value">3</div></div>
+      <div class="info-box"><div class="info-label">Total Marks</div><div class="info-value">200</div></div>
+      <div class="info-box"><div class="info-label">Grades</div><div class="info-value">A*–G</div></div>
+      <div class="info-box"><div class="info-label">Coursework</div><div class="info-value">65%</div></div>
+    </div>
+    <div class="paper-card">
+      <h4>Component 1 — Written Exam</h4>
+      <div class="paper-meta">
+        <span class="tag">⏱ 1h 25min</span>
+        <span class="tag">📊 70 marks</span>
+        <span class="tag">📝 35% weighting</span>
+      </div>
+      <p>Four compulsory questions based on source documents about a global issue. Sources may include articles, data sets, personal testimonies, and images. You analyse, evaluate arguments, and make reasoned judgements.</p>
+      <p><strong>Q1 (~14 marks):</strong> Identify/describe patterns from data. <strong>Q2 (~20 marks):</strong> Analyse arguments. <strong>Q3 (~16 marks):</strong> Evaluate quality of arguments. <strong>Q4 (~20 marks):</strong> Assess actions and explain judgements with evidence.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Component 2 — Individual Report</h4>
+      <div class="paper-meta">
+        <span class="tag">📊 60 marks</span>
+        <span class="tag">📝 30% weighting</span>
+        <span class="tag">📏 1500–2000 words</span>
+      </div>
+      <p>A research essay on a global question from the topic list. Must be your own work. Externally marked by Cambridge. Choose a topic you're genuinely interested in — quality of research and personal reflection matter.</p>
+    </div>
+    <div class="paper-card">
+      <h4>Component 3 — Team Project</h4>
+      <div class="paper-meta">
+        <span class="tag">📊 70 marks</span>
+        <span class="tag">📝 35% weighting</span>
+        <span class="tag">🤝 Collaborative</span>
+      </div>
+      <p>A team-based project: Explanation of Research & Planning (300–400 words, team), Evidence of Action (team), and a Reflective Paper (750–1000 words, individual). Internally assessed, externally moderated.</p>
+    </div>
+  </div>
+
+  <div class="detail-panel" id="gp-syllabus">
+    <h3>Topic List</h3>
+    <p>The exam and coursework draw from these global topics. You study a selection, not all of them.</p>
+    <div class="topic-list" id="gp-topics"></div>
+  </div>
+
+  <div class="detail-panel" id="gp-grades">
+    <h3>Grade Boundaries (June 2025 Reference)</h3>
+    <table class="grade-table">
+      <tr><th>Grade</th><th>Approx. Overall %</th><th>Notes</th></tr>
+      <tr><td class="grade-astar">A*</td><td>~78–85%</td><td>Outstanding critical analysis + excellent research</td></tr>
+      <tr><td class="grade-a">A</td><td>~65–72%</td><td>Strong evaluation and well-structured arguments</td></tr>
+      <tr><td>B</td><td>~52–60%</td><td>Good analysis with clear reasoning</td></tr>
+      <tr><td>C</td><td>~40–48%</td><td>Adequate skills demonstration</td></tr>
+    </table>
+  </div>
+
+  <div class="detail-panel" id="gp-tips">
+    <h3>Exam Strategy & Tips</h3>
+    <div class="tip-card"><div class="tip-label">Written Exam</div>You're assessed on SKILLS, not knowledge of the topic. Read sources carefully before writing. For Q4: always give reasons AND evidence for your judgements. Balanced, evaluative responses score highest.</div>
+    <div class="tip-card"><div class="tip-label">Individual Report</div>Stay within 1500–2000 words. Structure clearly: introduction, research findings, analysis, personal reflection, conclusion. Use a variety of sources (not just websites — include academic articles, reports, data). Cite everything.</div>
+    <div class="tip-card"><div class="tip-label">Team Project</div>Keep the Explanation of Research & Planning under 400 words — marks stop at 400. Evidence of Action should show what you DID, not just your research. Your Reflective Paper is individual — focus on YOUR contribution and learning.</div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ========== DATA ==========
+const subjects = {
+  ict: {
+    name: 'ICT', code: '0417', color: 'var(--blue)',
+    exams: [
+      { paper: 'Paper 2 (Practical – Documents/DB)', date: 'Wed 1 Apr 2026', iso: '2026-04-01', session: 'Practical window', duration: '2h 30m', code: '0417/21' },
+      { paper: 'Paper 3 (Practical – Spreadsheets/Web)', date: 'Thu 2 Apr 2026', iso: '2026-04-02', session: 'Practical window', duration: '2h 30m', code: '0417/31' },
+      { paper: 'Paper 2 Var 2 (Practical – Documents/DB)', date: 'Thu 16 Apr 2026', iso: '2026-04-16', session: 'Practical window', duration: '2h 30m', code: '0417/22' },
+      { paper: 'Paper 3 Var 2 (Practical – Spreadsheets/Web)', date: 'Tue 21 Apr 2026', iso: '2026-04-21', session: 'Practical window', duration: '2h 30m', code: '0417/32' },
+      { paper: 'Paper 1 (Theory)', date: 'Thu 7 May 2026', iso: '2026-05-07', session: 'PM', duration: '1h 30m', code: '0417/12' },
+    ]
+  },
+  cs: {
+    name: 'Computer Science', code: '0478', color: 'var(--purple)',
+    exams: [
+      { paper: 'Paper 1 (Computer Systems)', date: 'Wed 13 May 2026', iso: '2026-05-13', session: 'AM', duration: '1h 45m', code: '0478/12' },
+      { paper: 'Paper 2 (Algorithms & Programming)', date: 'Wed 20 May 2026', iso: '2026-05-20', session: 'AM', duration: '1h 45m', code: '0478/22' },
+    ]
+  },
+  business: {
+    name: 'Business Studies', code: '0450', color: 'var(--green)',
+    exams: [
+      { paper: 'Paper 1 (Short Answer & Data)', date: 'Mon 11 May 2026', iso: '2026-05-11', session: 'AM', duration: '1h 30m', code: '0450/12' },
+      { paper: 'Paper 2 (Case Study)', date: 'Mon 18 May 2026', iso: '2026-05-18', session: 'AM', duration: '1h 30m', code: '0450/22' },
+    ]
+  },
+  engfirst: {
+    name: 'English First Language', code: '0500', color: 'var(--accent)',
+    exams: [
+      { paper: 'Paper 1 (Reading)', date: 'Wed 6 May 2026', iso: '2026-05-06', session: 'AM', duration: '2h', code: '0500/12' },
+      { paper: 'Paper 2 (Directed Writing & Composition)', date: 'Fri 15 May 2026', iso: '2026-05-15', session: 'AM', duration: '2h', code: '0500/22' },
+    ]
+  },
+  englit: {
+    name: 'English Literature', code: '0475', color: 'var(--pink)',
+    exams: [
+      { paper: 'Paper 1 (Poetry & Prose)', date: 'Fri 8 May 2026', iso: '2026-05-08', session: 'PM', duration: '1h 30m', code: '0475/12' },
+      { paper: 'Paper 2 (Drama – Closed Book)', date: 'Mon 11 May 2026', iso: '2026-05-11', session: 'PM', duration: '1h 30m', code: '0475/22' },
+      { paper: 'Paper 3 (Drama – Open Text)', date: 'Mon 11 May 2026', iso: '2026-05-11', session: 'PM', duration: '45m', code: '0475/32' },
+      { paper: 'Paper 4 (Unseen)', date: 'Mon 11 May 2026', iso: '2026-05-11', session: 'PM', duration: '1h 15m', code: '0475/42' },
+    ]
+  },
+  science: {
+    name: 'Co-ordinated Sciences', code: '0654', color: 'var(--red)',
+    exams: [
+      { paper: 'Paper 4 (Theory Extended)', date: 'Thu 7 May 2026', iso: '2026-05-07', session: 'AM', duration: '2h', code: '0654/42' },
+      { paper: 'Paper 5 (Practical)', date: 'Tue 12 May 2026', iso: '2026-05-12', session: 'AM', duration: '2h', code: '0654/52' },
+      { paper: 'Paper 6 (Alt to Practical)', date: 'Tue 12 May 2026', iso: '2026-05-12', session: 'AM', duration: '1h 30m', code: '0654/62' },
+      { paper: 'Paper 2 (MCQ Extended)', date: 'Wed 3 Jun 2026', iso: '2026-06-03', session: 'AM', duration: '45m', code: '0654/22' },
+    ]
+  },
+  addmath: {
+    name: 'Additional Mathematics', code: '0606', color: 'var(--cyan)',
+    exams: [
+      { paper: 'Paper 1 (No Calculator)', date: 'Mon 18 May 2026', iso: '2026-05-18', session: 'AM', duration: '2h', code: '0606/12' },
+      { paper: 'Paper 2 (Calculator)', date: 'Tue 26 May 2026', iso: '2026-05-26', session: 'AM', duration: '2h', code: '0606/22' },
+    ]
+  },
+  gp: {
+    name: 'Global Perspectives', code: '0457', color: 'var(--teal)',
+    exams: [
+      { paper: 'Component 1 (Written Exam)', date: 'Wed 6 May 2026', iso: '2026-05-06', session: 'PM', duration: '1h 25m', code: '0457/12' },
+      { paper: 'Component 2 (Individual Report)', date: 'Coursework deadline', iso: null, session: '—', duration: 'N/A', code: '—' },
+      { paper: 'Component 3 (Team Project)', date: 'Coursework deadline', iso: null, session: '—', duration: 'N/A', code: '—' },
+    ]
+  }
+};
+
+// ========== TOPICS DATA ==========
+const topicData = {
+  'ict-theory-topics': [
+    ['1','Types & Components of Computer Systems'],['2','Input & Output Devices'],['3','Storage Devices & Media'],
+    ['4','Networks & Effects of Using Them'],['5','Effects of Using ICT'],['6','ICT Applications'],
+    ['7','The Systems Life Cycle'],['8','Safety & Security'],['9','Audiences'],
+    ['10','Communication'],['11','File Management'],['12','Images'],
+    ['13','Layout'],['14','Styles'],['15','Proofing'],['16','Graphs & Charts']
+  ],
+  'ict-practical-topics': [
+    ['17','Document Production'],['18','Databases'],['19','Presentations'],
+    ['20','Spreadsheets & Data Graphs'],['21','Web Authoring (HTML/CSS)']
+  ],
+  'cs-topics1': [
+    ['1','Data Representation (binary, hex, ASCII, images, sound)'],
+    ['2','Data Transmission (methods, error detection, encryption)'],
+    ['3','Hardware (CPU, memory, input/output, storage)'],
+    ['4','Software (OS, translators, utilities, IDE)'],
+    ['5','The Internet & Its Uses (WWW, URLs, HTTP/S, browsers)'],
+    ['6','Automated & Emerging Technologies (sensors, robotics, AI)']
+  ],
+  'cs-topics2': [
+    ['7','Algorithm Design & Problem-Solving (flowcharts, pseudocode, decomposition)'],
+    ['8','Programming (variables, loops, arrays, procedures, file handling)'],
+    ['9','Databases (tables, queries, primary keys, SQL basics)'],
+    ['10','Boolean Logic (gates: NOT, AND, OR, NAND, NOR, XOR; truth tables)']
+  ],
+  'bus-topics': [
+    ['1','Understanding Business Activity (purpose, classification, enterprise)'],
+    ['2','People in Business (motivation, recruitment, training, org structure)'],
+    ['3','Marketing (segmentation, research, 4Ps, competition)'],
+    ['4','Operations Management (production methods, quality, location)'],
+    ['5','Financial Information (cash flow, income statements, balance sheets)'],
+    ['6','External Influences (government, economy, environment, globalisation, MNCs)']
+  ],
+  'sci-bio-topics': [
+    ['B1','Characteristics of Living Organisms'],['B2','Cells'],['B3','Movement Into & Out of Cells'],
+    ['B4','Biological Molecules'],['B5','Enzymes'],['B6','Plant Nutrition'],['B7','Human Nutrition'],
+    ['B8','Transport in Plants'],['B9','Transport in Animals'],['B10','Diseases & Immunity'],
+    ['B11','Gas Exchange in Humans'],['B12','Respiration'],['B13','Coordination & Response'],
+    ['B14','Drugs'],['B15','Reproduction'],['B16','Inheritance'],['B17','Variation & Selection'],
+    ['B18','Organisms & Their Environment'],['B19','Human Influences on Ecosystems']
+  ],
+  'sci-chem-topics': [
+    ['C1','States of Matter'],['C2','Atoms, Elements & Compounds'],['C3','Stoichiometry'],
+    ['C4','Electrochemistry'],['C5','Chemical Energetics'],['C6','Chemical Reactions'],
+    ['C7','Acids, Bases & Salts'],['C8','The Periodic Table'],['C9','Metals'],
+    ['C10','Chemistry of the Environment'],['C11','Organic Chemistry'],['C12','Experimental Techniques & Chemical Analysis']
+  ],
+  'sci-phys-topics': [
+    ['P1','Motion, Forces & Energy'],['P2','Thermal Physics'],
+    ['P3','Waves (light, sound, EM spectrum)'],['P4','Electricity & Magnetism'],
+    ['P5','Nuclear Physics & Radioactivity'],['P6','Space Physics']
+  ],
+  'am-topics': [
+    ['1','Functions (notation, inverse, composite)'],
+    ['2','Quadratic Functions (completing square, discriminant)'],
+    ['3','Equations, Inequalities & Graphs'],
+    ['4','Indices & Surds'],
+    ['5','Factors of Polynomials (remainder/factor theorem)'],
+    ['6','Simultaneous Equations (linear & non-linear)'],
+    ['7','Logarithmic & Exponential Functions'],
+    ['8','Straight Line Graphs'],
+    ['9','Circular Measure (radians, arc length, sector area)'],
+    ['10','Trigonometry (identities, equations, graphs)'],
+    ['11','Permutations & Combinations'],
+    ['12','Binomial Theorem'],
+    ['13','Vectors in 2D'],
+    ['14','Matrices (operations, determinant, inverse)'],
+    ['15','Differentiation (power, chain, product/quotient rules)'],
+    ['16','Integration (definite, area under curve)'],
+    ['17','Kinematics (displacement, velocity, acceleration)']
+  ],
+  'gp-topics': [
+    ['—','Demographic Change'],['—','Education for All'],['—','Employment'],
+    ['—','Fuel & Energy'],['—','Globalisation'],['—','Law & Criminality'],
+    ['—','Migration'],['—','Poverty & Inequality'],['—','Sport & Recreation'],
+    ['—','Sustainability'],['—','Technology & the Digital World'],['—','Tradition, Culture & Identity'],
+    ['—','Transport & Infrastructure'],['—','Water, Food & Agriculture'],
+    ['—','Conflict & Peace'],['—','Disease & Health'],['—','Human Rights'],['—','Language & Communication']
+  ]
+};
+
+// ========== COUNTDOWN ==========
+function updateCountdown() {
+  const examStart = new Date('2026-04-01T00:00:00');
+  const now = new Date();
+  const diff = examStart - now;
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+
+  document.getElementById('countdown').innerHTML = `
+    <div class="countdown-card"><div class="num">${days}</div><div class="lbl">Days</div></div>
+    <div class="countdown-card"><div class="num">${hours}</div><div class="lbl">Hours</div></div>
+    <div class="countdown-card"><div class="num">${mins}</div><div class="lbl">Minutes</div></div>
+    <div class="countdown-card" style="border-color:var(--accent)"><div class="num" style="font-size:14px;color:var(--text2)">until first exam</div><div class="lbl">ICT Practical · 1 Apr 2026</div></div>
+  `;
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+// ========== NAVIGATION ==========
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(tab.dataset.section).classList.add('active');
+    window.scrollTo({ top: 200, behavior: 'smooth' });
+  });
+});
+
+function goToSubject(id) {
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.section === id);
+  });
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+// ========== DETAIL TABS ==========
+document.querySelectorAll('.detail-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const parent = tab.closest('.section');
+    parent.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    parent.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('active'));
+    parent.querySelector('#' + tab.dataset.panel).classList.add('active');
+  });
+});
+
+// ========== RENDER TOPICS ==========
+function renderTopics() {
+  const saved = JSON.parse(localStorage.getItem('igcse-checked') || '{}');
+
+  Object.keys(topicData).forEach(listId => {
+    const el = document.getElementById(listId);
+    if (!el) return;
+    el.innerHTML = topicData[listId].map(([num, name]) => {
+      const key = listId + '-' + num + '-' + name.substring(0,10);
+      const checked = saved[key] ? 'checked' : '';
+      return `<div class="topic-item">
+        <span class="topic-num">${num}</span>
+        <span class="topic-name">${name}</span>
+        <div class="topic-check ${checked}" data-key="${key}" onclick="toggleCheck(this, event)"></div>
+      </div>`;
+    }).join('');
+  });
+}
+
+function toggleCheck(el, e) {
+  e.stopPropagation();
+  el.classList.toggle('checked');
+  const saved = JSON.parse(localStorage.getItem('igcse-checked') || '{}');
+  if (el.classList.contains('checked')) {
+    saved[el.dataset.key] = true;
+  } else {
+    delete saved[el.dataset.key];
+  }
+  localStorage.setItem('igcse-checked', JSON.stringify(saved));
+}
+
+renderTopics();
+
+// ========== EXAM TRACKER ==========
+function renderTracker() {
+  const grid = document.getElementById('trackerGrid');
+  const now = new Date();
+
+  grid.innerHTML = Object.keys(subjects).map(key => {
+    const s = subjects[key];
+    const examsHtml = s.exams.map(ex => {
+      let daysLeft = null;
+      let badgeHtml = '';
+      if (ex.iso) {
+        const examDate = new Date(ex.iso + 'T00:00:00');
+        daysLeft = Math.ceil((examDate - now) / (1000*60*60*24));
+        let badgeClass = 'ok';
+        if (daysLeft <= 0) badgeClass = 'done';
+        else if (daysLeft < 60) badgeClass = 'urgent';
+        else if (daysLeft < 90) badgeClass = 'soon';
+        badgeHtml = daysLeft <= 0
+          ? '<span class="days-badge done">Done</span>'
+          : `<span class="days-badge ${badgeClass}">${daysLeft}d</span>`;
+      } else {
+        badgeHtml = '<span class="days-badge ok" style="opacity:0.5">CW</span>';
+      }
+
+      return `<div class="tracker-exam">
+        <div>
+          <div style="font-weight:500">${ex.paper}</div>
+          <div class="te-date">${ex.date} · ${ex.session} · ${ex.duration}${ex.code !== '—' ? ' · <span style="opacity:0.6">' + ex.code + '</span>' : ''}</div>
+        </div>
+        ${badgeHtml}
+      </div>`;
+    }).join('');
+
+    return `<div class="tracker-subject">
+      <div class="ts-name">${s.name}</div>
+      <div class="ts-code">${s.code}</div>
+      ${examsHtml}
+    </div>`;
+  }).join('');
+}
+renderTracker();
+</script>
+</body>
+</html>
