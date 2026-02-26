@@ -1122,6 +1122,23 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
 .streak-cell.l3 { background: rgba(64,208,128,0.75); }
 .streak-cell.l4 { background: var(--green); }
 .streak-cell.today { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ===== ZONE PICKER ===== */
+.zone-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:900; padding:16px; }
+.zone-modal-overlay.hidden { display:none; }
+.zone-modal { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:36px 28px; width:100%; max-width:460px; }
+.zone-modal h2 { font-family:var(--font-display); font-size:20px; font-weight:700; margin-bottom:6px; }
+.zone-modal p { color:var(--text2); font-size:13px; margin-bottom:20px; line-height:1.6; }
+.zone-options { display:flex; flex-direction:column; gap:8px; }
+.zone-option { background:var(--surface2); border:1.5px solid var(--border); border-radius:12px; padding:12px 16px; cursor:pointer; transition:all 0.15s; display:flex; align-items:center; gap:14px; }
+.zone-option:hover { border-color:var(--accent); background:var(--surface3,#1a1a2e); }
+.zone-option.selected { border-color:var(--accent); background:var(--surface3,#1a1a2e); }
+.zo-badge { background:var(--accent); color:#000; font-weight:800; font-size:11px; padding:3px 8px; border-radius:6px; white-space:nowrap; min-width:52px; text-align:center; }
+.zo-label { font-weight:600; font-size:13px; color:var(--text); }
+.zo-region { font-size:11px; color:var(--text3,var(--muted)); margin-top:1px; }
+.sidebar-zone { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; margin:10px 8px 4px; background:var(--surface2); border-radius:8px; cursor:pointer; font-size:12px; color:var(--text2); border:1px solid var(--border); transition:border-color 0.15s; }
+.sidebar-zone:hover { border-color:var(--accent); color:var(--text); }
+.sidebar-zone-badge { background:var(--accent); color:#000; font-weight:800; font-size:11px; padding:2px 8px; border-radius:5px; }
 .streak-label { font-size: 11px; color: var(--text3); margin-bottom: 8px; }
 
 /* ===== F3: MOCK EXAM ===== */
@@ -1228,6 +1245,10 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
       <div class="sidebar-item" data-section="formulae">Formula Sheet</div>
     </div>
   </nav>
+  <div class="sidebar-zone" onclick="document.getElementById('zoneModal').classList.remove('hidden')">
+    <span>Exam Zone</span>
+    <span class="sidebar-zone-badge" id="zoneChip">?</span>
+  </div>
   <div class="sidebar-pomo-btn" id="pomoSidebarBtn" onclick="togglePomo()">⏱ Pomodoro</div>
 </aside>
 
@@ -1244,7 +1265,7 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
   </div>
 
   <h3>Your 8 Subjects at a Glance</h3>
-  <p>The May/June 2026 CAIE session (Zone 4) runs from 1 April (ICT practicals) to 9 June 2026, with results released on 20 August 2026. Below is every subject you're sitting with its syllabus code, number of papers, and total marks.</p>
+  <p>The May/June 2026 CAIE session — <span id="zoneLabel" style="color:var(--accent);font-weight:600;cursor:pointer" onclick="document.getElementById('zoneModal').classList.remove('hidden')">select your zone ▾</span> — runs from 1 April (ICT practicals) to 9 June 2026, with results released on 20 August 2026. Below is every subject you're sitting with its syllabus code, number of papers, and total marks.</p>
 
   <div class="overview-grid">
     <div class="subject-card" data-s="ict" onclick="goToSubject('ict')">
@@ -2132,6 +2153,21 @@ p { color: var(--text2); margin-bottom: 12px; font-size: 14px; }
   </div>
 </div>
 
+<!-- ZONE PICKER MODAL -->
+<div id="zoneModal" class="zone-modal-overlay hidden" onclick="closeZoneModalOverlay(event)">
+  <div class="zone-modal">
+    <h2>🌍 Select Your Exam Zone</h2>
+    <p>Cambridge runs exams at different times across the world. Pick the zone your school is in — exam dates and paper codes will update automatically.</p>
+    <div class="zone-options">
+      <div class="zone-option" onclick="applyZone('Z1')"><span class="zo-badge">Zone 1</span><div><div class="zo-label">UK, Europe &amp; Middle East</div><div class="zo-region">United Kingdom · Germany · France · UAE · Saudi Arabia</div></div></div>
+      <div class="zone-option" onclick="applyZone('Z2')"><span class="zo-badge">Zone 2</span><div><div class="zo-label">Americas &amp; Caribbean</div><div class="zo-region">USA · Canada · Mexico · Brazil · Caribbean islands</div></div></div>
+      <div class="zone-option" onclick="applyZone('Z3')"><span class="zo-badge">Zone 3</span><div><div class="zo-label">East &amp; Southern Africa</div><div class="zo-region">Kenya · Tanzania · Uganda · Zimbabwe · South Africa</div></div></div>
+      <div class="zone-option" onclick="applyZone('Z4')"><span class="zo-badge">Zone 4</span><div><div class="zo-label">South &amp; East Asia</div><div class="zo-region">India · Singapore · Malaysia · China · Hong Kong · Pakistan</div></div></div>
+      <div class="zone-option" onclick="applyZone('Z5')"><span class="zo-badge">Zone 5</span><div><div class="zo-label">West Africa</div><div class="zo-region">Nigeria · Ghana · Sierra Leone · Cameroon · Gambia</div></div></div>
+    </div>
+  </div>
+</div>
+
 <!-- POMODORO WIDGET -->
 <div id="pomodoroWidget" class="pomo-widget" style="display:none">
   <div class="pomo-header">
@@ -2228,6 +2264,77 @@ const subjects = {
       { paper: 'Component 3 (Team Project)', date: 'Coursework deadline', iso: null, session: '—', duration: 'N/A', code: '—' },
     ]
   }
+};
+
+// ========== ZONE DATA ==========
+const ICT_PRACTICALS = [
+  {paper:'Paper 2 (Practical – Documents/DB)',date:'Wed 1 Apr 2026',iso:'2026-04-01',session:'Practical window',duration:'2h 30m',code:'0417/21'},
+  {paper:'Paper 3 (Practical – Spreadsheets/Web)',date:'Thu 2 Apr 2026',iso:'2026-04-02',session:'Practical window',duration:'2h 30m',code:'0417/31'},
+  {paper:'Paper 2 Var 2 (Practical – Documents/DB)',date:'Thu 16 Apr 2026',iso:'2026-04-16',session:'Practical window',duration:'2h 30m',code:'0417/22'},
+  {paper:'Paper 3 Var 2 (Practical – Spreadsheets/Web)',date:'Tue 21 Apr 2026',iso:'2026-04-21',session:'Practical window',duration:'2h 30m',code:'0417/32'},
+];
+const GP_COURSEWORK = [
+  {paper:'Component 2 (Individual Report)',date:'Coursework deadline',iso:null,session:'—',duration:'N/A',code:'—'},
+  {paper:'Component 3 (Team Project)',date:'Coursework deadline',iso:null,session:'—',duration:'N/A',code:'—'},
+];
+const ZONE_INFO = {
+  Z1:{label:'Zone 1',region:'UK, Europe & Middle East'},
+  Z2:{label:'Zone 2',region:'Americas & Caribbean'},
+  Z3:{label:'Zone 3',region:'East & Southern Africa'},
+  Z4:{label:'Zone 4',region:'South & East Asia'},
+  Z5:{label:'Zone 5',region:'West Africa'},
+};
+const zoneExams = {
+  Z1:{
+    ict:     [{paper:'Paper 1 (Theory)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'AM',duration:'1h 30m',code:'0417/11'}],
+    cs:      [{paper:'Paper 1 (Computer Systems)',date:'Wed 13 May 2026',iso:'2026-05-13',session:'PM',duration:'1h 45m',code:'0478/13'},{paper:'Paper 2 (Algorithms & Programming)',date:'Wed 20 May 2026',iso:'2026-05-20',session:'PM',duration:'1h 45m',code:'0478/23'}],
+    business:[{paper:'Paper 1 (Short Answer & Data)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'1h 30m',code:'0450/13'},{paper:'Paper 2 (Case Study)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'PM',duration:'1h 30m',code:'0450/23'}],
+    engfirst:[{paper:'Paper 1 (Reading)',date:'Tue 5 May 2026',iso:'2026-05-05',session:'PM',duration:'2h',code:'0500/13'},{paper:'Paper 2 (Directed Writing & Composition)',date:'Fri 15 May 2026',iso:'2026-05-15',session:'PM',duration:'2h',code:'0500/23'}],
+    englit:  [{paper:'Paper 1 (Poetry & Prose)',date:'Fri 8 May 2026',iso:'2026-05-08',session:'AM',duration:'1h 30m',code:'0475/11'},{paper:'Paper 2 (Drama – Closed Book)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'1h 30m',code:'0475/21'},{paper:'Paper 3 (Drama – Open Text)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'45m',code:'0475/31'},{paper:'Paper 4 (Unseen)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'1h 15m',code:'0475/41'}],
+    science: [{paper:'Paper 4 (Theory Extended)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'PM',duration:'2h',code:'0654/43'},{paper:'Paper 5 (Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'PM',duration:'2h',code:'0654/53'},{paper:'Paper 6 (Alt to Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'PM',duration:'1h 30m',code:'0654/63'},{paper:'Paper 2 (MCQ Extended)',date:'Wed 3 Jun 2026',iso:'2026-06-03',session:'PM',duration:'45m',code:'0654/23'}],
+    addmath: [{paper:'Paper 1 (No Calculator)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'PM',duration:'2h',code:'0606/13'},{paper:'Paper 2 (Calculator)',date:'Tue 26 May 2026',iso:'2026-05-26',session:'PM',duration:'2h',code:'0606/23'}],
+    gp:      [{paper:'Component 1 (Written Exam)',date:'Wed 6 May 2026',iso:'2026-05-06',session:'AM',duration:'1h 25m',code:'0457/11'}],
+  },
+  Z2:{
+    ict:     [{paper:'Paper 1 (Theory)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'PM',duration:'1h 30m',code:'0417/11'}],
+    cs:      [{paper:'Paper 1 (Computer Systems)',date:'Wed 13 May 2026',iso:'2026-05-13',session:'AM',duration:'1h 45m',code:'0478/11'},{paper:'Paper 2 (Algorithms & Programming)',date:'Wed 20 May 2026',iso:'2026-05-20',session:'AM',duration:'1h 45m',code:'0478/21'}],
+    business:[{paper:'Paper 1 (Short Answer & Data)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'1h 30m',code:'0450/11'},{paper:'Paper 2 (Case Study)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'AM',duration:'1h 30m',code:'0450/21'}],
+    engfirst:[{paper:'Paper 1 (Reading)',date:'Wed 6 May 2026',iso:'2026-05-06',session:'AM',duration:'2h',code:'0500/11'},{paper:'Paper 2 (Directed Writing & Composition)',date:'Thu 21 May 2026',iso:'2026-05-21',session:'AM',duration:'2h',code:'0500/21'}],
+    englit:  [{paper:'Paper 1 (Poetry & Prose)',date:'Fri 8 May 2026',iso:'2026-05-08',session:'PM',duration:'1h 30m',code:'0475/11'},{paper:'Paper 2 (Drama – Closed Book)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'1h 30m',code:'0475/21'},{paper:'Paper 3 (Drama – Open Text)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'45m',code:'0475/31'},{paper:'Paper 4 (Unseen)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'1h 15m',code:'0475/41'}],
+    science: [{paper:'Paper 4 (Theory Extended)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'AM',duration:'2h',code:'0654/41'},{paper:'Paper 5 (Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'AM',duration:'2h',code:'0654/51'},{paper:'Paper 6 (Alt to Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'AM',duration:'1h 30m',code:'0654/61'},{paper:'Paper 2 (MCQ Extended)',date:'Wed 3 Jun 2026',iso:'2026-06-03',session:'AM',duration:'45m',code:'0654/21'}],
+    addmath: [{paper:'Paper 1 (No Calculator)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'AM',duration:'2h',code:'0606/11'},{paper:'Paper 2 (Calculator)',date:'Tue 26 May 2026',iso:'2026-05-26',session:'AM',duration:'2h',code:'0606/21'}],
+    gp:      [{paper:'Component 1 (Written Exam)',date:'Wed 6 May 2026',iso:'2026-05-06',session:'PM',duration:'1h 25m',code:'0457/11'}],
+  },
+  Z3:{
+    ict:     [{paper:'Paper 1 (Theory)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'AM',duration:'1h 30m',code:'0417/12'}],
+    cs:      [{paper:'Paper 1 (Computer Systems)',date:'Wed 13 May 2026',iso:'2026-05-13',session:'PM',duration:'1h 45m',code:'0478/11'},{paper:'Paper 2 (Algorithms & Programming)',date:'Wed 20 May 2026',iso:'2026-05-20',session:'PM',duration:'1h 45m',code:'0478/21'}],
+    business:[{paper:'Paper 1 (Short Answer & Data)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'1h 30m',code:'0450/11'},{paper:'Paper 2 (Case Study)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'PM',duration:'1h 30m',code:'0450/21'}],
+    engfirst:[{paper:'Paper 1 (Reading)',date:'Wed 6 May 2026',iso:'2026-05-06',session:'PM',duration:'2h',code:'0500/11'},{paper:'Paper 2 (Directed Writing & Composition)',date:'Thu 21 May 2026',iso:'2026-05-21',session:'PM',duration:'2h',code:'0500/21'}],
+    englit:  [{paper:'Paper 1 (Poetry & Prose)',date:'Fri 8 May 2026',iso:'2026-05-08',session:'AM',duration:'1h 30m',code:'0475/12'},{paper:'Paper 2 (Drama – Closed Book)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'1h 30m',code:'0475/22'},{paper:'Paper 3 (Drama – Open Text)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'45m',code:'0475/32'},{paper:'Paper 4 (Unseen)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'1h 15m',code:'0475/42'}],
+    science: [{paper:'Paper 4 (Theory Extended)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'PM',duration:'2h',code:'0654/41'},{paper:'Paper 5 (Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'PM',duration:'2h',code:'0654/51'},{paper:'Paper 6 (Alt to Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'PM',duration:'1h 30m',code:'0654/61'},{paper:'Paper 2 (MCQ Extended)',date:'Wed 3 Jun 2026',iso:'2026-06-03',session:'PM',duration:'45m',code:'0654/21'}],
+    addmath: [{paper:'Paper 1 (No Calculator)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'PM',duration:'2h',code:'0606/11'},{paper:'Paper 2 (Calculator)',date:'Tue 26 May 2026',iso:'2026-05-26',session:'PM',duration:'2h',code:'0606/21'}],
+    gp:      [{paper:'Component 1 (Written Exam)',date:'Wed 6 May 2026',iso:'2026-05-06',session:'AM',duration:'1h 25m',code:'0457/12'}],
+  },
+  Z4:{
+    ict:     [{paper:'Paper 1 (Theory)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'PM',duration:'1h 30m',code:'0417/12'}],
+    cs:      [{paper:'Paper 1 (Computer Systems)',date:'Wed 13 May 2026',iso:'2026-05-13',session:'AM',duration:'1h 45m',code:'0478/12'},{paper:'Paper 2 (Algorithms & Programming)',date:'Wed 20 May 2026',iso:'2026-05-20',session:'AM',duration:'1h 45m',code:'0478/22'}],
+    business:[{paper:'Paper 1 (Short Answer & Data)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'1h 30m',code:'0450/12'},{paper:'Paper 2 (Case Study)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'AM',duration:'1h 30m',code:'0450/22'}],
+    engfirst:[{paper:'Paper 1 (Reading)',date:'Wed 6 May 2026',iso:'2026-05-06',session:'AM',duration:'2h',code:'0500/12'},{paper:'Paper 2 (Directed Writing & Composition)',date:'Fri 15 May 2026',iso:'2026-05-15',session:'AM',duration:'2h',code:'0500/22'}],
+    englit:  [{paper:'Paper 1 (Poetry & Prose)',date:'Fri 8 May 2026',iso:'2026-05-08',session:'PM',duration:'1h 30m',code:'0475/12'},{paper:'Paper 2 (Drama – Closed Book)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'1h 30m',code:'0475/22'},{paper:'Paper 3 (Drama – Open Text)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'45m',code:'0475/32'},{paper:'Paper 4 (Unseen)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'1h 15m',code:'0475/42'}],
+    science: [{paper:'Paper 4 (Theory Extended)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'AM',duration:'2h',code:'0654/42'},{paper:'Paper 5 (Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'AM',duration:'2h',code:'0654/52'},{paper:'Paper 6 (Alt to Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'AM',duration:'1h 30m',code:'0654/62'},{paper:'Paper 2 (MCQ Extended)',date:'Wed 3 Jun 2026',iso:'2026-06-03',session:'AM',duration:'45m',code:'0654/22'}],
+    addmath: [{paper:'Paper 1 (No Calculator)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'AM',duration:'2h',code:'0606/12'},{paper:'Paper 2 (Calculator)',date:'Tue 26 May 2026',iso:'2026-05-26',session:'AM',duration:'2h',code:'0606/22'}],
+    gp:      [{paper:'Component 1 (Written Exam)',date:'Wed 6 May 2026',iso:'2026-05-06',session:'PM',duration:'1h 25m',code:'0457/12'}],
+  },
+  Z5:{
+    ict:     [{paper:'Paper 1 (Theory)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'AM',duration:'1h 30m',code:'0417/13'}],
+    cs:      [{paper:'Paper 1 (Computer Systems)',date:'Wed 13 May 2026',iso:'2026-05-13',session:'PM',duration:'1h 45m',code:'0478/12'},{paper:'Paper 2 (Algorithms & Programming)',date:'Wed 20 May 2026',iso:'2026-05-20',session:'PM',duration:'1h 45m',code:'0478/22'}],
+    business:[{paper:'Paper 1 (Short Answer & Data)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'PM',duration:'1h 30m',code:'0450/12'},{paper:'Paper 2 (Case Study)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'PM',duration:'1h 30m',code:'0450/22'}],
+    engfirst:[{paper:'Paper 1 (Reading)',date:'Wed 6 May 2026',iso:'2026-05-06',session:'PM',duration:'2h',code:'0500/12'},{paper:'Paper 2 (Directed Writing & Composition)',date:'Fri 15 May 2026',iso:'2026-05-15',session:'PM',duration:'2h',code:'0500/22'}],
+    englit:  [{paper:'Paper 1 (Poetry & Prose)',date:'Fri 8 May 2026',iso:'2026-05-08',session:'AM',duration:'1h 30m',code:'0475/13'},{paper:'Paper 2 (Drama – Closed Book)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'1h 30m',code:'0475/23'},{paper:'Paper 3 (Drama – Open Text)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'45m',code:'0475/33'},{paper:'Paper 4 (Unseen)',date:'Mon 11 May 2026',iso:'2026-05-11',session:'AM',duration:'1h 15m',code:'0475/43'}],
+    science: [{paper:'Paper 4 (Theory Extended)',date:'Thu 7 May 2026',iso:'2026-05-07',session:'PM',duration:'2h',code:'0654/42'},{paper:'Paper 5 (Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'PM',duration:'2h',code:'0654/52'},{paper:'Paper 6 (Alt to Practical)',date:'Tue 12 May 2026',iso:'2026-05-12',session:'PM',duration:'1h 30m',code:'0654/62'},{paper:'Paper 2 (MCQ Extended)',date:'Wed 3 Jun 2026',iso:'2026-06-03',session:'PM',duration:'45m',code:'0654/22'}],
+    addmath: [{paper:'Paper 1 (No Calculator)',date:'Mon 18 May 2026',iso:'2026-05-18',session:'PM',duration:'2h',code:'0606/12'},{paper:'Paper 2 (Calculator)',date:'Tue 26 May 2026',iso:'2026-05-26',session:'PM',duration:'2h',code:'0606/22'}],
+    gp:      [{paper:'Component 1 (Written Exam)',date:'Tue 5 May 2026',iso:'2026-05-05',session:'AM',duration:'1h 25m',code:'0457/13'}],
+  },
 };
 
 // ========== TOPICS DATA ==========
@@ -4446,6 +4553,44 @@ function printRevisionSheet(subj) {
   setTimeout(() => win.print(), 300);
 }
 
+// ========== ZONE PICKER ==========
+function applyZone(z) {
+  if (!zoneExams[z]) return;
+  localStorage.setItem('igcse-zone', z);
+  const ze = zoneExams[z];
+  subjects.ict.exams = [...ICT_PRACTICALS, ...ze.ict];
+  subjects.cs.exams = ze.cs;
+  subjects.business.exams = ze.business;
+  subjects.engfirst.exams = ze.engfirst;
+  subjects.englit.exams = ze.englit;
+  subjects.science.exams = ze.science;
+  subjects.addmath.exams = ze.addmath;
+  subjects.gp.exams = [...ze.gp, ...GP_COURSEWORK];
+  const chip = document.getElementById('zoneChip');
+  if (chip) chip.textContent = ZONE_INFO[z].label;
+  const zoneLabel = document.getElementById('zoneLabel');
+  if (zoneLabel) zoneLabel.textContent = `${ZONE_INFO[z].label} — ${ZONE_INFO[z].region} ▾`;
+  // Highlight selected option
+  document.querySelectorAll('.zone-option').forEach(el => {
+    el.classList.toggle('selected', el.getAttribute('onclick') === `applyZone('${z}')`);
+  });
+  renderTracker();
+  document.getElementById('zoneModal').classList.add('hidden');
+}
+function initZone() {
+  const saved = localStorage.getItem('igcse-zone');
+  if (saved && zoneExams[saved]) {
+    applyZone(saved);
+  } else {
+    document.getElementById('zoneModal').classList.remove('hidden');
+  }
+}
+function closeZoneModalOverlay(e) {
+  if (e.target === e.currentTarget && localStorage.getItem('igcse-zone')) {
+    document.getElementById('zoneModal').classList.add('hidden');
+  }
+}
+
 // ========== INIT NEW FEATURES ==========
 renderGradeCalc();
 renderFormulaSheet();
@@ -4453,6 +4598,7 @@ initFlashcards();
 renderReviewQueue();
 renderPomoStats();
 renderStreak();
+initZone();
 </script>
 </body>
 </html>
